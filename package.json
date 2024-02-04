@@ -4,6 +4,7 @@
   "description": "North Wiltshire Model Aircraft Club online membership portal",
   "main": "index.js",
   "scripts": {
+    "build": "sass ./src/assets/sass:./public/css",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "fs-extra": "^11.2.0",
     "govuk-frontend": "^5.0.0",
     "nunjucks": "^3.2.4"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0"
   }
 }

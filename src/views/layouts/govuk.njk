@@ -1,4 +1,8 @@
-{% extends "govuk-frontend/templates/govuk-template.njk" %}
+{% extends "govuk/template.njk" %}
+
+{% block head %}
+    <link href="/public/css/index.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 {% block pageTitle %}
     {{ super() }} - My Gov.uk App
