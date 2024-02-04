@@ -1,0 +1,9 @@
+{% extends "govuk-frontend/templates/govuk-template.njk" %}
+
+{% block pageTitle %}
+    {{ super() }} - My Gov.uk App
+{% endblock %}
+
+{% block mainContent %}
+    {{ block("content") }}
+{% endblock %}
