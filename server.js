@@ -26,8 +26,11 @@ nunjucks.configure(['node_modules/govuk-frontend/dist', 'src/views'], {
     express: app,
 });
 
-// Serve static assets from public
-app.use('/public', express.static(path.join(__dirname, 'public')))
+// Serve static public from src/assets
+app.use('/public', express.static(path.join(__dirname, 'src/assets')))
+
+// Serve static public/css from public/css
+app.use('/public/css', express.static(path.join(__dirname, 'public/css')))
 
 // Serve static assets from govuk-frontend
 app.use('/assets', express.static(path.join(__dirname, 'node_modules/govuk-frontend/dist/govuk/assets')));

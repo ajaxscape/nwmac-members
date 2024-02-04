@@ -1,13 +1,29 @@
 {% extends "govuk/template.njk" %}
 
+{% set assetPath = "/public" %}
+{% set themeColor = "#1d70b8" %}
+
+{% block headIcons %}
+    <link rel="icon" sizes="48x48" href="{{ assetPath | default("/assets", true) }}/images/favicon.ico">
+    <link rel="icon" sizes="any" href="{{ assetPath | default("/assets", true) }}/images/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="{{ assetPath | default("/assets", true) }}/manifest.json">
+{% endblock %}
+
 {% block head %}
     <link href="/public/css/index.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
+{% block header %}
+    {{ govukHeader({}) }}
+{% endblock %}
+
 {% block pageTitle %}
-    {{ super() }} - My Gov.uk App
+    Cheese
 {% endblock %}
 
 {% block mainContent %}
     {{ block("content") }}
 {% endblock %}
+
+{% block footer %}{% endblock %}
+
