@@ -1,0 +1,79 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block content %}
+    {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Join",
+        href: "/join"
+      },
+      {
+        text: "Address",
+        href: "/join/address"
+      }
+    ]
+  }) }}
+
+  <form method="post" novalidate="novalidate" action="/join/name">
+  {% call govukFieldset({
+    legend: {
+      text: "What is your name?",
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+    }
+  }) %}
+
+    {{ govukInput({
+      label: {
+        text: "First name"
+      },
+      id: "first-name",
+      name: "firstName",
+      autocomplete: "given-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Middle name (optional)"
+      },
+      id: "middle-name",
+      name: "middleName",
+      autocomplete: "middle-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Last name"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "last-name",
+      name: "lastName",
+      autocomplete: "family-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Preferedname (optional)"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "prefered-name",
+      name: "preferedName"
+    }) }}
+
+  {% endcall %}
+
+  {{ govukButton({
+    text: "Save and continue"
+  }) }}
+
+  </form>
+{% endblock %}

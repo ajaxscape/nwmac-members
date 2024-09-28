@@ -1,5 +1,7 @@
 {% extends "govuk/template.njk" %}
 
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
 {% set assetPath = "/public" %}
 {% set themeColor = "#1d70b8" %}
 
@@ -14,11 +16,32 @@
 {% endblock %}
 
 {% block header %}
-    {{ govukHeader({}) }}
+    <header class="govuk-header" role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <h2>North Wiltshire Model Aircraft Club (NWMAC)</h2>
+        </div>
+    </header>
+    {{ govukServiceNavigation({
+        navigation: [
+            {
+                href: "#",
+                text: "Login"
+            },
+            {
+                href: "#",
+                text: "Register",
+                active: true
+            },
+            {
+                href: "#",
+                text: "Renew membership for 2025"
+            }
+        ]
+    }) }}
 {% endblock %}
 
 {% block pageTitle %}
-    Cheese
+    NWMAC
 {% endblock %}
 
 {% block mainContent %}
