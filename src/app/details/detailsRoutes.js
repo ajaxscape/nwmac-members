@@ -1,5 +1,5 @@
 const express = require('express');
-const {viewEnterAddress, viewEnterName, postEnterName} = require("./joinController");
+const {viewEnterAddress, viewEnterName, postEnterName} = require("./detailsController");
 const router = express.Router();
 
 router

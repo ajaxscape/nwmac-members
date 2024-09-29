@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const joinRouter = require('./join/joinRoutes');
+const detailsRouter = require('./details/detailsRoutes');
 
-router.use('/join', joinRouter)
+router.use('/details/:state', detailsRouter)
 
 router.get('/', (req,res) => {
     res.render('index');

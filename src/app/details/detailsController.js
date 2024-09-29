@@ -1,13 +1,13 @@
 const viewEnterName = (_, res) => {
-    res.render('pages/join/name', {});
+    res.render('pages/details/name', {});
 }
 
-const postEnterName = (_, res) => {
+const postEnterName = (req, res) => {
     res.redirect('/join/address');
 }
 
 const viewEnterAddress = (_, res) => {
-    res.render('pages/join/address', {});
+    res.render('pages/details/address', {});
 }
 
 module.exports = {
