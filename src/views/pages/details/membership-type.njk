@@ -1,0 +1,38 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block content %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "Home",
+                href: "/"
+            },
+            {
+                text: locals.state | capitalize,
+                href: "/details/" + locals.state
+            },
+            {
+                text: "Address",
+                href: "/details/" + locals.state + "/address"
+            }
+        ]
+    }) }}
+
+    <form method="post" novalidate="novalidate" action="">
+        {{ govukRadios({
+            name: "membershipType",
+            fieldset: {
+                legend: {
+                    html: "Membership type",
+                    isPageHeading: true,
+                    classes: "govuk-fieldset__legend--l"
+                }
+            },
+            items: []
+        }) }}
+    </form>
+{% endblock %}

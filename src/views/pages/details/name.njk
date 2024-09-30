@@ -13,12 +13,12 @@
         href: "/"
       },
       {
-        text: "Join",
-        href: "/join"
+        text: locals.state | capitalize,
+        href: "/details/" + locals.state
       },
       {
         text: "Address",
-        href: "/join/address"
+        href: "/details/" + locals.state + "/address"
       }
     ]
   }) }}

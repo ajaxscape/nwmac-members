@@ -4,7 +4,7 @@ const path = require("path");
 const sass = require('sass');
 const { writeFileSync } = require('fs-extra');
 const {ensureDir} = require("fs-extra");
-const router = require('./src/app/routes');
+const appRouter = require('./src/app/appRouter');
 
 const app = express();
 const port = 3000;
@@ -39,11 +39,12 @@ app.use('/assets', express.static(path.join(__dirname, 'node_modules/govuk-front
 // Set the view engine to Nunjucks
 app.set('view engine', 'njk');
 
-app.use('/', router);
-
 // Define routes
-app.get('/', (req, res) => {
-    res.render('index');
+app.use('/', appRouter);
+
+// Page not found
+app.all('*', (req, res) => {
+    res.status(404).send('<h1>404! Page not found</h1>');
 });
 
 // Start the server

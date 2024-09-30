@@ -1,13 +1,17 @@
-const viewEnterName = (_, res) => {
-    res.render('pages/details/name', {});
+const viewEnterName = (req, res) => {
+    res.render('pages/details/name', { locals: res.locals });
 }
 
 const postEnterName = (req, res) => {
-    res.redirect('/join/address');
+    res.redirect(`/details/${res.locals.state}/address`);
 }
 
-const viewEnterAddress = (_, res) => {
-    res.render('pages/details/address', {});
+const viewEnterAddress = (req, res) => {
+    res.render('pages/details/address', { locals: res.locals });
+}
+
+const postEnterAddress = (req, res) => {
+    res.redirect(`/details/${res.locals.state}/age`);
 }
 
 module.exports = {

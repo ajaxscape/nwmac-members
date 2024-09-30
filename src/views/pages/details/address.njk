@@ -7,20 +7,20 @@
 
 {% block content %}
     {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "/"
-      },
-      {
-        text: "Join",
-        href: "/join"
-      },
-      {
-        text: "Address",
-        href: "/join/address"
-      }
-    ]
+      items: [
+        {
+          text: "Home",
+          href: "/"
+        },
+        {
+          text: locals.state | capitalize,
+          href: "/details/" + locals.state
+        },
+        {
+          text: "Age",
+          href: "/details/" + locals.state + "/age"
+        }
+      ]
   }) }}
 
   <form method="post" novalidate="novalidate" action="">
