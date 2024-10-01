@@ -5,11 +5,7 @@
 {% set assetPath = "/public" %}
 {% set themeColor = "#1d70b8" %}
 
-{% block headIcons %}
-    <link rel="icon" sizes="48x48" href="{{ assetPath | default("/assets", true) }}/images/favicon.ico">
-    <link rel="icon" sizes="any" href="{{ assetPath | default("/assets", true) }}/images/favicon.svg" type="image/svg+xml">
-    <link rel="manifest" href="{{ assetPath | default("/assets", true) }}/manifest.json">
-{% endblock %}
+{% block headIcons %}{% endblock %}
 
 {% block head %}
     <link href="/public/css/index.css" rel="stylesheet" type="text/css" />

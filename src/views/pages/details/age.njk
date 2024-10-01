@@ -16,30 +16,29 @@
                 href: "/details/" + locals.state
             },
             {
-                text: "Membership type"
+                text: "Age"
             }
         ]
     }) }}
 
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
-            name: "membershipType",
+            name: "age",
             fieldset: {
                 legend: {
-                    html: "Select type of membership",
+                    html: "Select age",
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                 }
             },
             items: [
-
                 {
-                    value: "single",
-                    text: "Single"
+                    value: "senior",
+                    text: "18 and over"
                 },
                 {
-                    value: "family",
-                    text: "Family"
+                    value: "junior",
+                    text: "Under 18 (junior)"
                 }
             ]
         }) }}
