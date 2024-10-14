@@ -1,6 +1,7 @@
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set assetPath = "/public" %}
 {% set themeColor = "#1d70b8" %}
@@ -17,23 +18,32 @@
             <h2 class="govuk-!-padding-top-5">North Wilts Model Aircraft Club</h2>
         </div>
     </header>
-    {{ govukServiceNavigation({
-        navigation: [
-            {
-                href: "#",
-                text: "Login"
-            },
-            {
-                href: "#",
-                text: "Register",
-                active: true
-            },
-            {
-                href: "/details/renew",
-                text: "Renew membership for 2025"
-            }
-        ]
-    }) }}
+{#    {{ govukServiceNavigation({#}
+{#        navigation: [#}
+{#            {#}
+{#                href: "#",#}
+{#                text: "Login"#}
+{#            },#}
+{#            {#}
+{#                href: "#",#}
+{#                text: "Register",#}
+{#                active: true#}
+{#            },#}
+{#            {#}
+{#                href: "/details/renew",#}
+{#                text: "Renew membership for 2025"#}
+{#            }#}
+{#        ]#}
+{#    }) }}#}
+{% endblock %}
+
+{% block beforeContent %}
+    {% if errors %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: errors | mapToErrorSummary
+        }) }}
+    {% endif %}
 {% endblock %}
 
 {% block pageTitle %}
