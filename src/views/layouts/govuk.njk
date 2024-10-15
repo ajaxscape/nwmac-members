@@ -22,13 +22,12 @@
 {% endblock %}
 
 {% block beforeContent %}
-    {{ govukBackLink({
-        text: "Back",
-        href: "#",
-        attributes: {
-            onclick: "window.history.go(-1); return false;"
-        }
-    }) }}
+    {% if backLink %}
+        {{ govukBackLink({
+            text: "Back",
+            href: backLink
+        }) }}
+    {% endif %}
     {% if errors %}
         {{ govukErrorSummary({
             titleText: "There is a problem",

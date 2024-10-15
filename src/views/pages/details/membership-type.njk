@@ -4,13 +4,16 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
+{% set pageTitle="Select type of membership" %}
+{% set backLink="/details/" + state %}
+
 {% block content %}
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
             name: "membershipType",
             fieldset: {
                 legend: {
-                    html: "Select type of membership",
+                    html: pageTitle,
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                 }

@@ -4,13 +4,16 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
+{% set pageTitle="Select age" %}
+{% set backLink="/details/" + state + "/membership-type" %}
+
 {% block content %}
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
             name: "age",
             fieldset: {
                 legend: {
-                    html: "Select age",
+                    html: pageTitle,
                     isPageHeading: true,
                     classes: "govuk-fieldset__legend--l"
                 }

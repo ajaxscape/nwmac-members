@@ -5,6 +5,9 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
+{% set pageTitle="Enter address" %}
+{% set backLink="/details/" + state + "/name" %}
+
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
   {% call govukFieldset({
