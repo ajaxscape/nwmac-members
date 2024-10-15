@@ -1,31 +1,40 @@
-const express = require('express');
-const nunjucks = require('nunjucks');
-const path = require("path");
-const sass = require('sass');
-const { writeFileSync } = require('fs-extra');
-const {ensureDir} = require("fs-extra");
-const appRouter = require('./src/app/appRouter');
+import express from 'express'
+import nunjucks from 'nunjucks'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import * as sass from 'sass'
+import fsExtra from 'fs-extra'
+import appRouter from './src/app/app-router.js'
+import addFilters from './src/lib/add-filters.js'
 
-const app = express();
-const port = 3000;
+const { writeFileSync, ensureDir } = fsExtra
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
+
+const app = express()
+const port = 3000
 
 // Compile SASS
-const result = sass.compile(path.join(__dirname, 'src/assets/sass/index.scss'), {
-    quietDeps: true,
-    sourceMap: true,
-    sourceMapIncludeSources: true,
-    style: 'expanded'
+const result = sass.renderSync({
+  file: path.join(__dirname, 'src/assets/sass/index.scss'),
+  outFile: path.join(__dirname, 'public/css/index.css'),
+  outputStyle: 'expanded'
 })
 
-ensureDir(path.join(__dirname, 'public/css'), () => {
-    writeFileSync(path.join(__dirname, 'public/css/index.css'), result.css)
+ensureDir(path.join(__dirname, 'public/css')).then(() => {
+  writeFileSync(path.join(__dirname, 'public/css/index.css'), result.css)
 })
 
 // Set up Nunjucks templating engine
-nunjucks.configure(['node_modules/govuk-frontend/dist', 'src/views'], {
+const env = nunjucks.configure(
+  ['node_modules/govuk-frontend/dist', 'src/views'],
+  {
     autoescape: true,
-    express: app,
-});
+    express: app
+  }
+)
+
+addFilters(env)
 
 // Serve static public from src/assets
 app.use('/public', express.static(path.join(__dirname, 'src/assets')))
@@ -34,20 +43,28 @@ app.use('/public', express.static(path.join(__dirname, 'src/assets')))
 app.use('/public/css', express.static(path.join(__dirname, 'public/css')))
 
 // Serve static assets from govuk-frontend
-app.use('/assets', express.static(path.join(__dirname, 'node_modules/govuk-frontend/dist/govuk/assets')));
+app.use(
+  '/assets',
+  express.static(
+    path.join(__dirname, 'node_modules/govuk-frontend/dist/govuk/assets')
+  )
+)
 
 // Set the view engine to Nunjucks
-app.set('view engine', 'njk');
+app.set('view engine', 'njk')
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // Define routes
-app.use('/', appRouter);
+app.use('/', appRouter)
 
 // Page not found
 app.all('*', (req, res) => {
-    res.status(404).send('<h1>404! Page not found</h1>');
-});
+  res.status(404).send('<h1>404! Page not found</h1>')
+})
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+  console.log(`Server is running at http://localhost:${port}`)
+})
