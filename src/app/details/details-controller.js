@@ -5,6 +5,13 @@ export const viewSelectMembershipType = (req, res) => {
 }
 
 export const postSelectMembershipType = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/membership-type', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
   res.redirect(`/details/${res.locals.state}/age`)
 }
 
@@ -13,6 +20,13 @@ export const viewEnterAge = (req, res) => {
 }
 
 export const postEnterAge = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/age', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
   res.redirect(`/details/${res.locals.state}/name`)
 }
 
@@ -36,5 +50,12 @@ export const viewEnterAddress = (req, res) => {
 }
 
 export const postEnterAddress = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/address', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
   res.redirect(`/details/${res.locals.state}`)
 }

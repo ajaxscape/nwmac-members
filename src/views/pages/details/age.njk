@@ -5,22 +5,6 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% block content %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home",
-                href: "/"
-            },
-            {
-                text: locals.state | capitalize,
-                href: "/details/" + locals.state
-            },
-            {
-                text: "Age"
-            }
-        ]
-    }) }}
-
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
             name: "age",
@@ -40,7 +24,8 @@
                     value: "junior",
                     text: "Under 18 (junior)"
                 }
-            ]
+            ],
+            errorMessage: mapToError(errors, "age")
         }) }}
 
         {{ govukButton({

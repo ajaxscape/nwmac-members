@@ -5,27 +5,13 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% block content %}
-    {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "/"
-      },
-      {
-        text: locals.state | capitalize,
-        href: "/details/" + locals.state
-      },
-      {
-        text: "Name"
-      }
-    ]
-  }) }}
+{% set pageTitle="Enter name" %}
 
+{% block content %}
   <form method="post" novalidate="novalidate" action="">
   {% call govukFieldset({
     legend: {
-      text: "Enter name",
+      text: pageTitle,
       classes: "govuk-fieldset__legend--l",
       isPageHeading: true
     }
@@ -37,7 +23,8 @@
       },
       id: "first-name",
       name: "firstName",
-      autocomplete: "given-name"
+      autocomplete: "given-name",
+      errorMessage: mapToError(errors, "firstName")
     }) }}
 
     {{ govukInput({
@@ -56,7 +43,8 @@
       classes: "govuk-!-width-two-thirds",
       id: "last-name",
       name: "lastName",
-      autocomplete: "family-name"
+      autocomplete: "family-name",
+      errorMessage: mapToError(errors, "lastName")
     }) }}
 
     {{ govukInput({

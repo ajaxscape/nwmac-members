@@ -5,22 +5,6 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% block content %}
-    {{ govukBreadcrumbs({
-        items: [
-            {
-                text: "Home",
-                href: "/"
-            },
-            {
-                text: locals.state | capitalize,
-                href: "/details/" + locals.state
-            },
-            {
-                text: "Membership type"
-            }
-        ]
-    }) }}
-
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
             name: "membershipType",
@@ -32,7 +16,6 @@
                 }
             },
             items: [
-
                 {
                     value: "single",
                     text: "Single"
@@ -41,7 +24,8 @@
                     value: "family",
                     text: "Family"
                 }
-            ]
+            ],
+            errorMessage: mapToError(errors, "membershipType")
         }) }}
 
         {{ govukButton({

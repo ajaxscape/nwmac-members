@@ -6,6 +6,7 @@ import * as sass from 'sass'
 import fsExtra from 'fs-extra'
 import appRouter from './src/app/app-router.js'
 import addFilters from './src/lib/add-filters.js'
+import addFunctions from './src/lib/add-functions.js'
 
 const { writeFileSync, ensureDir } = fsExtra
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
@@ -35,6 +36,7 @@ const env = nunjucks.configure(
 )
 
 addFilters(env)
+addFunctions(env)
 
 // Serve static public from src/assets
 app.use('/public', express.static(path.join(__dirname, 'src/assets')))

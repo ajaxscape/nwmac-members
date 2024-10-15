@@ -1,4 +1,4 @@
-import * as filters from './nujucks-filters/index.js'
+import * as filters from './nunjucks-filters/index.js'
 
 export default (env) => {
   Object.keys(filters).forEach((filterName) => {

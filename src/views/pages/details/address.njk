@@ -6,22 +6,6 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% block content %}
-    {{ govukBreadcrumbs({
-      items: [
-        {
-          text: "Home",
-          href: "/"
-        },
-        {
-          text: locals.state | capitalize,
-          href: "/details/" + locals.state
-        },
-        {
-          text: "Address"
-        }
-      ]
-  }) }}
-
   <form method="post" novalidate="novalidate" action="">
   {% call govukFieldset({
     legend: {
@@ -37,7 +21,8 @@
       },
       id: "address-line-1",
       name: "addressLine1",
-      autocomplete: "address-line1"
+      autocomplete: "address-line1",
+      errorMessage: mapToError(errors, "addressLine1")
     }) }}
 
     {{ govukInput({
@@ -56,7 +41,8 @@
       classes: "govuk-!-width-two-thirds",
       id: "address-town",
       name: "addressTown",
-      autocomplete: "address-level2"
+      autocomplete: "address-level2",
+      errorMessage: mapToError(errors, "addressTown")
     }) }}
 
     {{ govukInput({
@@ -75,7 +61,8 @@
       classes: "govuk-input--width-10",
       id: "address-postcode",
       name: "addressPostcode",
-      autocomplete: "postal-code"
+      autocomplete: "postal-code",
+      errorMessage: mapToError(errors, "addressPostcode")
     }) }}
 
   {% endcall %}
