@@ -1,18 +1,7 @@
-/**
- * Creates an error object with text and href properties.
- * @param {string} errorId
- * @param {string|Object} errorDetails
- * @returns {Object}
- */
-function createErrorObject(errorId, errorDetails) {
-  if (typeof errorDetails === 'string') {
-    return { text: errorDetails, href: `#${errorId}` }
-  } else {
-    return { text: errorDetails.msg, href: `#${errorDetails.id ?? errorId}` }
-  }
-}
+import kebabCase from 'kebab-case'
 
-module.exports = (errors) =>
-  Object.entries(errors).map(([errorId, errorDetails]) =>
-    createErrorObject(errorId, errorDetails)
-  )
+export default (errors) =>
+  errors.map((errorDetails) => ({
+    text: errorDetails.msg,
+    href: `#${kebabCase(errorDetails.path)}`
+  }))

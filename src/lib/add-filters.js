@@ -1,6 +1,6 @@
-const filters = require('./nujucks-filters')
+import * as filters from './nujucks-filters/index.js'
 
-module.exports = (env) => {
+export default (env) => {
   Object.keys(filters).forEach((filterName) => {
     env.addFilter(filterName, filters[filterName])
   })

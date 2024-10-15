@@ -1,27 +1,27 @@
-const express = require('express')
-const nunjucks = require('nunjucks')
-const path = require('path')
-const sass = require('sass')
-const { writeFileSync } = require('fs-extra')
-const { ensureDir } = require('fs-extra')
-const appRouter = require('./src/app/appRouter')
-const addFilters = require('./src/lib/add-filters')
+import express from 'express'
+import nunjucks from 'nunjucks'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import * as sass from 'sass'
+import fsExtra from 'fs-extra'
+import appRouter from './src/app/app-router.js'
+import addFilters from './src/lib/add-filters.js'
+
+const { writeFileSync, ensureDir } = fsExtra
+const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
+const __dirname = path.dirname(__filename) // get the name of the directory
 
 const app = express()
 const port = 3000
 
 // Compile SASS
-const result = sass.compile(
-  path.join(__dirname, 'src/assets/sass/index.scss'),
-  {
-    quietDeps: true,
-    sourceMap: true,
-    sourceMapIncludeSources: true,
-    style: 'expanded'
-  }
-)
+const result = sass.renderSync({
+  file: path.join(__dirname, 'src/assets/sass/index.scss'),
+  outFile: path.join(__dirname, 'public/css/index.css'),
+  outputStyle: 'expanded'
+})
 
-ensureDir(path.join(__dirname, 'public/css'), () => {
+ensureDir(path.join(__dirname, 'public/css')).then(() => {
   writeFileSync(path.join(__dirname, 'public/css/index.css'), result.css)
 })
 
@@ -53,7 +53,7 @@ app.use(
 // Set the view engine to Nunjucks
 app.set('view engine', 'njk')
 
-app.use(express.urlencoded({ extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Define routes

@@ -1,5 +1,5 @@
-const express = require('express')
-const {
+import express from 'express'
+import {
   viewEnterAddress,
   viewEnterName,
   postEnterName,
@@ -8,8 +8,9 @@ const {
   viewEnterAge,
   postEnterAge,
   postEnterAddress
-} = require('./detailsController')
-const { body } = require('express-validator')
+} from './details-controller.js'
+import { body } from 'express-validator'
+
 const router = express.Router()
 
 router
@@ -37,4 +38,4 @@ router.get('/', (req, res) => {
   res.render('index')
 })
 
-module.exports = router
+export default router

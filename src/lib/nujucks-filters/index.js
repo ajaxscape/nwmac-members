@@ -1,3 +1,3 @@
-module.exports = {
-  mapToErrorSummary: require('./map-to-error-summary')
-}
+import mapToErrorSummary from './map-to-error-summary.js'
+
+export { mapToErrorSummary }
