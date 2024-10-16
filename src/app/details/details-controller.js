@@ -23,21 +23,21 @@ export const postSelectMembershipType = (req, res) => {
     })
   }
   storeData(req, res)
-  res.redirect(`/details/${res.locals.data.state}/age`)
+  res.redirect(`/details/${res.locals.data.state}/age-group`)
 }
 
 /**
  * Select Age group
  */
 
-export const viewEnterAge = (req, res) => {
-  res.render('pages/details/age', { locals: res.locals })
+export const viewEnterAgeGroup = (req, res) => {
+  res.render('pages/details/age-group', { locals: res.locals })
 }
 
-export const postEnterAge = (req, res) => {
+export const postEnterAgeGroup = (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return res.render('pages/details/age', {
+    return res.render('pages/details/age-group', {
       locals: res.locals,
       errors: errors.array()
     })

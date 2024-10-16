@@ -5,14 +5,14 @@ import {
   postEnterName,
   viewSelectMembershipType,
   postSelectMembershipType,
-  viewEnterAge,
-  postEnterAge,
+  viewEnterAgeGroup,
+  postEnterAgeGroup,
   postEnterAddress
 } from './details-controller.js'
 
 import {
   validateAddressLine1,
-  validateAge,
+  validateAgeGroup,
   validateFirstName,
   validateLastName,
   validateMembershipType,
@@ -27,7 +27,10 @@ router
   .get(viewSelectMembershipType)
   .post(validateMembershipType(), postSelectMembershipType)
 
-router.route('/age').get(viewEnterAge).post(validateAge(), postEnterAge)
+router
+  .route('/age-group')
+  .get(viewEnterAgeGroup)
+  .post(validateAgeGroup(), postEnterAgeGroup)
 
 router
   .route('/name')

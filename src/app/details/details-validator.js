@@ -24,8 +24,8 @@ export const validateMembershipType = () =>
  * Validate Age
  */
 
-export const validateAge = () =>
-  body('age').trim().notEmpty().withMessage('Age must be selected')
+export const validateAgeGroup = () =>
+  body('ageGroup').trim().notEmpty().withMessage('Age group must be selected')
 
 /**
  * Validate Address
