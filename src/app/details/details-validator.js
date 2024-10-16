@@ -21,7 +21,7 @@ export const validateMembershipType = () =>
     .withMessage('Type of membership must be selected')
 
 /**
- * Validate Age
+ * Validate Age group
  */
 
 export const validateAgeGroup = () =>
