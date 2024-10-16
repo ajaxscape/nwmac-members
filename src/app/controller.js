@@ -1,6 +1,13 @@
 export const setLocals = (req, res, next) => {
-  if (req.body) {
-    res.locals.data = { ...req.body }
+  switch (req.method.toLowerCase()) {
+    case 'get':
+      res.locals.data = { ...res.locals.data, ...req.session }
+      break
+    case 'post':
+      res.locals.data = { ...req.body }
+      break
+    default:
+      break
   }
   next()
 }

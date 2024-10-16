@@ -47,8 +47,8 @@
       id: "town",
       name: "town",
       value: data.town,
-      autocomplete: "city",
-      errorMessage: mapToError(errors, "addressTown")
+      autocomplete: "town",
+      errorMessage: mapToError(errors, "town")
     }) }}
 
     {{ govukInput({
@@ -70,7 +70,7 @@
       name: "postcode",
       value: data.postcode,
       autocomplete: "postal-code",
-      errorMessage: mapToError(errors, "addressPostcode")
+      errorMessage: mapToError(errors, "postcode")
     }) }}
 
   {% endcall %}

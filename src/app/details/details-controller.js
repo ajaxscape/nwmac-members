@@ -1,11 +1,16 @@
 import { validationResult } from 'express-validator'
 
+const storeData = (req, res) => {
+  Object.entries(res.locals.data).forEach(([key, value]) => {
+    req.session[key] = value
+  })
+}
+
 /**
  * Select Membership type
  */
 
 export const viewSelectMembershipType = (req, res) => {
-  res.locals.data.membershipType = req.session.membershipType
   res.render('pages/details/membership-type', { locals: res.locals })
 }
 
@@ -17,7 +22,7 @@ export const postSelectMembershipType = (req, res) => {
       errors: errors.array()
     })
   }
-  req.session.membershipType = res.locals.data.membershipType
+  storeData(req, res)
   res.redirect(`/details/${res.locals.data.state}/age`)
 }
 
@@ -26,7 +31,6 @@ export const postSelectMembershipType = (req, res) => {
  */
 
 export const viewEnterAge = (req, res) => {
-  res.locals.data.age = req.session.age
   res.render('pages/details/age', { locals: res.locals })
 }
 
@@ -38,7 +42,7 @@ export const postEnterAge = (req, res) => {
       errors: errors.array()
     })
   }
-  req.session.age = res.locals.data.age
+  storeData(req, res)
   res.redirect(`/details/${res.locals.data.state}/name`)
 }
 
@@ -47,10 +51,6 @@ export const postEnterAge = (req, res) => {
  */
 
 export const viewEnterName = (req, res) => {
-  res.locals.data.firstName = req.session.firstName
-  res.locals.data.lastName = req.session.lastName
-  res.locals.data.middleName = req.session.middleName
-  res.locals.data.preferedName = req.session.preferedName
   res.render('pages/details/name', { locals: res.locals })
 }
 
@@ -62,10 +62,7 @@ export const postEnterName = (req, res) => {
       errors: errors.array()
     })
   }
-  req.session.firstName = res.locals.data.firstName
-  req.session.lastName = res.locals.data.lastName
-  req.session.middleName = res.locals.data.middleName
-  req.session.preferedName = res.locals.data.preferedName
+  storeData(req, res)
   res.redirect(`/details/${res.locals.data.state}/address`)
 }
 
@@ -74,11 +71,6 @@ export const postEnterName = (req, res) => {
  */
 
 export const viewEnterAddress = (req, res) => {
-  res.locals.data.addressLine1 = req.session.addressLine1
-  res.locals.data.addressLine2 = req.session.addressLine2
-  res.locals.data.town = req.session.town
-  res.locals.data.county = req.session.county
-  res.locals.data.postcode = req.session.postcode
   res.render('pages/details/address', { locals: res.locals })
 }
 
@@ -90,10 +82,6 @@ export const postEnterAddress = (req, res) => {
       errors: errors.array()
     })
   }
-  req.session.addressLine1 = res.locals.data.addressLine1
-  req.session.addressLine2 = res.locals.data.addressLine2
-  req.session.town = res.locals.data.town
-  req.session.county = res.locals.data.county
-  req.session.postcode = res.locals.data.postcode
+  storeData(req, res)
   res.redirect(`/details/${res.locals.data.state}`)
 }
