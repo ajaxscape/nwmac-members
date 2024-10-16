@@ -1,4 +1,5 @@
 import express from 'express'
+import session from 'express-session'
 import nunjucks from 'nunjucks'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -13,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url) // get the resolved path to th
 const __dirname = path.dirname(__filename) // get the name of the directory
 
 const app = express()
-const port = 3000
+const port = process.env.PORT
 
 // Compile SASS
 const result = sass.renderSync({
@@ -55,8 +56,18 @@ app.use(
 // Set the view engine to Nunjucks
 app.set('view engine', 'njk')
 
+// Middleware to enable body
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+// Middleware to enable sessions
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
 
 // Define routes
 app.use('/', appRouter)

@@ -6,7 +6,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle="Enter address" %}
-{% set backLink="/details/" + state + "/name" %}
+{% set backLink="/details/" + data.state + "/name" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
@@ -22,8 +22,9 @@
       label: {
         text: "Address line 1"
       },
-      id: "address-line-1",
+      id: "addressLine1",
       name: "addressLine1",
+      value: data.addressLine1,
       autocomplete: "address-line1",
       errorMessage: mapToError(errors, "addressLine1")
     }) }}
@@ -32,8 +33,9 @@
       label: {
         text: "Address line 2 (optional)"
       },
-      id: "address-line-2",
+      id: "addressLine2",
       name: "addressLine2",
+      value: data.addressLine2,
       autocomplete: "address-line2"
     }) }}
 
@@ -42,9 +44,10 @@
         text: "Town or city"
       },
       classes: "govuk-!-width-two-thirds",
-      id: "address-town",
-      name: "addressTown",
-      autocomplete: "address-level2",
+      id: "town",
+      name: "town",
+      value: data.town,
+      autocomplete: "city",
       errorMessage: mapToError(errors, "addressTown")
     }) }}
 
@@ -53,8 +56,9 @@
         text: "County (optional)"
       },
       classes: "govuk-!-width-two-thirds",
-      id: "address-county",
-      name: "addressCounty"
+      id: "county",
+      name: "county",
+      value: data.county
     }) }}
 
     {{ govukInput({
@@ -62,8 +66,9 @@
         text: "Postcode"
       },
       classes: "govuk-input--width-10",
-      id: "address-postcode",
-      name: "addressPostcode",
+      id: "postcode",
+      name: "postcode",
+      value: data.postcode,
       autocomplete: "postal-code",
       errorMessage: mapToError(errors, "addressPostcode")
     }) }}

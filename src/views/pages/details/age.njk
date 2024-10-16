@@ -5,12 +5,13 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle="Select age" %}
-{% set backLink="/details/" + state + "/membership-type" %}
+{% set backLink="/details/" + data.state + "/membership-type" %}
 
 {% block content %}
     <form method="post" novalidate="novalidate" action="">
         {{ govukRadios({
             name: "age",
+            value: data.age,
             fieldset: {
                 legend: {
                     html: pageTitle,

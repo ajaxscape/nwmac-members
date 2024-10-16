@@ -6,7 +6,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle="Enter name" %}
-{% set backLink="/details/" + state + "/age" %}
+{% set backLink="/details/" + data.state + "/age" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
@@ -22,8 +22,9 @@
       label: {
         text: "First name"
       },
-      id: "first-name",
+      id: "firstName",
       name: "firstName",
+      value: data.firstName,
       autocomplete: "given-name",
       errorMessage: mapToError(errors, "firstName")
     }) }}
@@ -32,8 +33,9 @@
       label: {
         text: "Middle name (optional)"
       },
-      id: "middle-name",
+      id: "middleName",
       name: "middleName",
+      value: data.middleName,
       autocomplete: "middle-name"
     }) }}
 
@@ -42,19 +44,21 @@
         text: "Last name"
       },
       classes: "govuk-!-width-two-thirds",
-      id: "last-name",
+      id: "lastName",
       name: "lastName",
+      value: data.lastName,
       autocomplete: "family-name",
       errorMessage: mapToError(errors, "lastName")
     }) }}
 
     {{ govukInput({
       label: {
-        text: "Preferedname (optional)"
+        text: "Prefered name (optional)"
       },
       classes: "govuk-!-width-two-thirds",
-      id: "prefered-name",
-      name: "preferedName"
+      id: "preferedName",
+      name: "preferedName",
+      value: data.preferedName
     }) }}
 
   {% endcall %}

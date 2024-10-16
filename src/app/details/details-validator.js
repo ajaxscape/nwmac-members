@@ -38,10 +38,7 @@ export const validateAddressLine1 = () =>
     .withMessage('Address line 1 must be entered')
 
 export const validateTown = () =>
-  body('addressTown').trim().notEmpty().withMessage('Town must be entered')
+  body('town').trim().notEmpty().withMessage('Town must be entered')
 
 export const validatePostcode = () =>
-  body('addressPostcode')
-    .trim()
-    .notEmpty()
-    .withMessage('Postcode must be entered')
+  body('postcode').trim().notEmpty().withMessage('Postcode must be entered')

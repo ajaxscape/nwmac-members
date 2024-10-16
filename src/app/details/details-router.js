@@ -23,14 +23,16 @@ import {
 const router = express.Router()
 
 router
-  .route('/name')
-  .get(viewEnterName)
-  .post(validateFirstName(), validateLastName(), postEnterName)
-
-router
   .route('/membership-type')
   .get(viewSelectMembershipType)
   .post(validateMembershipType(), postSelectMembershipType)
+
+router.route('/age').get(viewEnterAge).post(validateAge(), postEnterAge)
+
+router
+  .route('/name')
+  .get(viewEnterName)
+  .post(validateFirstName(), validateLastName(), postEnterName)
 
 router
   .route('/address')
@@ -41,8 +43,6 @@ router
     validatePostcode(),
     postEnterAddress
   )
-
-router.route('/age').get(viewEnterAge).post(validateAge(), postEnterAge)
 
 router.get('/', (req, res) => {
   res.render('index')
