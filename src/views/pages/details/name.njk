@@ -5,8 +5,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% set pageTitle="Enter name" %}
-{% set backLink="/details/" + data.state + "/age-group" %}
+{% set pageTitle="Change name" if edit else "Enter name" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "") %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
@@ -53,18 +53,18 @@
 
     {{ govukInput({
       label: {
-        text: "Prefered name (optional)"
+        text: "Preferred name (optional)"
       },
       classes: "govuk-!-width-two-thirds",
-      id: "preferedName",
-      name: "preferedName",
-      value: data.preferedName
+      id: "preferredName",
+      name: "preferredName",
+      value: data.preferredName
     }) }}
 
   {% endcall %}
 
   {{ govukButton({
-    text: "Save and continue"
+    text: ("Save and return" if edit else "Save and continue")
   }) }}
 
   </form>

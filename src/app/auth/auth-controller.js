@@ -18,5 +18,5 @@ export const postLogin = (req, res) => {
     })
   }
   req.session.email = email
-  res.redirect(`/details/renew/membership-type`)
+  res.redirect(`/details/renew/name`)
 }

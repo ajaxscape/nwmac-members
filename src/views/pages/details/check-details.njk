@@ -1,0 +1,58 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+    {% set baseUrl = "/details/" + data.state + "/edit" %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+
+            <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
+
+            <h2 class="govuk-heading-m">Application details</h2>
+
+            {{ govukSummaryList({
+                classes: "govuk-!-margin-bottom-9",
+                rows: [
+                    {
+                        key: { text: 'Name' },
+                        value: { text: data | formatName },
+                        actions: { items: [{ href: baseUrl + "/name", text: "Change", visuallyHiddenText: "name" }] }
+                    },
+                    {
+                        key: { text: 'Address' },
+                        value: { html: data | formatAddress },
+                        actions: { items: [{ href: baseUrl + "/address", text: "Change", visuallyHiddenText: "address" }] }
+                    },
+                    {
+                        key: { text: 'Membership type' },
+                        value: { text: data.membershipType },
+                        actions: { items: [{ href: baseUrl + "/membership-type", text: "Change", visuallyHiddenText: "membership type" }] }
+                    },
+                    {
+                        key: { text: 'Age group' },
+                        value: { text: data.ageGroup },
+                        actions: { items: [{ href: baseUrl + "/age-group", text: "Change", visuallyHiddenText: "age group" }] }
+                    }
+                ]
+            }) }}
+
+            <h2 class="govuk-heading-m">Now send your application</h2>
+
+            <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+
+            <form action="/form-handler" method="post" novalidate>
+
+                <input type="hidden" name="answers-checked" value="true">
+
+                {{ govukButton({
+                    text: "Accept and send"
+                }) }}
+
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

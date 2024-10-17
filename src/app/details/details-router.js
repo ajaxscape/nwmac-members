@@ -7,7 +7,8 @@ import {
   postSelectMembershipType,
   viewEnterAgeGroup,
   postEnterAgeGroup,
-  postEnterAddress
+  postEnterAddress,
+  viewCheckDetails
 } from './details-controller.js'
 
 import {
@@ -21,6 +22,8 @@ import {
 } from './details-validator.js'
 
 const router = express.Router()
+
+router.use('/edit', router)
 
 router
   .route('/membership-type')
@@ -46,6 +49,8 @@ router
     validatePostcode(),
     postEnterAddress
   )
+
+router.route('/check-details').get(viewCheckDetails)
 
 router.get('/', (req, res) => {
   res.render('index')

@@ -5,7 +5,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle="Select age group" %}
-{% set backLink="/details/" + data.state + "/membership-type" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "/membership-type") %}
 
 {% block content %}
     <form method="post" novalidate="novalidate" action="">
@@ -33,7 +33,7 @@
         }) }}
 
         {{ govukButton({
-            text: "Save and continue"
+            text: ("Save and return" if edit else "Save and continue")
         }) }}
     </form>
 {% endblock %}

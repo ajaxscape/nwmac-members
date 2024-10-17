@@ -6,7 +6,7 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% set pageTitle="Enter address" %}
-{% set backLink="/details/" + data.state + "/name" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "/name") %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
@@ -75,8 +75,8 @@
 
   {% endcall %}
 
-  {{ govukButton({
-    text: "Save and continue"
-  }) }}
+    {{ govukButton({
+      text: ("Save and return" if edit else "Save and continue")
+    }) }}
   </form>
 {% endblock %}

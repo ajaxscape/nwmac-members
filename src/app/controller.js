@@ -25,5 +25,6 @@ export const registerMembershipState = (req, res, next) => {
     return res.status(404)
   }
   res.locals.data.state = state
+  res.locals.edit = req.url.split('/').some((tag) => tag === 'edit')
   next()
 }
