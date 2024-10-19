@@ -57,7 +57,9 @@ export const viewEmailHasBeenSent = (req, res) => {
 export const redirectByToken = (req, res) => {
   const email = retrieveEmailFromToken(req.params.token)
   if (email) {
-    res.redirect(`/auth/email-confirmation`)
+    req.session.email = email
+    // res.redirect(`/auth/email-confirmation`)
+    res.redirect(`/details/join/name`)
   } else {
     res.redirect('/auth/enter-email')
   }
