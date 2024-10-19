@@ -1,0 +1,60 @@
+{% extends "layouts/govuk.njk" %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+
+{% set pageTitle="General Data Protection Regulations (GDPR)" %}
+
+{% block content %}
+    <form method="post" novalidate="novalidate" action="">
+        {% call govukFieldset({
+            legend: {
+                text: pageTitle,
+                classes: "govuk-fieldset__legend--l",
+                isPageHeading: true
+            }
+        }) %}
+
+        <p class="govuk-body">
+            According to advice from the BMFA, because you pay a membership fee, in return for which
+            the Club provides certain services, this forms a contractual arrangement and, under the
+            regulations, the Club has the right to contact you regarding matters of club business. Should
+            the Club wish to contact you regarding other matters e.g. a table-top sale at another club,
+            you have the right to elect to decline to receive such notifications. The spirit of the
+            regulations requires us to assume that you do not wish to receive such communications
+            unless positively notified otherwise.
+            The GDPR also requires NWMAC to have a <a class="govuk-link" href="/intro/private-policy">Privacy Policy</a>, to explain what information is
+            collected and how it is used.
+        </p>
+
+
+        {{ govukRadios({
+            name: "nonClubContact",
+            value: data.nonClubContact,
+            fieldset: {
+                legend: {
+                    html: pageTitle,
+                    classes: "govuk-fieldset__legend--m"
+                }
+            },
+            items: [
+                {
+                    value: "Yes",
+                    text: "yes"
+                },
+                {
+                    value: "No",
+                    text: "no"
+                }
+            ],
+            errorMessage: mapToError(errors, "nonClubContact")
+        }) }}
+
+        {% endcall %}
+
+    {{ govukButton({
+        text: ("Save and return" if edit else "Save and continue")
+    }) }}
+    </form>
+{% endblock %}

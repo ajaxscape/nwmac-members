@@ -59,7 +59,7 @@ export const redirectByToken = (req, res) => {
   if (email) {
     req.session.email = email
     // res.redirect(`/auth/email-confirmation`)
-    res.redirect(`/details/join/name`)
+    res.redirect(`/intro/gdpr`)
   } else {
     res.redirect('/auth/enter-email')
   }
