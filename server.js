@@ -72,11 +72,6 @@ app.use(
 // Define routes
 app.use('/', appRouter)
 
-// Page not found
-app.all('*', (req, res) => {
-  res.status(404).send('<h1>404! Page not found</h1>')
-})
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`)

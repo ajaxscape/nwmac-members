@@ -3,6 +3,7 @@ import { validateEmail } from './auth-validator.js'
 import {
   postEnterEmail,
   postUnknownEmail,
+  redirectByToken,
   viewEmailHasBeenSent,
   viewEnterEmail,
   viewUnknownEmail
@@ -24,6 +25,8 @@ router
 router
   .route('/email-has-been-sent')
   .get(authenticate, setLocals, viewEmailHasBeenSent)
+
+router.route('/tk/:token').get(redirectByToken)
 
 router.get('/', (req, res) => {
   res.redirect(`/auth/enter-email`)

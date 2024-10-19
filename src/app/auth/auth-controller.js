@@ -2,6 +2,10 @@
  * Enter Address
  */
 import { validationResult } from 'express-validator'
+import { nanoid } from 'nanoid'
+
+const currentTokens = []
+const tokenTimeout = 10 * 60 * 1000 // 10 minutes
 
 export const viewEnterEmail = (req, res) => {
   res.render('pages/auth/enter-email', { locals: res.locals })
@@ -43,5 +47,42 @@ export const postUnknownEmail = (req, res) => {
 }
 
 export const viewEmailHasBeenSent = (req, res) => {
-  res.render('pages/auth/email-has-been-sent', { locals: res.locals })
+  const token = nanoid()
+  currentTokens.push({
+    expires: Date.now() + tokenTimeout,
+    token
+  })
+  res.render('pages/auth/email-has-been-sent', {
+    locals: res.locals,
+    emailConfirmationLink: `/auth/tk/${token}`
+  })
+}
+
+export const redirectByToken = (req, res) => {
+  // remove any old tokens
+  while (
+    currentTokens.some((currentToken) => currentToken.expires < Date.now())
+  ) {
+    currentTokens.splice(
+      currentTokens.findIndex(
+        (currentToken) => currentToken.expires < Date.now()
+      ),
+      1
+    )
+  }
+
+  const [currentToken] = currentTokens.splice(
+    currentTokens.findIndex(
+      (currentToken) => currentToken.token === req.params.token
+    )
+  )
+  if (currentToken) {
+    res.redirect(`/auth/email-confirmation`)
+  } else {
+    res.redirect('/auth/enter-email')
+  }
+}
+
+export const viewEmailConfirmation = (req, res) => {
+  res.render('pages/auth/email-confirmation', { locals: res.locals })
 }
