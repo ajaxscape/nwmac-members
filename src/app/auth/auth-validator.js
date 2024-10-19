@@ -12,12 +12,3 @@ export const validateEmail = () =>
     .bail()
     .isEmail()
     .withMessage('Email must be valid')
-
-export const validatePassword = () =>
-  body('password')
-    .trim()
-    .notEmpty()
-    .withMessage('Password must be entered')
-    .bail()
-    .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters')

@@ -5,8 +5,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/password-input/macro.njk" import govukPasswordInput %}
 
-{% set pageTitle="Enter credentials" %}
-{% set backLink="/details/" + data.state + "/name" %}
+{% set pageTitle="Sorry, we have not recognised your email address" %}
+{% set backLink="/auth/enter-email" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
@@ -18,32 +18,18 @@
     }
   }) %}
 
-    {{ govukInput({
-      label: {
-        text: "Email address"
-      },
-      classes: "govuk-!-width-two-thirds",
-      id: "email",
-      name: "email",
-      value: email,
-      autocomplete: "email",
-      errorMessage: mapToError(errors, "email")
-    }) }}
+    <p class="govuk-body">
+      If you are <strong>already a member</strong>, you may not have entered the email address we have for you.  If this is the case, please press back and try entering the email address again.
+    </p>
 
-    {{ govukPasswordInput({
-      label: {
-        text: "Password"
-      },
-      classes: "govuk-!-width-two-thirds",
-      id: "password-input",
-      name: "password",
-      errorMessage: mapToError(errors, "password")
-    }) }}
+    <p class="govuk-body">
+      If you are <strong>not a member</strong> and would like to apply for membership, please click the apply for membership button below.
+    </p>
 
   {% endcall %}
 
   {{ govukButton({
-    text: "Login"
+    text: "Apply for membership"
   }) }}
   </form>
 {% endblock %}
