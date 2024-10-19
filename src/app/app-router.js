@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 
 // Page not found
 router.all('*', (req, res) => {
-  res.status(404).send('<h1>404! Page not found</h1>')
+  res.status(404).render('pages/error/404')
 })
 
 export default router
