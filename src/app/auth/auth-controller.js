@@ -6,12 +6,13 @@ import {
   generateToken,
   retrieveEmailFromToken
 } from '../../lib/utils/current-tokens.js'
+import { identifyEmail } from '../../lib/utils/identify-email.js'
 
 export const viewEnterEmail = (req, res) => {
   res.render('pages/auth/enter-email', { locals: res.locals })
 }
 
-export const postEnterEmail = (req, res) => {
+export const postEnterEmail = async (req, res) => {
   const { email } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -25,7 +26,7 @@ export const postEnterEmail = (req, res) => {
   req.session.email = email
 
   // ToDo Validate email here
-  const emailIsRecognised = email === 'ben@surgison.net'
+  const emailIsRecognised = await identifyEmail(email)
 
   if (emailIsRecognised) {
     res.redirect('/auth/email-has-been-sent')

@@ -18,5 +18,5 @@ export const postGDPR = (req, res) => {
   }
   storeData(req, res)
   // ToDo sortout state
-  res.redirect('/details/join/name', res)
+  res.redirect('/details/join/name')
 }
