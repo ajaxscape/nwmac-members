@@ -51,11 +51,11 @@ export const validateMobileNumber = () =>
 
 export const validateBMFANumber = () =>
   body('bmfaNumber')
+    .if(body('bmfaThroughClub').equals('no'))
     .trim()
-    .if(body('bmfaThroughClub').equals('yes'))
     .notEmpty()
     .withMessage(
-      'BMFA Number must be entered when registering through the club'
+      'BMFA Number must be entered when not registering through the club'
     )
 
 export const validateBMFAThroughClub = () =>
