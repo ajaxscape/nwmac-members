@@ -27,6 +27,11 @@
                         actions: { items: [{ href: baseUrl + "/address", text: "Change", visuallyHiddenText: "address" }] }
                     },
                     {
+                        key: { text: 'Phone numbers' },
+                        value: { html: data | formatPhoneNumbers },
+                        actions: { items: [{ href: baseUrl + "/phone-numbers", text: "Change", visuallyHiddenText: "phone numbers" }] }
+                    },
+                    {
                         key: { text: 'Membership type' },
                         value: { text: data.membershipType },
                         actions: { items: [{ href: baseUrl + "/membership-type", text: "Change", visuallyHiddenText: "membership type" }] }
@@ -35,6 +40,11 @@
                         key: { text: 'Age group' },
                         value: { text: data.ageGroup },
                         actions: { items: [{ href: baseUrl + "/age-group", text: "Change", visuallyHiddenText: "age group" }] }
+                    },
+                    {
+                        key: { text: 'BMFA membership' },
+                        value: { html: data | formatBmfaMembership },
+                        actions: { items: [{ href: baseUrl + "/bmfa-membership", text: "Change", visuallyHiddenText: "bmfa membership" }] }
                     }
                 ]
             }) }}

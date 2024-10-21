@@ -8,15 +8,22 @@ import {
   viewEnterAgeGroup,
   postEnterAgeGroup,
   postEnterAddress,
-  viewCheckDetails
+  viewCheckDetails,
+  viewEnterPhoneNumbers,
+  postEnterPhoneNumbers,
+  viewEnterBMFAMembership,
+  postEnterBMFAMembership
 } from './details-controller.js'
 
 import {
   validateAddressLine1,
   validateAgeGroup,
+  validateBMFANumber,
+  validateBMFAThroughClub,
   validateFirstName,
   validateLastName,
   validateMembershipType,
+  validateMobileNumber,
   validatePostcode,
   validateTown
 } from './details-validator.js'
@@ -48,6 +55,20 @@ router
     validateTown(),
     validatePostcode(),
     postEnterAddress
+  )
+
+router
+  .route('/phone-numbers')
+  .get(viewEnterPhoneNumbers)
+  .post(validateMobileNumber(), postEnterPhoneNumbers)
+
+router
+  .route('/bmfa-membership')
+  .get(viewEnterBMFAMembership)
+  .post(
+    validateBMFANumber(),
+    validateBMFAThroughClub(),
+    postEnterBMFAMembership
   )
 
 router.route('/check-details').get(viewCheckDetails)

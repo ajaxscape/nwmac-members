@@ -1,0 +1,59 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle="Change BMFA number" if edit else "Enter BMFA number" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "/age-group") %}
+
+{% block content %}
+  <form method="post" novalidate="novalidate" action="">
+  {% call govukFieldset({
+    legend: {
+      text: pageTitle,
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+    }
+  }) %}
+
+    {{ govukRadios({
+      name: "bmfaThroughClub",
+      value: data.bmfaThroughClub,
+      fieldset: {
+        legend: {
+          text: 'BMFA membership registered through the club.',
+          classes: "govuk-fieldset__legend--m"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "yes"
+        },
+        {
+          value: "No",
+          text: "no"
+        }
+      ],
+      errorMessage: mapToError(errors, "nonClubContact")
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Land line (optional)"
+      },
+      id: "bmfaNumber",
+      name: "bmfaNumber",
+      value: data.bmfaNumber
+    }) }}
+
+  {% endcall %}
+
+  {{ govukButton({
+    text: ("Save and return" if edit else "Save and continue")
+  }) }}
+
+  </form>
+{% endblock %}

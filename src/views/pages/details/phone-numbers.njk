@@ -1,0 +1,48 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle="Change phone number" if edit else "Enter phone number" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "/address") %}
+
+{% block content %}
+  <form method="post" novalidate="novalidate" action="">
+  {% call govukFieldset({
+    legend: {
+      text: pageTitle,
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+    }
+  }) %}
+
+    {{ govukInput({
+      label: {
+        text: "Mobile number"
+      },
+      id: "mobileNumber",
+      name: "mobileNumber",
+      value: data.mobileNumber,
+      autocomplete: "mobile-number",
+      errorMessage: mapToError(errors, "mobileNumber")
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Land line (optional)"
+      },
+      id: "landLine",
+      name: "landLine",
+      value: data.landLine,
+      autocomplete: "land-line"
+    }) }}
+
+  {% endcall %}
+
+  {{ govukButton({
+    text: ("Save and return" if edit else "Save and continue")
+  }) }}
+
+  </form>
+{% endblock %}

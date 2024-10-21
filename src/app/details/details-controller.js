@@ -41,6 +41,26 @@ export const postEnterAddress = (req, res) => {
     })
   }
   storeData(req, res)
+  res.redirect(redirectUrl('phone-numbers', res))
+}
+
+/**
+ * Enter Phone
+ */
+
+export const viewEnterPhoneNumbers = (req, res) => {
+  res.render('pages/details/phone-numbers', { locals: res.locals })
+}
+
+export const postEnterPhoneNumbers = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/phone-numbers', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
+  storeData(req, res)
   res.redirect(redirectUrl('membership-type', res))
 }
 
@@ -76,6 +96,26 @@ export const postEnterAgeGroup = (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.render('pages/details/age-group', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
+  storeData(req, res)
+  res.redirect(redirectUrl('bmfa-membership', res))
+}
+
+/**
+ * Select BMFA membership
+ */
+
+export const viewEnterBMFAMembership = (req, res) => {
+  res.render('pages/details/bmfa-membership', { locals: res.locals })
+}
+
+export const postEnterBMFAMembership = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/bmfa-membership', {
       locals: res.locals,
       errors: errors.array()
     })

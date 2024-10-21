@@ -42,3 +42,24 @@ export const validateTown = () =>
 
 export const validatePostcode = () =>
   body('postcode').trim().notEmpty().withMessage('Postcode must be entered')
+
+export const validateMobileNumber = () =>
+  body('mobileNumber')
+    .trim()
+    .notEmpty()
+    .withMessage('Mobile number must be entered')
+
+export const validateBMFANumber = () =>
+  body('bmfaNumber')
+    .trim()
+    .if(body('bmfaThroughClub').equals('yes'))
+    .notEmpty()
+    .withMessage(
+      'BMFA Number must be entered when registering through the club'
+    )
+
+export const validateBMFAThroughClub = () =>
+  body('bmfaThroughClub')
+    .trim()
+    .notEmpty()
+    .withMessage('Yes or No must be selected')
