@@ -1,22 +1,48 @@
 {% extends "layouts/govuk.njk" %}
 
-{% set pageTitle="Check your email" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle="Enter the code we sent to your email address" %}
 
 {% block content %}
-    <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+    <form method="post" novalidate="novalidate" action="">
+        {% call govukFieldset({
+            legend: {
+                text: pageTitle,
+                classes: "govuk-fieldset__legend--l",
+                isPageHeading: true
+            }
+        }) %}
 
-    <p class="govuk-body">
-      We have just emailed <strong>{{ data.email }}</strong> with a link to continue your application.
-    </p>
+            <p class="govuk-body">We’ve emailed {{ data.email }} with a security code.</p>
 
-    <p class="govuk-body">
-      Make sure the email has <strong>NWMAC Membership Link</strong> in the title before clicking the link.
-    </p>
+            {{ govukInput({
+                legend: {
+                    text: pageTitle,
+                    classes: "govuk-fieldset__legend--l",
+                    isPageHeading: true
+                },
+                id: "security-code",
+                name: "securityCode",
+                type: "text",
+                autocomplete: "one-time-code",
+                classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
+                inputmode: "numeric",
+                attributes: { maxlength: 6 }
+            }) }}
 
-    <p class="govuk-body">
-      If you can't find the email, it may be in your spam folder.  If you still cannot find it, try entering your email again <a class="govuk-link" href="/auth/enter-email">here</a>
-    </p>
+        {% endcall %}
 
-{# ToDo: Remove prior to go live#}
-    <p class="govuk-body"><a href="{{ emailConfirmationLink }}" class="govuk-link">Test email confirmation link</a></p>
+        {{ govukButton({
+            text: "Continue"
+        }) }}
+
+        <h2 class="govuk-heading-m">If you can't find the email</h2>
+
+        <p class="govuk-body">
+            Please check your spam folder.  If you still cannot find it, try <a class="govuk-link" href="/auth/enter-email">entering your email again</a>.
+        </p>
+    </form>
 {% endblock %}

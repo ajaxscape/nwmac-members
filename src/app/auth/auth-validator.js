@@ -12,3 +12,13 @@ export const validateEmail = () =>
     .bail()
     .isEmail()
     .withMessage('Email must be valid')
+
+/**
+ * Validate Login
+ */
+
+export const validateSecurityCode = () =>
+  body('securityCode')
+    .trim()
+    .notEmpty()
+    .withMessage('Security code must be entered')
