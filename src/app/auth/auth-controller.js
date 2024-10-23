@@ -7,8 +7,9 @@ import {
   retrieveEmailFromToken
 } from '../../lib/utils/current-tokens.js'
 import { identifyEmail } from '../../lib/utils/identify-email.js'
+import sendEmail from '../../lib/utils/send-email.js'
 
-export const viewEnterEmail = (req, res) => {
+export const viewEnterEmail = (_, res) => {
   res.render('pages/auth/enter-email', { locals: res.locals })
 }
 
@@ -29,7 +30,7 @@ export const postEnterEmail = async (req, res) => {
   const emailIsRecognised = await identifyEmail(email)
 
   if (emailIsRecognised) {
-    res.redirect('/auth/email-has-been-sent')
+    res.redirect('/auth/send-confirmation-email')
   } else {
     res.redirect('/auth/unknown-email')
   }
@@ -44,15 +45,50 @@ export const viewUnknownEmail = (req, res) => {
 }
 
 export const postUnknownEmail = (req, res) => {
-  res.redirect('/auth/email-has-been-sent')
+  res.redirect('/auth/send-confirmation-email')
 }
 
-export const viewEmailHasBeenSent = (req, res) => {
+export const sendConfirmationEmail = async (req, res) => {
+  const recipient = { email: req.session.email, name: 'Club member' }
+  req.session.securityCode =
+    Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
+  const success = await sendEmail({
+    subject: 'North Wilts Model Aircraft Club Security Token',
+    content: `
+    Dear ${recipient.name},<br>
+    Your one time security code is <strong>${req.session.securityCode}</strong>.<br>
+    Kind regards, <br>
+    NWMAC club secretary
+    `,
+    recipients: [recipient]
+  })
+  if (success) {
+    res.redirect('/auth/security-code')
+  } else {
+    res.redirect('/auth/enter-email')
+  }
+}
+
+export const viewSecurityCode = (req, res) => {
   const token = generateToken(req.session.email)
-  res.render('pages/auth/email-has-been-sent', {
+  res.render('pages/auth/security-code', {
     locals: res.locals,
     emailConfirmationLink: `/auth/tk/${token}`
   })
+}
+
+export const postSecurityCode = (req, res) => {
+  const { securityCode } = req.body
+  const isValidCode = securityCode === req.session.securityCode.toString()
+  if (!isValidCode) {
+    return res.render('pages/auth/security-code', {
+      locals: res.locals,
+      errors: [
+        { id: securityCode, msg: 'Invalid security code. Please try again.' }
+      ]
+    })
+  }
+  res.redirect(`/intro/gdpr`)
 }
 
 export const redirectByToken = (req, res) => {

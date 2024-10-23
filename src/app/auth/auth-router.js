@@ -2,10 +2,12 @@ import express from 'express'
 import { validateEmail } from './auth-validator.js'
 import {
   postEnterEmail,
+  postSecurityCode,
   postUnknownEmail,
   redirectByToken,
-  viewEmailHasBeenSent,
+  sendConfirmationEmail,
   viewEnterEmail,
+  viewSecurityCode,
   viewUnknownEmail
 } from './auth-controller.js'
 import { authenticate, setLocals } from '../controller.js'
@@ -23,8 +25,13 @@ router
   .post(authenticate, setLocals, postUnknownEmail)
 
 router
-  .route('/email-has-been-sent')
-  .get(authenticate, setLocals, viewEmailHasBeenSent)
+  .route('/send-confirmation-email')
+  .get(authenticate, setLocals, sendConfirmationEmail)
+
+router
+  .route('/security-code')
+  .get(authenticate, setLocals, viewSecurityCode)
+  .post(authenticate, setLocals, postSecurityCode)
 
 router.route('/tk/:token').get(redirectByToken)
 
