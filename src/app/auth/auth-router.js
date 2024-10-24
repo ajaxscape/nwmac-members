@@ -1,13 +1,15 @@
 import express from 'express'
-import { validateEmail } from './auth-validator.js'
+import { validateEmail, validateTrustBrowser } from './auth-validator.js'
 import {
   postEnterEmail,
   postSecurityCode,
+  postTrustBrowser,
   postUnknownEmail,
   redirectByToken,
   sendConfirmationEmail,
   viewEnterEmail,
   viewSecurityCode,
+  viewTrustBrowser,
   viewUnknownEmail
 } from './auth-controller.js'
 import { authenticate, setLocals } from '../controller.js'
@@ -32,6 +34,11 @@ router
   .route('/security-code')
   .get(authenticate, setLocals, viewSecurityCode)
   .post(authenticate, setLocals, postSecurityCode)
+
+router
+  .route('/trust-browser')
+  .get(authenticate, setLocals, viewTrustBrowser)
+  .post(authenticate, setLocals, validateTrustBrowser(), postTrustBrowser)
 
 router.route('/tk/:token').get(redirectByToken)
 

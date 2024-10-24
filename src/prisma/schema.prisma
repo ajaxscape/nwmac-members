@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id               Int      @id @default(autoincrement())
+  firstName        String?  @map("first_name") @db.VarChar(30)
+  middleName       String?  @map("middle_name") @db.VarChar(30)
+  lastName         String?  @map("last_name") @db.VarChar(30)
+  preferredName    String?  @map("preferred_name") @db.VarChar(30)
+  email            String?  @unique
+  mobile           String?  @db.VarChar(30)
+  membershipNumber Int?     @map("membership_number")
+  bmfaNumber       Int?     @map("bmfa_number")
+  flyerId          Int?     @map("flyer_id")
+  operatorId       Int?     @map("operator_id")
+  addressId        Int?     @map("address_id")
+  nonClubContact   String?  @map("non_club_contact")
+  createdAt        DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
+  updatedAt        DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
+  address          Address? @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
+
+  @@map("member")
+}
+
+model Address {
+  id           Int      @id @default(autoincrement())
+  addressLine1 String?  @map("address_line_1") @db.VarChar(50)
+  addressLine2 String?  @map("address_line_2") @db.VarChar(50)
+  town         String?  @db.VarChar(30)
+  county       String?  @db.VarChar(30)
+  postcode     String?  @db.VarChar(10)
+  createdAt    DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
+  Member       Member[] @relation(map: "FK_member_address_id")
+
+  @@map("address")
+}

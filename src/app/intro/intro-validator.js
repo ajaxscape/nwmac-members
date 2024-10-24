@@ -1,6 +1,3 @@
-/**
- * Validate Age group
- */
 import { body } from 'express-validator'
 
 export const validateNonClubContact = () =>

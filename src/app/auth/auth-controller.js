@@ -8,9 +8,16 @@ import {
 } from '../../lib/utils/current-tokens.js'
 import { identifyEmail } from '../../lib/utils/identify-email.js'
 import sendEmail from '../../lib/utils/send-email.js'
+import { storeData } from '../../lib/utils/store-session-data.js'
 
-export const viewEnterEmail = (_, res) => {
-  res.render('pages/auth/enter-email', { locals: res.locals })
+export const viewEnterEmail = (req, res) => {
+  const email = req.signedCookies.email
+  if (email) {
+    req.session.email = email
+    res.redirect('/intro/gdpr')
+  } else {
+    res.render('pages/auth/enter-email', { locals: res.locals })
+  }
 }
 
 export const postEnterEmail = async (req, res) => {
@@ -52,16 +59,18 @@ export const sendConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: 'Club member' }
   req.session.securityCode =
     Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
-  const success = await sendEmail({
-    subject: 'North Wilts Model Aircraft Club Security Token',
-    content: `
+  const success =
+    process.env.SKIP_SECURITY_CODE_EMAIL ??
+    (await sendEmail({
+      subject: 'North Wilts Model Aircraft Club Security Token',
+      content: `
     Dear ${recipient.name},<br>
     Your one time security code is <strong>${req.session.securityCode}</strong>.<br>
     Kind regards, <br>
     NWMAC club secretary
     `,
-    recipients: [recipient]
-  })
+      recipients: [recipient]
+    }))
   if (success) {
     res.redirect('/auth/security-code')
   } else {
@@ -73,7 +82,10 @@ export const viewSecurityCode = (req, res) => {
   const token = generateToken(req.session.email)
   res.render('pages/auth/security-code', {
     locals: res.locals,
-    emailConfirmationLink: `/auth/tk/${token}`
+    emailConfirmationLink: `/auth/tk/${token}`,
+    securityCode: process.env.SKIP_SECURITY_CODE_EMAIL
+      ? req.session.securityCode
+      : ''
   })
 }
 
@@ -88,7 +100,33 @@ export const postSecurityCode = (req, res) => {
       ]
     })
   }
-  res.redirect(`/intro/gdpr`)
+  res.redirect(`/auth/trust-browser`)
+}
+
+/**
+ * Select Trust browser choice
+ */
+
+export const viewTrustBrowser = (req, res) => {
+  res.render('pages/auth/trust-browser', { locals: res.locals })
+}
+
+export const postTrustBrowser = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/auth/trust-browser', {
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
+  storeData(req, res)
+
+  if (req.body.trustBrowser === 'yes') {
+    res.cookie('email', req.session.email, { signed: true })
+  }
+
+  // ToDo sortout state
+  res.redirect('/intro/gdpr')
 }
 
 export const redirectByToken = (req, res) => {

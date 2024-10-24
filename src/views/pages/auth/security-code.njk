@@ -35,6 +35,10 @@
 
         {% endcall %}
 
+        {% if securityCode %}
+            <p>Test security code: <strong>{{ securityCode }}</strong></p>
+        {% endif %}
+
         {{ govukButton({
             text: "Continue"
         }) }}

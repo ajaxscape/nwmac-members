@@ -1,8 +1,9 @@
+import { validationResult } from 'express-validator'
+import { storeData } from '../../lib/utils/store-session-data.js'
+
 /**
  * Select GDPR choice
  */
-import { validationResult } from 'express-validator'
-import { storeData } from '../../lib/utils/store-session-data.js'
 
 export const viewGDPR = (req, res) => {
   res.render('pages/intro/gdpr', { locals: res.locals })

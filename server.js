@@ -8,6 +8,7 @@ import fsExtra from 'fs-extra'
 import appRouter from './src/app/app-router.js'
 import addFilters from './src/lib/add-filters.js'
 import addFunctions from './src/lib/add-functions.js'
+import cookieParser from 'cookie-parser'
 
 const { writeFileSync, ensureDir } = fsExtra
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
@@ -68,6 +69,9 @@ app.use(
     saveUninitialized: true
   })
 )
+
+// Middleware to enable cookies
+app.use(cookieParser(process.env.SESSION_SECRET))
 
 // Define routes
 app.use('/', appRouter)

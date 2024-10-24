@@ -22,3 +22,9 @@ export const validateSecurityCode = () =>
     .trim()
     .notEmpty()
     .withMessage('Security code must be entered')
+
+export const validateTrustBrowser = () =>
+  body('trustBrowser')
+    .trim()
+    .notEmpty()
+    .withMessage('Yes or No must be selected')

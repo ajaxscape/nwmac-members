@@ -1,0 +1,39 @@
+{% extends "layouts/govuk.njk" %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+
+{% set pageTitle="Trust your browser" %}
+
+{% block content %}
+    <form method="post" novalidate="novalidate" action="">
+        {{ govukRadios({
+            name: "trustBrowser",
+            value: data.nonClubContact,
+            fieldset: {
+                legend: {
+                    text: pageTitle,
+                    classes: "govuk-fieldset__legend--l",
+                    isPageHeading: true
+                }
+            },
+            hint: {text: 'Would you like to skip entering a security code on this browser in future?'},
+            items: [
+                {
+                    value: "yes",
+                    text: "Yes"
+                },
+                {
+                    value: "No",
+                    text: "No"
+                }
+            ],
+            errorMessage: mapToError(errors, "trustBrowser")
+        }) }}
+
+        {{ govukButton({
+            text: ("Save and continue")
+        }) }}
+    </form>
+{% endblock %}
