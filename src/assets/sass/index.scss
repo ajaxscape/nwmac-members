@@ -1,1 +1,7 @@
 @import '../../../node_modules/govuk-frontend/dist/govuk/all.scss';
+
+.nwmac-caa-form {
+  .govuk-form-group {
+    display: inline-block;
+  }
+}

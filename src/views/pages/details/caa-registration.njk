@@ -1,6 +1,7 @@
 {% extends "layouts/govuk.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -9,7 +10,7 @@
 {% set backLink="/details/" + data.state + ("/check-details" if edit else "/bmfa-membership") %}
 
 {% block content %}
-  <form method="post" novalidate="novalidate" action="">
+  <form method="post" novalidate="novalidate" action="" autocapitalize="characters" class="nwmac-caa-form">
   {% call govukFieldset({
     legend: {
       text: pageTitle,
@@ -19,24 +20,36 @@
   }) %}
 
     {% if operatorIdRequired %}
-      {{ govukInput({
-        label: {
-          text: "Operator ID"
-        },
-        id: "operatorId",
-        name: "operatorId",
-        value: data.operatorId
-      }) }}
+      <div class="govuk-!-width-full">
+          {{ govukLabel ({
+              text: "Operator ID"
+          }) }}
+          <p class="govuk-heading-s govuk-!-display-inline-block">GBR-OP-</p>
+          {{ govukInput({
+            id: "operatorId",
+            name: "operatorId",
+            value: data.operatorId,
+            classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
+            inputmode: "alphanumeric",
+            attributes: { maxlength: 12 }
+          }) }}
+      </div>
     {% endif %}
 
-    {{ govukInput({
-      label: {
-        text: "Flyer ID"
-      },
-      id: "flyerId",
-      name: "flyerId",
-      value: data.operatorId
-    }) }}
+      <div class="govuk-!-width-full">
+      {{ govukLabel ({
+          text: "Flyer ID"
+      }) }}
+      <p class="govuk-heading-s govuk-!-display-inline-block">GBR-RP-</p>
+        {{ govukInput({
+          id: "flyerId",
+          name: "flyerId",
+            value: data.flyerId,
+            classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
+            inputmode: "alphanumeric",
+            attributes: { maxlength: 12 }
+        }) }}
+      </div>
 
   {% endcall %}
 

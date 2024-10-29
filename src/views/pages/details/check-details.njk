@@ -49,7 +49,8 @@
                     {
                         key: { text: 'Operator ID' },
                         value: { html: data | formatOperatorId},
-                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] }
+                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] },
+                        classes: '' if data.ageGroup === 'senior' else 'govuk-!-display-none'
                     },
                     {
                         key: { text: 'Flyer ID' },

@@ -27,6 +27,7 @@
                 id: "security-code",
                 name: "securityCode",
                 type: "text",
+                value: data.securityCode,
                 autocomplete: "one-time-code",
                 classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
                 inputmode: "numeric",
@@ -34,10 +35,6 @@
             }) }}
 
         {% endcall %}
-
-        {% if securityCode %}
-            <p>Test security code: <strong>{{ securityCode }}</strong></p>
-        {% endif %}
 
         {{ govukButton({
             text: "Continue"

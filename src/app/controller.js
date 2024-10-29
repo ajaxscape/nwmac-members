@@ -9,6 +9,12 @@ export const setLocals = (req, res, next) => {
     default:
       break
   }
+  if (res.locals.data.operatorId) {
+    res.locals.data.operatorId = res.locals.data.operatorId.toUpperCase()
+  }
+  if (res.locals.data.flyerId) {
+    res.locals.data.flyerId = res.locals.data.flyerId.toUpperCase()
+  }
   next()
 }
 
