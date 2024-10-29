@@ -80,9 +80,6 @@ export const sendConfirmationEmail = async (req, res) => {
 
 export const viewSecurityCode = (req, res) => {
   const token = generateToken(req.session.email)
-  if (!res.locals.data.securityCode && process.env.SKIP_SECURITY_CODE_EMAIL) {
-    res.locals.data.securityCode = req.session.securityCode
-  }
   res.render('pages/auth/security-code', {
     locals: res.locals,
     emailConfirmationLink: `/auth/tk/${token}`,
