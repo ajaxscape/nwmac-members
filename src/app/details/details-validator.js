@@ -49,27 +49,28 @@ export const validateMobileNumber = () =>
     .notEmpty()
     .withMessage('Mobile number must be entered')
 
-export const validateBMFANumber = () =>
-  body('bmfaNumber')
-    .if(body('bmfaThroughClub').equals('no'))
-    .trim()
-    .notEmpty()
-    .withMessage(
-      'BMFA Number must be entered when not registering through the club'
-    )
-
 export const validateBMFAThroughClub = () =>
   body('bmfaThroughClub')
     .trim()
     .notEmpty()
     .withMessage('Yes or No must be selected')
 
+export const validateBMFANumber = () =>
+  body('bmfaNumber')
+    .if(body('bmfaThroughClub').equals('no'))
+    .trim()
+    .isLength({ min: 1, max: 6 })
+    .withMessage('BMFA Number must be entered and contain up to 6 digits')
+
 export const validateOperatorId = () =>
   body('operatorId')
     .if(body('operatorIdRequired').notEmpty())
     .trim()
-    .notEmpty()
-    .withMessage('Operator ID must be entered')
+    .isLength({ min: 12, max: 12 })
+    .withMessage('Operator ID must be 12 characters long')
 
 export const validateFlyerId = () =>
-  body('flyerId').trim().notEmpty().withMessage('Flyer ID must be entered')
+  body('flyerId')
+    .trim()
+    .isLength({ min: 12, max: 12 })
+    .withMessage('Flyer ID must be 12 characters long')
