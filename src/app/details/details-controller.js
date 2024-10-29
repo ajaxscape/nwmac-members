@@ -121,6 +121,30 @@ export const postEnterBMFAMembership = (req, res) => {
     })
   }
   storeData(req, res)
+  res.redirect(redirectUrl('caa-registration', res))
+}
+
+/**
+ * Enter CAA registration
+ */
+
+export const viewEnterCAARegistration = (req, res) => {
+  res.render('pages/details/caa-registration', {
+    operatorIdRequired: req.session.ageGroup === 'senior',
+    locals: res.locals
+  })
+}
+
+export const postEnterCAARegistration = (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.render('pages/details/caa-registration', {
+      operatorIdRequired: req.session.ageGroup === 'senior',
+      locals: res.locals,
+      errors: errors.array()
+    })
+  }
+  storeData(req, res)
   res.redirect(redirectUrl('check-details', res))
 }
 

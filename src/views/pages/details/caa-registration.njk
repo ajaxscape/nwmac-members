@@ -1,0 +1,48 @@
+{% extends "layouts/govuk.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle="Change CAA Operator ID or Flyer ID" if edit else "Enter CAA Operator ID and Flyer ID" %}
+{% set backLink="/details/" + data.state + ("/check-details" if edit else "/bmfa-membership") %}
+
+{% block content %}
+  <form method="post" novalidate="novalidate" action="">
+  {% call govukFieldset({
+    legend: {
+      text: pageTitle,
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+    }
+  }) %}
+
+    {% if operatorIdRequired %}
+      {{ govukInput({
+        label: {
+          text: "Operator ID"
+        },
+        id: "operatorId",
+        name: "operatorId",
+        value: data.operatorId
+      }) }}
+    {% endif %}
+
+    {{ govukInput({
+      label: {
+        text: "Flyer ID"
+      },
+      id: "flyerId",
+      name: "flyerId",
+      value: data.operatorId
+    }) }}
+
+  {% endcall %}
+
+  {{ govukButton({
+    text: ("Save and return" if edit else "Save and continue")
+  }) }}
+
+  </form>
+{% endblock %}

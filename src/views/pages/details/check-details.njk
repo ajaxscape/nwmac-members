@@ -45,6 +45,16 @@
                         key: { text: 'BMFA membership' },
                         value: { html: data | formatBmfaMembership },
                         actions: { items: [{ href: baseUrl + "/bmfa-membership", text: "Change", visuallyHiddenText: "bmfa membership" }] }
+                    },
+                    {
+                        key: { text: 'Operator ID' },
+                        value: { html: data | formatOperatorId},
+                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] }
+                    },
+                    {
+                        key: { text: 'Flyer ID' },
+                        value: { html: data | formatFlyerId },
+                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] }
                     }
                 ]
             }) }}

@@ -12,7 +12,9 @@ import {
   viewEnterPhoneNumbers,
   postEnterPhoneNumbers,
   viewEnterBMFAMembership,
-  postEnterBMFAMembership
+  postEnterBMFAMembership,
+  viewEnterCAARegistration,
+  postEnterCAARegistration
 } from './details-controller.js'
 
 import {
@@ -21,9 +23,11 @@ import {
   validateBMFANumber,
   validateBMFAThroughClub,
   validateFirstName,
+  validateFlyerId,
   validateLastName,
   validateMembershipType,
   validateMobileNumber,
+  validateOperatorId,
   validatePostcode,
   validateTown
 } from './details-validator.js'
@@ -70,6 +74,11 @@ router
     validateBMFAThroughClub(),
     postEnterBMFAMembership
   )
+
+router
+  .route('/caa-registration')
+  .get(viewEnterCAARegistration)
+  .post(validateOperatorId(), validateFlyerId(), postEnterCAARegistration)
 
 router.route('/check-details').get(viewCheckDetails)
 

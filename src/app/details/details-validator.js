@@ -63,3 +63,13 @@ export const validateBMFAThroughClub = () =>
     .trim()
     .notEmpty()
     .withMessage('Yes or No must be selected')
+
+export const validateOperatorId = () =>
+  body('operatorId')
+    .if(body('operatorIdRequired').notEmpty())
+    .trim()
+    .notEmpty()
+    .withMessage('Operator ID must be entered')
+
+export const validateFlyerId = () =>
+  body('flyerId').trim().notEmpty().withMessage('Flyer ID must be entered')
