@@ -14,7 +14,9 @@ import {
   viewEnterBMFAMembership,
   postEnterBMFAMembership,
   viewEnterCAARegistration,
-  postEnterCAARegistration
+  postEnterCAARegistration,
+  viewConfirmation,
+  postCheckDetails
 } from './details-controller.js'
 
 import {
@@ -80,7 +82,8 @@ router
   .get(viewEnterCAARegistration)
   .post(validateOperatorId(), validateFlyerId(), postEnterCAARegistration)
 
-router.route('/check-details').get(viewCheckDetails)
+router.route('/check-details').get(viewCheckDetails).post(postCheckDetails)
+router.route('/confirmation').get(viewConfirmation)
 
 router.get('/', (req, res) => {
   res.render('index')

@@ -156,3 +156,15 @@ export const postEnterCAARegistration = (req, res) => {
 export const viewCheckDetails = (req, res) => {
   res.render('pages/details/check-details', { locals: res.locals })
 }
+
+export const postCheckDetails = (req, res) => {
+  res.redirect(redirectUrl('confirmation', res))
+}
+/**
+ * Confirmation
+ */
+
+// details-controller.js
+export const viewConfirmation = (req, res) => {
+  res.render('pages/details/confirmation', { locals: res.locals })
+}
