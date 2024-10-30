@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session'
+import robots from 'express-robots-txt'
 import nunjucks from 'nunjucks'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -35,6 +36,14 @@ const env = nunjucks.configure(
     autoescape: true,
     express: app
   }
+)
+
+app.use(
+  robots({
+    UserAgent: '*',
+    Disallow: '/',
+    CrawlDelay: '5'
+  })
 )
 
 addFilters(env)
