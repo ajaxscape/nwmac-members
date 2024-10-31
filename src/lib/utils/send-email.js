@@ -1,32 +1,45 @@
-import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend'
-
-const mailerSend = new MailerSend({
-  apiKey: process.env.MAILER_SEND_API_KEY
-})
-
-const sentFrom = new Sender(
-  process.env.MAILER_SENT_FROM_ADDRESS,
-  'Club Secretary'
-)
+import {
+  SendSmtpEmail,
+  TransactionalEmailsApi,
+  TransactionalEmailsApiApiKeys
+} from '@getbrevo/brevo'
 
 export default async function ({
   subject = '',
   content = '',
   recipients = []
 }) {
-  const emailParams = new EmailParams()
-    .setFrom(sentFrom)
-    .setTo(
-      [recipients]
-        .flat()
-        .map((recipient) => new Recipient(recipient.email, recipient.name))
-    )
-    .setReplyTo(sentFrom)
-    .setSubject(subject)
-    .setHtml(content)
+  const apiInstance = new TransactionalEmailsApi()
+
+  apiInstance.setApiKey(
+    TransactionalEmailsApiApiKeys.apiKey,
+    process.env.EMAIL_API_KEY
+  )
+
+  const sendSmtpEmail = new SendSmtpEmail()
+
+  sendSmtpEmail.subject = subject
+  sendSmtpEmail.htmlContent = content
+  sendSmtpEmail.sender = {
+    name: 'Club Secretary',
+    email: process.env.EMAIL_SENT_FROM_ADDRESS
+  }
+  sendSmtpEmail.to = recipients
+  // sendSmtpEmail.replyTo = {
+  //   email: 'shubham.upadhyay@sendinblue.com',
+  //   name: 'Shubham Upadhyay'
+  // }
+  // sendSmtpEmail.headers = { 'Some-Custom-Name': 'unique-id-1234' }
+  // sendSmtpEmail.params = {
+  //   parameter: 'My param value',
+  //   subject: 'common subject'
+  // }
 
   try {
-    await mailerSend.email.send(emailParams)
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
+    console.log(
+      'API called successfully. Returned data: ' + JSON.stringify(data)
+    )
     return true
   } catch (error) {
     console.error(error)
