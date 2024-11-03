@@ -1,4 +1,5 @@
 import mapToErrorSummary from './map-to-error-summary.js'
+import mapAchievementsToItems from './map-achievements-to-items.js'
 import formatName from './format-name.js'
 import formatAddress from './format-address.js'
 import formatBmfaMembership from './format-bmfa-membership.js'
@@ -8,6 +9,7 @@ import formatOperatorId from './format-operator-id.js'
 
 export {
   mapToErrorSummary,
+  mapAchievementsToItems,
   formatName,
   formatAddress,
   formatBmfaMembership,

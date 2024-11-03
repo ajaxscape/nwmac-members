@@ -16,7 +16,9 @@ import {
   viewEnterCAARegistration,
   postEnterCAARegistration,
   viewConfirmation,
-  postCheckDetails
+  postCheckDetails,
+  viewSelectAchievements,
+  postSelectAchievements
 } from './details-controller.js'
 
 import {
@@ -81,6 +83,11 @@ router
   .route('/caa-registration')
   .get(viewEnterCAARegistration)
   .post(validateOperatorId(), validateFlyerId(), postEnterCAARegistration)
+
+router
+  .route('/achievements')
+  .get(viewSelectAchievements)
+  .post(postSelectAchievements)
 
 router.route('/check-details').get(viewCheckDetails).post(postCheckDetails)
 router.route('/confirmation').get(viewConfirmation)

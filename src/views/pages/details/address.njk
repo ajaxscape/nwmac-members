@@ -9,13 +9,13 @@
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
-  {% call govukFieldset({
-    legend: {
-      text: "Enter address",
-      classes: "govuk-fieldset__legend--l",
-      isPageHeading: true
-    }
-  }) %}
+    {% call govukFieldset({
+      legend: {
+        text: pageTitle,
+        classes: "govuk-fieldset__legend--l",
+        isPageHeading: true
+      }
+    }) %}
 
     {{ govukInput({
       label: {

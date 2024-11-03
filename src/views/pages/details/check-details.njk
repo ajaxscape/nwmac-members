@@ -56,6 +56,11 @@
                         key: { text: 'Flyer ID' },
                         value: { html: data | formatFlyerId },
                         actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] }
+                    },
+                    {
+                        key: { text: 'Achievements' },
+                        value: { html: formatAchievements(data, achievements) },
+                        actions: { items: [{ href: baseUrl + "/achievements", text: "Change", visuallyHiddenText: "achievements" }] }
                     }
                 ]
             }) }}
