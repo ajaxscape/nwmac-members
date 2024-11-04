@@ -9,10 +9,16 @@ export const setLocals = (req, res, next) => {
     default:
       break
   }
-  const { operatorId = '', flyerId = '', achievements = [] } = res.locals.data
-  res.locals.data.operatorId = operatorId.toUpperCase()
-  res.locals.data.flyerId = flyerId.toUpperCase()
-  res.locals.data.achievements = [achievements].flat()
+  const { operatorId, flyerId, achievements } = res.locals.data
+  if (operatorId) {
+    res.locals.data.operatorId = operatorId.toUpperCase()
+  }
+  if (flyerId) {
+    res.locals.data.flyerId = flyerId.toUpperCase()
+  }
+  if (achievements) {
+    res.locals.data.achievements = [achievements].flat()
+  }
   next()
 }
 
