@@ -5,7 +5,7 @@ import { storeData } from '../../lib/utils/store-session-data.js'
  * Select GDPR choice
  */
 
-export const viewGDPR = (req, res) => {
+export const viewGDPR = async (req, res) => {
   res.render('pages/intro/gdpr', { locals: res.locals })
 }
 

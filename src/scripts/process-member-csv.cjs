@@ -1,0 +1,20 @@
+const fs = require('fs')
+const path = require('path')
+const csv = require('csv-parser')
+let sqlQuery = `
+INSERT INTO member (first_name, middle_name, last_name, email, bmfa_number) VALUES `
+
+// eslint-disable-next-line no-undef
+fs.createReadStream(path.resolve(`${__dirname}/../temp/members.csv`))
+  .pipe(csv())
+  .on('data', function (data) {
+    try {
+      sqlQuery += `('${data.FIRST_NAME}', '${data.MIDDLE_NAME}', '${data.LAST_NAME}', '${data.EMAIL}', '${data.BMFA_NUMBER}'),`
+    } catch (err) {
+      console.error(err)
+      //error handler
+    }
+  })
+  .on('end', function () {
+    console.log(sqlQuery)
+  })

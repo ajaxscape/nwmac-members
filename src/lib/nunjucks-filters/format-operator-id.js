@@ -1,6 +1,4 @@
 export default (data) => {
-  const { operatorId, ageGroup } = data
-  return ageGroup === 'senior'
-    ? `GBR-OP-${operatorId ?? '** Must be entered **'}`
-    : 'Not required'
+  const { operatorId } = data
+  return operatorId ? `GBR-OP-${operatorId}` : ''
 }

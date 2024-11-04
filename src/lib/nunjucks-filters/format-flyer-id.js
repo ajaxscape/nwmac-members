@@ -1,4 +1,4 @@
 export default (data) => {
   const { flyerId } = data
-  return `GBR-RP-${flyerId}`
+  return flyerId ? `GBR-RP-${flyerId}` : ''
 }

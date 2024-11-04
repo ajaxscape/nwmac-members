@@ -9,6 +9,7 @@ import {
 import { identifyEmail } from '../../lib/utils/identify-email.js'
 import sendEmail from '../../lib/utils/send-email.js'
 import { storeData } from '../../lib/utils/store-session-data.js'
+import { getMembers } from '../../repositories/member.repository.js'
 
 export const viewEnterEmail = (req, res) => {
   const email = req.signedCookies.email
@@ -89,7 +90,7 @@ export const viewSecurityCode = (req, res) => {
   })
 }
 
-export const postSecurityCode = (req, res) => {
+export const postSecurityCode = async (req, res) => {
   const { securityCode } = req.body
   const isValidCode = securityCode === req.session.securityCode.toString()
   if (!isValidCode) {
@@ -100,7 +101,12 @@ export const postSecurityCode = (req, res) => {
       ]
     })
   }
-  res.redirect(`/auth/trust-browser`)
+  const [member] = await getMembers({ email: req.session.email })
+  if (member) {
+    res.redirect(`/auth/trust-browser`)
+  } else {
+    res.redirect('/intro/gdpr')
+  }
 }
 
 /**

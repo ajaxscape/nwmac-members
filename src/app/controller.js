@@ -1,3 +1,20 @@
+import { getMembers } from '../repositories/member.repository.js'
+
+export const restoreData = async (req, res, next) => {
+  if (req.signedCookies.email) {
+    const members = await getMembers({ email: req.signedCookies.email })
+    if (members?.length) {
+      Object.entries(members[0]).forEach(([key, value]) => {
+        if (key === 'id') {
+          key = 'memberId'
+        }
+        req.session[key] = value
+      })
+    }
+  }
+  next()
+}
+
 export const setLocals = (req, res, next) => {
   switch (req.method.toLowerCase()) {
     case 'get':

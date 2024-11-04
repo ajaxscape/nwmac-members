@@ -22,7 +22,7 @@ router.use('/details/:state', [
 ])
 
 router.get('/', (req, res) => {
-  res.render('index')
+  res.redirect('/intro/gdpr')
 })
 
 // Page not found

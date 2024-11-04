@@ -1,3 +1,6 @@
+import { getMembers } from '../../repositories/member.repository.js'
+
 export async function identifyEmail(email) {
-  return Promise.resolve(email === 'ben@surgison.net')
+  const member = await getMembers({ email })
+  return Promise.resolve(member[0])
 }
