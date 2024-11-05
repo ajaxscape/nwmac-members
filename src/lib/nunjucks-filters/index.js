@@ -7,7 +7,7 @@ import formatPhoneNumbers from './format-phone-numbers.js'
 import formatFlyerId from './format-flyer-id.js'
 import formatOperatorId from './format-operator-id.js'
 
-export {
+const filters = {
   mapToErrorSummary,
   mapAchievementsToItems,
   formatName,
@@ -16,4 +16,10 @@ export {
   formatPhoneNumbers,
   formatFlyerId,
   formatOperatorId
+}
+
+export default (env) => {
+  Object.keys(filters).forEach((filterName) => {
+    env.addFilter(filterName, filters[filterName])
+  })
 }

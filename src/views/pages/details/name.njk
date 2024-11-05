@@ -5,7 +5,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle="Change name" if edit else "Enter name" %}
-{% set backLink=("/details/" + data.state + "/check-details" if edit else "/intro/gdpr") %}
+{% set backLink="/details/check-details" if edit else "/details/club-contact" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
