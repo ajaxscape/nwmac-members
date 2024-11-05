@@ -12,7 +12,7 @@
     {% set pageTitle="Change CAA Flyer ID" if edit else "Enter CAA Flyer ID" %}
 {% endif %}
 
-{% set backLink="/details/" + data.state + ("/check-details" if edit else "/bmfa-membership") %}
+{% set backLink="/details/check-details" if edit else "/details/bmfa-membership" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="" autocapitalize="characters" class="nwmac-caa-form">

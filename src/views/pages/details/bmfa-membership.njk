@@ -6,7 +6,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle="Change BMFA number" if edit else "Enter BMFA number" %}
-{% set backLink="/details/" + data.state + ("/check-details" if edit else "/age-group") %}
+{% set backLink="/details/check-details" if edit else "/details/age-group" %}
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">

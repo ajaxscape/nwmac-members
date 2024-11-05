@@ -1,4 +1,10 @@
 import mapToError from './map-to-error.js'
 import formatAchievements from './format-achievements.js'
 
-export { mapToError, formatAchievements }
+const functions = { mapToError, formatAchievements }
+
+export default (env) => {
+  Object.keys(functions).forEach((functionName) => {
+    env.addGlobal(functionName, functions[functionName])
+  })
+}

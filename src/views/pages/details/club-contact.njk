@@ -5,6 +5,7 @@
 
 
 {% set pageTitle="General Data Protection Regulations (GDPR)" %}
+{% set backLink="/details/check-details" if edit else "/auth" %}
 
 {% block content %}
     <form method="post" novalidate="novalidate" action="">

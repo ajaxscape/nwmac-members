@@ -6,9 +6,9 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import * as sass from 'sass'
 import fsExtra from 'fs-extra'
-import appRouter from './src/app/app-router.js'
-import addFilters from './src/lib/add-filters.js'
-import addFunctions from './src/lib/add-functions.js'
+import appRouter from './src/app/app.router.js'
+import addFilters from './src/lib/nunjucks-filters/index.js'
+import addFunctions from './src/lib/nunjucks-functions/index.js'
 import cookieParser from 'cookie-parser'
 
 const { writeFileSync, ensureDir } = fsExtra

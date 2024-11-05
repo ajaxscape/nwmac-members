@@ -1,20 +1,17 @@
 import express from 'express'
-import detailsRouter from './details/details-router.js'
+import detailsRouter from './details/details.router.js'
 import authRouter from './auth/auth-router.js'
-import introRouter from './intro/intro-router.js'
 import {
+  authenticate,
   registerMembershipState,
-  setLocals,
-  authenticate
-} from './controller.js'
+  setLocals
+} from './app.controller.js'
 
 const router = express.Router()
 
 router.use('/auth', authRouter)
 
-router.use('/intro', introRouter)
-
-router.use('/details/:state', [
+router.use('/details', [
   authenticate,
   setLocals,
   registerMembershipState,
@@ -22,7 +19,7 @@ router.use('/details/:state', [
 ])
 
 router.get('/', (req, res) => {
-  res.redirect('/intro/gdpr')
+  res.redirect('/details')
 })
 
 // Page not found
