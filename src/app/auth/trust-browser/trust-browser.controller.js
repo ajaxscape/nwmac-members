@@ -19,5 +19,5 @@ export const postTrustBrowser = (req, res) => {
     res.cookie('email', req.session.email, { signed: true })
   }
 
-  res.redirect('/details/club-contact')
+  res.redirect('/details')
 }

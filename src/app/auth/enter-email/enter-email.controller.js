@@ -5,7 +5,7 @@ export const viewEnterEmail = (req, res) => {
   const email = req.signedCookies.email
   if (email) {
     req.session.email = email
-    res.redirect('/details/club-contact')
+    res.redirect('/details')
   } else {
     res.render('pages/auth/enter-email', { locals: res.locals })
   }
