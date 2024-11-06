@@ -6,11 +6,14 @@ export function getMembers(data, tx = prisma) {
 
 export function upsertMember(data, tx = prisma) {
   const { id, ...rest } = data || {}
-  return tx.member.upsert({
-    update: rest,
-    create: rest,
-    where: { id }
-  })
+  if (id) {
+    return tx.member.update({
+      data: rest,
+      where: { id }
+    })
+  } else {
+    return tx.member.create({ data: rest })
+  }
 }
 
 export function getMemberById(id, tx = prisma) {
