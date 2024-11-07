@@ -1,5 +1,6 @@
 export default function mapAchievementsToItems(category) {
-  return category.achievements.map(({ id, title, code, checked }) => {
+  const { achievements = [] } = category || {}
+  return achievements.map(({ id, title, code, checked }) => {
     return {
       value: id,
       hint: { text: title },

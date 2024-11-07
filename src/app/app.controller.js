@@ -13,13 +13,35 @@ export const restoreData = async (req, res, next) => {
     const member = members[0]
 
     for (const [mbrKey, mbrValue] of Object.entries(member)) {
-      if (mbrKey === 'address' && Array.isArray(mbrValue)) {
-        const address = mbrValue[0]
-        for (const [addrKey, addrValue] of Object.entries(address)) {
-          req.session[addrKey === 'id' ? 'addressId' : addrKey] = addrValue
-        }
-      } else {
-        req.session[mbrKey === 'id' ? 'memberId' : mbrKey] = mbrValue
+      switch (mbrKey) {
+        case 'achievements':
+        case 'createdAt':
+        case 'updatedAt':
+          break
+        case 'id':
+          req.session.memberId = mbrValue
+          break
+        case 'nonClubContact':
+        case 'bmfaThroughClub':
+          req.session[mbrKey] = mbrValue ? 'yes' : 'no'
+          break
+        case 'mobile':
+          req.session.mobileNumber = mbrValue
+          break
+        case 'address':
+          for (const [addrKey, addrValue] of Object.entries(mbrValue)) {
+            switch (addrKey) {
+              case 'createdAt':
+              case 'updatedAt':
+              case 'id':
+                break
+              default:
+                req.session[addrKey] = addrValue
+            }
+          }
+          break
+        default:
+          req.session[mbrKey] = mbrValue
       }
     }
   }
