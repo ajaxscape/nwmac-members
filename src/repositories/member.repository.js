@@ -1,7 +1,11 @@
 import prisma from './utils/prisma-client.js'
 
 export function getMembers(data, tx = prisma) {
-  return tx.member.findMany(data && { where: data })
+  const options = { include: { address: true, achievements: true } }
+  if (data) {
+    options.where = data
+  }
+  return tx.member.findMany(options)
 }
 
 export function upsertMember(data, tx = prisma) {

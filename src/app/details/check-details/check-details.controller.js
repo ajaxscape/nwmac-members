@@ -18,6 +18,8 @@ export const viewCheckDetails = async (req, res) => {
 
 export const postCheckDetails = async (req, res) => {
   const {
+    memberId,
+    addressId,
     membershipNumber,
     membershipType,
     firstName,
@@ -33,7 +35,7 @@ export const postCheckDetails = async (req, res) => {
     mobileNumber,
     landline,
     ageGroup,
-    achievements,
+    // achievements,
     bmfaNumber,
     bmfaThroughClub,
     operatorId,
@@ -44,7 +46,7 @@ export const postCheckDetails = async (req, res) => {
   await prisma.$transaction(async (tx) => {
     const address = await upsertAddress(
       {
-        id: req.session.addressId,
+        id: addressId,
         addressLine1,
         addressLine2,
         town,
@@ -56,6 +58,7 @@ export const postCheckDetails = async (req, res) => {
 
     const member = await upsertMember(
       {
+        id: memberId,
         firstName,
         lastName,
         middleName,

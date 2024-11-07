@@ -1,17 +1,29 @@
 import { getMembers } from '../repositories/member.repository.js'
 
 export const restoreData = async (req, res, next) => {
-  if (req.session.email) {
-    const members = await getMembers({ email: req.session.email })
-    if (members?.length) {
-      Object.entries(members[0]).forEach(([key, value]) => {
-        if (key === 'id') {
-          key = 'memberId'
+  if (!req.session.email) {
+    return next()
+  }
+
+  const members = await getMembers({
+    email: req.session.email
+  })
+
+  if (members?.length) {
+    const member = members[0]
+
+    for (const [mbrKey, mbrValue] of Object.entries(member)) {
+      if (mbrKey === 'address' && Array.isArray(mbrValue)) {
+        const address = mbrValue[0]
+        for (const [addrKey, addrValue] of Object.entries(address)) {
+          req.session[addrKey === 'id' ? 'addressId' : addrKey] = addrValue
         }
-        req.session[key] = value
-      })
+      } else {
+        req.session[mbrKey === 'id' ? 'memberId' : mbrKey] = mbrValue
+      }
     }
   }
+
   next()
 }
 
