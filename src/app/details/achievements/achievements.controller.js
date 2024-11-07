@@ -35,6 +35,9 @@ export const viewSelectAchievements = async (req, res) => {
 }
 
 export const postSelectAchievements = async (req, res) => {
+  if (!res.locals.data.achievements) {
+    res.locals.data.achievements = []
+  }
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.render('pages/details/achievements', {
