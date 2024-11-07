@@ -1,6 +1,3 @@
-/**
- * Select BMFA membership
- */
 import { validationResult } from 'express-validator'
 import { storeData } from '../../../lib/utils/store-session-data.js'
 import { redirectUrl } from '../middleware/redirect-url.js'

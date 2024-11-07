@@ -1,6 +1,3 @@
-/**
- * Select achievements
- */
 import { getAchievementCategories } from '../../../repositories/achievement-category.repository.js'
 import { getAchievements } from '../../../repositories/achievement.repository.js'
 import { validationResult } from 'express-validator'

@@ -12,7 +12,6 @@ fs.createReadStream(path.resolve(`${__dirname}/../temp/members.csv`))
       sqlQuery += `('${data.FIRST_NAME}', '${data.MIDDLE_NAME}', '${data.LAST_NAME}', '${data.PREFERRED_NAME}', '${data.EMAIL}', '${data.BMFA_NUMBER}', '${data.MEMBERSHIP_NUMBER}'),`
     } catch (err) {
       console.error(err)
-      //error handler
     }
   })
   .on('end', function () {

@@ -25,15 +25,6 @@ export default async function ({
     email: process.env.EMAIL_SENT_FROM_ADDRESS
   }
   sendSmtpEmail.to = recipients
-  // sendSmtpEmail.replyTo = {
-  //   email: 'shubham.upadhyay@sendinblue.com',
-  //   name: 'Shubham Upadhyay'
-  // }
-  // sendSmtpEmail.headers = { 'Some-Custom-Name': 'unique-id-1234' }
-  // sendSmtpEmail.params = {
-  //   parameter: 'My param value',
-  //   subject: 'common subject'
-  // }
 
   try {
     const data = await apiInstance.sendTransacEmail(sendSmtpEmail)

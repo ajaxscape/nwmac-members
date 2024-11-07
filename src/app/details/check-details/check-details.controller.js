@@ -1,6 +1,3 @@
-/**
- * Check Details
- */
 import { getAchievements } from '../../../repositories/achievement.repository.js'
 import { redirectUrl } from '../middleware/redirect-url.js'
 import { upsertAddress } from '../../../repositories/address.repository.js'
@@ -56,7 +53,7 @@ export const postCheckDetails = async (req, res) => {
       tx
     )
 
-    const member = await upsertMember(
+    await upsertMember(
       {
         id: memberId,
         firstName,
@@ -78,8 +75,6 @@ export const postCheckDetails = async (req, res) => {
       },
       tx
     )
-
-    console.log(JSON.stringify(member, null, 2))
   })
   res.redirect(redirectUrl('confirmation-of-details', res))
 }
