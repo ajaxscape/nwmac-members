@@ -1,7 +1,7 @@
 import prisma from './utils/prisma-client.js'
 
 export function getMembers(data, tx = prisma) {
-  const options = { include: { address: true, achievements: true } }
+  const options = { include: { address: true, memberAchievements: true } }
   if (data) {
     options.where = data
   }

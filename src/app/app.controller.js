@@ -14,7 +14,6 @@ export const restoreData = async (req, res, next) => {
 
     for (const [mbrKey, mbrValue] of Object.entries(member)) {
       switch (mbrKey) {
-        case 'achievements':
         case 'createdAt':
         case 'updatedAt':
           break
@@ -39,6 +38,11 @@ export const restoreData = async (req, res, next) => {
                 req.session[addrKey] = addrValue
             }
           }
+          break
+        case 'memberAchievements':
+          req.session.achievements = mbrValue.map(
+            ({ achievementId }) => achievementId
+          )
           break
         default:
           req.session[mbrKey] = mbrValue

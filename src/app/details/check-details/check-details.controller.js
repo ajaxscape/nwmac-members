@@ -3,6 +3,10 @@ import { redirectUrl } from '../middleware/redirect-url.js'
 import { upsertAddress } from '../../../repositories/address.repository.js'
 import { upsertMember } from '../../../repositories/member.repository.js'
 import prisma from '../../../repositories/utils/prisma-client.js'
+import {
+  createMemberAchievementsByMemberId,
+  deleteMemberAchievementsByMemberId
+} from '../../../repositories/member-achievement.repository.js'
 
 // redirect-url.js
 export const viewCheckDetails = async (req, res) => {
@@ -32,7 +36,7 @@ export const postCheckDetails = async (req, res) => {
     mobileNumber,
     landline,
     ageGroup,
-    // achievements,
+    achievements,
     bmfaNumber,
     bmfaThroughClub,
     operatorId,
@@ -53,7 +57,7 @@ export const postCheckDetails = async (req, res) => {
       tx
     )
 
-    await upsertMember(
+    const member = await upsertMember(
       {
         id: memberId,
         firstName,
@@ -75,6 +79,9 @@ export const postCheckDetails = async (req, res) => {
       },
       tx
     )
+
+    await deleteMemberAchievementsByMemberId(member.id, tx)
+    await createMemberAchievementsByMemberId(member.id, achievements, tx)
   })
   res.redirect(redirectUrl('confirmation-of-details', res))
 }
