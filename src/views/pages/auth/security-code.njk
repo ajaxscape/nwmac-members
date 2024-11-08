@@ -1,4 +1,4 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/main-layout.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
@@ -8,6 +8,8 @@
 
 {% block content %}
     <form method="post" novalidate="novalidate" action="">
+        {% include "includes/csrf.njk" %}
+
         {% call govukFieldset({
             legend: {
                 text: pageTitle,
@@ -16,23 +18,23 @@
             }
         }) %}
 
-            <p class="govuk-body">We’ve emailed {{ data.email }} with a security code.</p>
+        <p class="govuk-body">We’ve emailed {{ data.email }} with a security code.</p>
 
-            {{ govukInput({
-                legend: {
-                    text: pageTitle,
-                    classes: "govuk-fieldset__legend--l",
-                    isPageHeading: true
-                },
-                id: "security-code",
-                name: "securityCode",
-                type: "text",
-                value: securityCode,
-                autocomplete: "one-time-code",
-                classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
-                inputmode: "numeric",
-                attributes: { maxlength: 6 }
-            }) }}
+        {{ govukInput({
+            legend: {
+                text: pageTitle,
+                classes: "govuk-fieldset__legend--l",
+                isPageHeading: true
+            },
+            id: "security-code",
+            name: "securityCode",
+            type: "text",
+            value: securityCode,
+            autocomplete: "one-time-code",
+            classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
+            inputmode: "numeric",
+            attributes: { maxlength: 6 }
+        }) }}
 
         {% endcall %}
 

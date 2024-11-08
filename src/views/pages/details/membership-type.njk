@@ -1,4 +1,4 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/form-layout.njk" %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -6,8 +6,7 @@
 {% set pageTitle="Select type of membership" %}
 {% set backLink="/details/check-details" if edit else "/details/phone-numbers" %}
 
-{% block content %}
-    <form method="post" novalidate="novalidate" action="">
+{% block formContent %}
         {{ govukRadios({
             name: "membershipType",
             value: data.membershipType,
@@ -30,9 +29,4 @@
             ],
             errorMessage: mapToError(errors, "membershipType")
         }) }}
-
-        {{ govukButton({
-            text: ("Save and return" if edit else "Save and continue")
-        }) }}
-    </form>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends "layouts/main-layout.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+<form method="post" novalidate="novalidate" action="">
+    {% include "includes/csrf.njk" %}
+    {% block formContent %}{% endblock %}
+
+    {{ govukButton({
+        text: ("Save and return" if edit else "Save and continue")
+    }) }}
+
+</form>
+{% endblock %}
