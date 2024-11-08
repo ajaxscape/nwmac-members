@@ -8,24 +8,26 @@ datasource db {
 }
 
 model Member {
-  id               Int           @id @default(autoincrement())
-  firstName        String?       @map("first_name") @db.VarChar(30)
-  middleName       String?       @map("middle_name") @db.VarChar(30)
-  lastName         String?       @map("last_name") @db.VarChar(30)
-  preferredName    String?       @map("preferred_name") @db.VarChar(30)
-  email            String?       @unique
-  mobile           String?       @db.VarChar(30)
-  membershipNumber Int?          @map("membership_number")
-  bmfaNumber       Int?          @map("bmfa_number")
-  flyerId          Int?          @map("flyer_id")
-  operatorId       Int?          @map("operator_id")
-  addressId        Int?          @map("address_id")
-  achievementId    Int?          @map("achievement_id")
-  nonClubContact   String?       @map("non_club_contact")
-  createdAt        DateTime      @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
-  updatedAt        DateTime      @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
-  achievements     Achievement[] @relation(map: "FK_achievement_member_id")
-  address          Address?      @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
+  id                 Int                 @id @default(autoincrement())
+  firstName          String?             @map("first_name") @db.VarChar(30)
+  middleName         String?             @map("middle_name") @db.VarChar(30)
+  lastName           String?             @map("last_name") @db.VarChar(30)
+  preferredName      String?             @map("preferred_name") @db.VarChar(30)
+  email              String?             @unique
+  mobile             String?             @db.VarChar(30)
+  ageGroup           String?             @map("age_group") @db.VarChar(10)
+  membershipType     String?             @map("membership_type") @db.VarChar(10)
+  membershipNumber   Int?                @map("membership_number")
+  bmfaNumber         Int?                @map("bmfa_number")
+  flyerId            String?             @map("flyer_id")
+  operatorId         String?             @map("operator_id")
+  addressId          Int?                @map("address_id")
+  nonClubContact     Boolean?            @map("non_club_contact")
+  bmfaThroughClub    Boolean?            @map("bmfa_through_club")
+  createdAt          DateTime            @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime            @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
+  memberAchievements MemberAchievement[] @relation(map: "FK_member_achievement_member_id")
+  address            Address?            @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
 
   @@map("member")
 }
@@ -63,7 +65,17 @@ model Achievement {
   createdAt             DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
   updatedAt             DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
   achievementCategory   AchievementCategory? @relation(fields: [achievementCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_achievement_achievement_category_id")
-  members               Member[]             @relation(map: "FK_achievement_member_id")
+  memberAchievements    MemberAchievement[]  @relation(map: "FK_member_achievement_achievement_id")
 
   @@map("achievement")
+}
+
+model MemberAchievement {
+  memberId      Int         @map("member_id")
+  member        Member      @relation(fields: [memberId], references: [id])
+  achievementId Int         @map("achievement_id")
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+
+  @@id([memberId, achievementId])
+  @@map("member_achievement")
 }

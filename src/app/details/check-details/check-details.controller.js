@@ -1,8 +1,12 @@
-/**
- * Check Details
- */
 import { getAchievements } from '../../../repositories/achievement.repository.js'
 import { redirectUrl } from '../middleware/redirect-url.js'
+import { upsertAddress } from '../../../repositories/address.repository.js'
+import { upsertMember } from '../../../repositories/member.repository.js'
+import prisma from '../../../repositories/utils/prisma-client.js'
+import {
+  createMemberAchievementsByMemberId,
+  deleteMemberAchievementsByMemberId
+} from '../../../repositories/member-achievement.repository.js'
 
 // redirect-url.js
 export const viewCheckDetails = async (req, res) => {
@@ -13,6 +17,71 @@ export const viewCheckDetails = async (req, res) => {
   })
 }
 
-export const postCheckDetails = (req, res) => {
+export const postCheckDetails = async (req, res) => {
+  const {
+    memberId,
+    addressId,
+    membershipNumber,
+    membershipType,
+    firstName,
+    lastName,
+    middleName,
+    preferredName,
+    addressLine1,
+    addressLine2,
+    town,
+    county,
+    postcode,
+    email,
+    mobileNumber,
+    landline,
+    ageGroup,
+    achievements,
+    bmfaNumber,
+    bmfaThroughClub,
+    operatorId,
+    flyerId,
+    nonClubContact
+  } = req.session
+
+  await prisma.$transaction(async (tx) => {
+    const address = await upsertAddress(
+      {
+        id: addressId,
+        addressLine1,
+        addressLine2,
+        town,
+        county,
+        postcode
+      },
+      tx
+    )
+
+    const member = await upsertMember(
+      {
+        id: memberId,
+        firstName,
+        lastName,
+        middleName,
+        preferredName,
+        email,
+        mobile: mobileNumber,
+        landline,
+        ageGroup,
+        bmfaNumber: Number(bmfaNumber),
+        bmfaThroughClub: bmfaThroughClub === 'yes',
+        operatorId,
+        flyerId,
+        nonClubContact: nonClubContact === 'yes',
+        membershipNumber,
+        membershipType,
+        addressId: address.id
+      },
+      tx
+    )
+
+    await deleteMemberAchievementsByMemberId(member.id, tx)
+    await createMemberAchievementsByMemberId(member.id, achievements, tx)
+  })
   res.redirect(redirectUrl('confirmation-of-details', res))
 }

@@ -1,17 +1,55 @@
 import { getMembers } from '../repositories/member.repository.js'
 
 export const restoreData = async (req, res, next) => {
-  if (req.session.email) {
-    const members = await getMembers({ email: req.session.email })
-    if (members?.length) {
-      Object.entries(members[0]).forEach(([key, value]) => {
-        if (key === 'id') {
-          key = 'memberId'
-        }
-        req.session[key] = value
-      })
+  if (!req.session.email) {
+    return next()
+  }
+
+  const members = await getMembers({
+    email: req.session.email
+  })
+
+  if (members?.length) {
+    const member = members[0]
+
+    for (const [mbrKey, mbrValue] of Object.entries(member)) {
+      switch (mbrKey) {
+        case 'createdAt':
+        case 'updatedAt':
+          break
+        case 'id':
+          req.session.memberId = mbrValue
+          break
+        case 'nonClubContact':
+        case 'bmfaThroughClub':
+          req.session[mbrKey] = mbrValue ? 'yes' : 'no'
+          break
+        case 'mobile':
+          req.session.mobileNumber = mbrValue
+          break
+        case 'address':
+          for (const [addrKey, addrValue] of Object.entries(mbrValue)) {
+            switch (addrKey) {
+              case 'createdAt':
+              case 'updatedAt':
+              case 'id':
+                break
+              default:
+                req.session[addrKey] = addrValue
+            }
+          }
+          break
+        case 'memberAchievements':
+          req.session.achievements = mbrValue.map(
+            ({ achievementId }) => achievementId
+          )
+          break
+        default:
+          req.session[mbrKey] = mbrValue
+      }
     }
   }
+
   next()
 }
 

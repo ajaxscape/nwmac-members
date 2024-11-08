@@ -1,6 +1,3 @@
-/**
- * Select achievements
- */
 import { getAchievementCategories } from '../../../repositories/achievement-category.repository.js'
 import { getAchievements } from '../../../repositories/achievement.repository.js'
 import { validationResult } from 'express-validator'
@@ -35,6 +32,9 @@ export const viewSelectAchievements = async (req, res) => {
 }
 
 export const postSelectAchievements = async (req, res) => {
+  if (!res.locals.data.achievements) {
+    res.locals.data.achievements = []
+  }
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.render('pages/details/achievements', {
