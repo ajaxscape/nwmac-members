@@ -28,6 +28,9 @@ export const restoreData = async (req, res, next) => {
           req.session.mobileNumber = mbrValue
           break
         case 'address':
+          if (!mbrValue) {
+            break
+          }
           for (const [addrKey, addrValue] of Object.entries(mbrValue)) {
             switch (addrKey) {
               case 'createdAt':
@@ -40,6 +43,9 @@ export const restoreData = async (req, res, next) => {
           }
           break
         case 'memberAchievements':
+          if (!mbrValue) {
+            break
+          }
           req.session.achievements = mbrValue.map(
             ({ achievementId }) => achievementId
           )
