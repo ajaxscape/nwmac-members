@@ -1,4 +1,4 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/main-layout.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
@@ -8,13 +8,15 @@
 
 {% block content %}
   <form method="post" novalidate="novalidate" action="">
-  {% call govukFieldset({
-    legend: {
-      text: pageTitle,
-      classes: "govuk-fieldset__legend--l",
-      isPageHeading: true
-    }
-  }) %}
+    {% include "includes/csrf.njk" %}
+
+    {% call govukFieldset({
+      legend: {
+        text: pageTitle,
+        classes: "govuk-fieldset__legend--l",
+        isPageHeading: true
+      }
+    }) %}
 
     <p class="govuk-body">
       Please enter your email address and press continue.
@@ -32,10 +34,10 @@
       errorMessage: mapToError(errors, "email")
     }) }}
 
-  {% endcall %}
+    {% endcall %}
 
-  {{ govukButton({
-    text: "Continue"
-  }) }}
+    {{ govukButton({
+      text: "Continue"
+    }) }}
   </form>
 {% endblock %}

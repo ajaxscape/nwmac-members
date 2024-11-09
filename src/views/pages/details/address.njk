@@ -1,14 +1,12 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/form-layout.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle="Enter address" %}
 {% set backLink="/details/check-details" if edit else "/details/name" %}
 
-{% block content %}
-  <form method="post" novalidate="novalidate" action="">
+{% block formContent %}
     {% call govukFieldset({
       legend: {
         text: pageTitle,
@@ -73,9 +71,4 @@
     }) }}
 
   {% endcall %}
-
-    {{ govukButton({
-      text: ("Save and return" if edit else "Save and continue")
-    }) }}
-  </form>
 {% endblock %}

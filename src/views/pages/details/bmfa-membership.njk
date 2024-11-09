@@ -1,4 +1,4 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/form-layout.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
@@ -8,8 +8,7 @@
 {% set pageTitle="Change BMFA number" if edit else "Enter BMFA number" %}
 {% set backLink="/details/check-details" if edit else "/details/age-group" %}
 
-{% block content %}
-  <form method="post" novalidate="novalidate" action="">
+{% block formContent %}
   {% call govukFieldset({
     legend: {
       text: pageTitle,
@@ -52,10 +51,4 @@
     }) }}
 
   {% endcall %}
-
-  {{ govukButton({
-    text: ("Save and return" if edit else "Save and continue")
-  }) }}
-
-  </form>
 {% endblock %}

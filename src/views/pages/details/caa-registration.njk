@@ -1,4 +1,4 @@
-{% extends "layouts/govuk.njk" %}
+{% extends "layouts/form-layout.njk" %}
 
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
@@ -14,9 +14,9 @@
 
 {% set backLink="/details/check-details" if edit else "/details/bmfa-membership" %}
 
-{% block content %}
-  <form method="post" novalidate="novalidate" action="" autocapitalize="characters" class="nwmac-caa-form">
+{% block formContent %}
   {% call govukFieldset({
+    classes: "nwmac-caa-field-set",
     legend: {
       text: pageTitle,
       classes: "govuk-fieldset__legend--l",
@@ -37,7 +37,7 @@
             value: data.operatorId,
             classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
             inputmode: "alphanumeric",
-            attributes: { maxlength: 12 }
+            attributes: { maxlength: 12, autocapitalize:"characters" }
           }) }}
       </div>
     {% endif %}
@@ -53,15 +53,9 @@
             value: data.flyerId,
             classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
             inputmode: "alphanumeric",
-            attributes: { maxlength: 12 }
+            attributes: { maxlength: 12, autocapitalize:"characters" }
         }) }}
       </div>
 
   {% endcall %}
-
-  {{ govukButton({
-    text: ("Save and return" if edit else "Save and continue")
-  }) }}
-
-  </form>
 {% endblock %}

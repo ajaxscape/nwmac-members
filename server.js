@@ -1,5 +1,5 @@
 import express from 'express'
-import session from 'express-session'
+import session from 'cookie-session'
 import robots from 'express-robots-txt'
 import nunjucks from 'nunjucks'
 import path from 'path'
