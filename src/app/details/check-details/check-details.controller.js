@@ -7,6 +7,14 @@ import {
   createMemberAchievementsByMemberId,
   deleteMemberAchievementsByMemberId
 } from '../../../repositories/member-achievement.repository.js'
+import { validationResult } from 'express-validator'
+
+export const loadBodyForValidation = async (req, res, next) => {
+  Object.keys(req.session).forEach((key) => {
+    req.body[key] = req.session[key]
+  })
+  next()
+}
 
 // redirect-url.js
 export const viewCheckDetails = async (req, res) => {
@@ -18,6 +26,36 @@ export const viewCheckDetails = async (req, res) => {
 }
 
 export const postCheckDetails = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    const summaryErrors = errors.array().map(({ path, ...rest }) => {
+      switch (path) {
+        case 'firstName':
+        case 'lastName':
+          return { ...rest, path: 'name' }
+        case 'addressLine1':
+        case 'town':
+        case 'postcode':
+          return { ...rest, path: 'address' }
+        default:
+          return { ...rest, path }
+      }
+    })
+    res.locals.data = { ...res.locals.data, ...req.body }
+    const errorFields = summaryErrors.reduce(
+      (fields, { path }) => ({ ...fields, [path]: true }),
+      {}
+    )
+    const achievements = await getAchievements()
+    return res.render('pages/details/check-details', {
+      locals: res.locals,
+      achievements,
+      errors: summaryErrors,
+      errorFields
+    })
+  }
+
   const {
     memberId,
     addressId,

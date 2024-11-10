@@ -19,48 +19,55 @@
                     {
                         key: { text: 'Name' },
                         value: { text: data | formatName },
-                        actions: { items: [{ href: baseUrl + "/name", text: "Change", visuallyHiddenText: "name" }] }
+                        classes: 'nwmac-error' if errorFields.name,
+                        actions: formatActions('name')
                     },
                     {
                         key: { text: 'Address' },
                         value: { html: data | formatAddress },
-                        actions: { items: [{ href: baseUrl + "/address", text: "Change", visuallyHiddenText: "address" }] }
+                        classes: 'nwmac-error' if errorFields.address,
+                        actions: formatActions('address')
                     },
                     {
                         key: { text: 'Phone numbers' },
                         value: { html: data | formatPhoneNumbers },
-                        actions: { items: [{ href: baseUrl + "/phone-numbers", text: "Change", visuallyHiddenText: "phone numbers" }] }
+                        classes: 'nwmac-error' if errorFields.mobileNumber,
+                        actions: formatActions('phoneNumbers')
                     },
                     {
                         key: { text: 'Membership type' },
                         value: { text: data.membershipType },
-                        actions: { items: [{ href: baseUrl + "/membership-type", text: "Change", visuallyHiddenText: "membership type" }] }
+                        classes: 'nwmac-error' if errorFields.membershipType,
+                        actions: formatActions('membershipType')
                     },
                     {
                         key: { text: 'Age group' },
                         value: { text: data.ageGroup },
-                        actions: { items: [{ href: baseUrl + "/age-group", text: "Change", visuallyHiddenText: "age group" }] }
+                        classes: 'nwmac-error' if errorFields.ageGroup,
+                        actions: formatActions('ageGroup')
                     },
                     {
                         key: { text: 'BMFA membership' },
                         value: { html: data | formatBmfaMembership },
-                        actions: { items: [{ href: baseUrl + "/bmfa-membership", text: "Change", visuallyHiddenText: "bmfa membership" }] }
+                        classes: 'nwmac-error' if errorFields.bmfaMembership,
+                        actions: formatActions('bmfaMembership')
                     },
                     {
                         key: { text: 'Operator ID' },
                         value: { html: data | formatOperatorId},
-                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] },
-                        classes: '' if data.ageGroup === 'senior' else 'govuk-!-display-none'
+                        classes: ('nwmac-error' if errorFields.operatorId) + (' govuk-!-display-none' if data.ageGroup === 'junior'),
+                        actions: formatActions('caaRegistration')
                     },
                     {
                         key: { text: 'Flyer ID' },
                         value: { html: data | formatFlyerId },
-                        actions: { items: [{ href: baseUrl + "/caa-registration", text: "Change", visuallyHiddenText: "caa registration" }] }
+                        classes: 'nwmac-error' if errorFields.flyerId,
+                        actions: formatActions('caaRegistration')
                     },
                     {
                         key: { text: 'Achievements' },
                         value: { html: formatAchievements(data, achievements) },
-                        actions: { items: [{ href: baseUrl + "/achievements", text: "Change", visuallyHiddenText: "achievements" }] }
+                        actions: formatActions('achievements')
                     }
                 ]
             }) }}
@@ -70,8 +77,6 @@
             <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
             <form action="" method="post" novalidate>
-
-                <input type="hidden" name="answers-checked" value="true">
 
                 {{ govukButton({
                     text: "Accept and send"
