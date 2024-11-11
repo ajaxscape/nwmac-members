@@ -11,7 +11,7 @@ import { validationResult } from 'express-validator'
 
 export const loadBodyForValidation = async (req, res, next) => {
   Object.keys(req.session).forEach((key) => {
-    req.body[key] = req.session[key]
+    req.body[key] = req.session[key] ?? null
   })
   next()
 }

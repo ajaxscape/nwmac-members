@@ -1,5 +1,5 @@
 export default (data) => {
-  const { firstName, lastName, middleName, preferredName } = data
+  const { firstName='', lastName='', middleName='', preferredName='' } = data
   let fullName = ''
 
   if (preferredName) {

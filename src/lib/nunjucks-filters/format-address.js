@@ -1,5 +1,5 @@
 export default (data) => {
-  const { addressLine1, addressLine2, town, county, postcode } = data
+  const { addressLine1='', addressLine2='', town='', county='', postcode='' } = data
   let formattedAddress = addressLine1
 
   if (addressLine2) {

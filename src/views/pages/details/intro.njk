@@ -1,0 +1,20 @@
+{% extends "layouts/main-layout.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+    {% set baseUrl = "/details/edit" %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">Welcome {{ data.preferredName if data.preferedName else data.firstName }}</h1>
+        </div>
+    </div>
+
+    <form action="" method="post" novalidate>
+
+        {{ govukButton({
+            text: "Continue"
+        }) }}
+
+    </form>
+{% endblock %}
