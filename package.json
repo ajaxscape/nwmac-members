@@ -8,7 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "@getbrevo/brevo": "^2.2.0",
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^5.22.0",
     "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.0",
     "csrf-csrf": "^3.0.8",
@@ -24,7 +24,7 @@
     "pino": "^8.19.0",
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
-    "prisma": "^5.21.1",
+    "sanitize": "^2.1.2",
     "sass": "^1.80.1"
   },
   "devDependencies": {
@@ -32,7 +32,8 @@
     "eslint": "^9.12.0",
     "globals": "^15.11.0",
     "nodemon": "^3.1.7",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "prisma": "^5.22.0"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",

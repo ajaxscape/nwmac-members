@@ -17,6 +17,10 @@
                 classes: "govuk-!-margin-bottom-9",
                 rows: [
                     {
+                        key: { text: 'NWMAC number' },
+                        value: { text: data.membershipNumber }
+                    },
+                    {
                         key: { text: 'Name' },
                         value: { text: data | formatName },
                         classes: 'nwmac-error' if errorFields.name,
@@ -36,13 +40,13 @@
                     },
                     {
                         key: { text: 'Membership type' },
-                        value: { text: data.membershipType },
+                        value: { text: data.membershipType | capitalize },
                         classes: 'nwmac-error' if errorFields.membershipType,
                         actions: formatActions('membershipType')
                     },
                     {
                         key: { text: 'Age group' },
-                        value: { text: data.ageGroup },
+                        value: { text: data.ageGroup | capitalize },
                         classes: 'nwmac-error' if errorFields.ageGroup,
                         actions: formatActions('ageGroup')
                     },
@@ -68,6 +72,11 @@
                         key: { text: 'Achievements' },
                         value: { html: formatAchievements(data, achievements) },
                         actions: formatActions('achievements')
+                    },
+                    {
+                        key: { text: 'Contact for non-club purposes' },
+                        value: { text: data.nonClubContact | capitalize },
+                        actions: formatActions('nonClubContact')
                     }
                 ]
             }) }}

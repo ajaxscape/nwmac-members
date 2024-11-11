@@ -4,7 +4,7 @@
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
 {% set pageTitle="Change name" if edit else "Enter name" %}
-{% set backLink="/details/check-details" if edit else "/details/club-contact" %}
+{% set backLink="/details/check-details" if edit else "/details/non-club-contact" %}
 
 {% block formContent %}
   {% call govukFieldset({

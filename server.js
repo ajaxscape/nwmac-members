@@ -10,6 +10,7 @@ import appRouter from './src/app/app.router.js'
 import addFilters from './src/lib/nunjucks-filters/index.js'
 import addFunctions from './src/lib/nunjucks-functions/index.js'
 import cookieParser from 'cookie-parser'
+import sanitize from 'sanitize'
 
 const { writeFileSync, ensureDir } = fsExtra
 const __filename = fileURLToPath(import.meta.url) // get the resolved path to the file
@@ -81,6 +82,8 @@ app.use(
 
 // Middleware to enable cookies
 app.use(cookieParser(process.env.SESSION_SECRET))
+
+app.use(sanitize.middleware)
 
 // Define routes
 app.use('/', appRouter)
