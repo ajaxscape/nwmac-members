@@ -12,11 +12,6 @@ export const restoreData = async (req, res, next) => {
   if (members?.length) {
     const member = members[0]
 
-    // Clear session
-    for (const sessionKey of Object.keys(req.session)) {
-      delete req.session[sessionKey]
-    }
-
     for (const [mbrKey, mbrValue] of Object.entries(member)) {
       switch (mbrKey) {
         case 'createdAt':

@@ -3,7 +3,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set renewal = data.firstName.length > 1 %}
+{% set renewal = data.membershipNumber > 1 %}
 
 {% block content %}
     {% set baseUrl = "/details/edit" %}
@@ -26,6 +26,10 @@
                         {
                             key: { text: 'Name' },
                             value: { text: data | formatName }
+                        },
+                        {
+                            key: { text: 'Email' },
+                            value: { text: data.email }
                         },
                         {
                             key: { text: 'BMFA membership' },
@@ -63,4 +67,9 @@
         }) }}
 
     </form>
+{% endblock %}
+
+
+{% block footerLink %}
+    <a class="govuk-link govuk-link--no-visited-state" href="/auth/logout">Login with a different email</a>
 {% endblock %}

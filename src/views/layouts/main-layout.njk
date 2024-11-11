@@ -44,5 +44,11 @@
     {{ block("content") }}
 {% endblock %}
 
-{% block footer %}{% endblock %}
+{% block footer %}
+    <footer class="govuk-footer app-footer">
+        <div class="govuk-width-container app-width-container">
+            {% block footerLink %}{% endblock %}
+        </div>
+    </footer>
+{% endblock %}
 

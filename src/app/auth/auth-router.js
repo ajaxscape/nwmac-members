@@ -14,6 +14,11 @@ router.use('/send-confirmation-email', sendConfirmationEmailRouter)
 router.use('/security-code', securityCodeRouter)
 router.use('/trust-browser', trustBrowserRouter)
 
+router.get('/logout', (req, res) => {
+  res.clearCookie('email')
+  res.redirect('/auth')
+})
+
 router.get('/', (req, res) => {
   res.redirect(`/auth/enter-email`)
 })
