@@ -1,12 +1,12 @@
-import { getAchievements } from '../../../repositories/achievement.repository.js'
-import { redirectUrl } from '../middleware/redirect-url.js'
-import { upsertAddress } from '../../../repositories/address.repository.js'
-import { upsertMember } from '../../../repositories/member.repository.js'
-import prisma from '../../../repositories/utils/prisma-client.js'
+import { getAchievements } from '#repos/achievement.repository.js'
+import { redirectUrl } from '#utils/redirect-url.js'
+import { upsertAddress } from '#repos/address.repository.js'
+import { upsertMember } from '#repos/member.repository.js'
+import prisma from '#repos/utils/prisma-client.js'
 import {
   createMemberAchievementsByMemberId,
   deleteMemberAchievementsByMemberId
-} from '../../../repositories/member-achievement.repository.js'
+} from '#repos/member-achievement.repository.js'
 import { validationResult } from 'express-validator'
 
 export const loadBodyForValidation = async (req, res, next) => {

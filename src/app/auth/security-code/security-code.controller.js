@@ -1,4 +1,4 @@
-import { getMembers } from '../../../repositories/member.repository.js'
+import { getMembers } from '#repos/member.repository.js'
 
 export const viewSecurityCode = (req, res) => {
   res.render('pages/auth/security-code', {

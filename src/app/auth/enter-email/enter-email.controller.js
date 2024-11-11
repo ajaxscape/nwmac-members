@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator'
-import { identifyEmail } from '../../../lib/utils/identify-email.js'
+import { identifyEmail } from '#utils/identify-email.js'
 
 export const viewEnterEmail = (req, res) => {
   const email = req.signedCookies.email
@@ -20,11 +20,6 @@ export const postEnterEmail = async (req, res) => {
       data: { email },
       errors: errors.array()
     })
-  }
-
-  // Clear session
-  for (const sessionKey of Object.keys(req.session)) {
-    delete req.session[sessionKey]
   }
 
   req.session.email = email

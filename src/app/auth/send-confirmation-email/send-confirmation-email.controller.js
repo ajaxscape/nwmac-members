@@ -1,4 +1,4 @@
-import sendEmail from '../../../lib/utils/send-email.js'
+import sendEmail from '#utils/send-email.js'
 
 export const sendConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: 'Club member' }

@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator'
-import { storeData } from '../../../lib/utils/store-session-data.js'
-import { redirectUrl } from '../middleware/redirect-url.js'
+import { storeData } from '#utils/store-session-data.js'
+import { redirectUrl } from '#utils/redirect-url.js'
 
 export const viewSelectMembershipType = (req, res) => {
   res.render('pages/details/membership-type', { locals: res.locals })

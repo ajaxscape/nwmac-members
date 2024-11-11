@@ -54,5 +54,10 @@
     "db:reset": "npx prisma migrate reset --force",
     "db:seed": "npm run prisma-generate && npx prisma db seed",
     "prisma-generate": "cd src && npx prisma generate"
+  },
+  "imports": {
+    "#utils/*.js": "./src/lib/utils/*.js",
+    "#middleware/*.js": "./src/lib/middleware/*.js",
+    "#repos/*.js": "./src/repositories/*.js"
   }
 }

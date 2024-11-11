@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator'
-import { storeData } from '../../../lib/utils/store-session-data.js'
+import { storeData } from '#utils/store-session-data.js'
 
 export const viewTrustBrowser = (req, res) => {
   res.render('pages/auth/trust-browser', { locals: res.locals })

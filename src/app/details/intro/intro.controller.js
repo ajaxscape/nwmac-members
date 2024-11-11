@@ -1,4 +1,4 @@
-import { getAchievements } from '../../../repositories/achievement.repository.js'
+import { getAchievements } from '#repos/achievement.repository.js'
 
 export const viewIntro = async (req, res) => {
   const achievements = await getAchievements()

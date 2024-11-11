@@ -1,8 +1,8 @@
-import { getAchievementCategories } from '../../../repositories/achievement-category.repository.js'
-import { getAchievements } from '../../../repositories/achievement.repository.js'
+import { getAchievementCategories } from '#repos/achievement-category.repository.js'
 import { validationResult } from 'express-validator'
-import { storeData } from '../../../lib/utils/store-session-data.js'
-import { redirectUrl } from '../middleware/redirect-url.js'
+import { storeData } from '#utils/store-session-data.js'
+import { redirectUrl } from '#utils/redirect-url.js'
+import { getAchievements } from '#repos/achievement.repository.js'
 
 const retrieveAchievements = async (data) => {
   const achievementCategories = await getAchievementCategories()

@@ -1,4 +1,4 @@
-import { getMembers } from '../repositories/member.repository.js'
+import { getMembers } from '#repos/member.repository.js'
 
 export const restoreData = async (req, res, next) => {
   if (!req.session.email) {
