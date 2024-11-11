@@ -1,12 +1,58 @@
 {% extends "layouts/main-layout.njk" %}
 
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set renewal = data.firstName.length > 1 %}
 
 {% block content %}
     {% set baseUrl = "/details/edit" %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds-from-desktop">
-            <h1 class="govuk-heading-l">Welcome {{ data.preferredName if data.preferedName else data.firstName }}</h1>
+            {% if renewal %}
+                <h1 class="govuk-heading-l">Renewal of membership</h1>
+
+                <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, it's time to renew your membership for the next year.</p>
+                <p class="govuk-body">Please make your way through the next few pages updating any missing information or any information that has changed.</p>
+
+
+                {{ govukSummaryList({
+                    classes: "govuk-!-margin-bottom-9",
+                    rows: [
+                        {
+                            key: { text: 'NWMAC number' },
+                            value: { text: data.membershipNumber }
+                        },
+                        {
+                            key: { text: 'Name' },
+                            value: { text: data | formatName }
+                        },
+                        {
+                            key: { text: 'BMFA membership' },
+                            value: { html: data | formatBmfaMembership }
+                        },
+                        {
+                            key: { text: 'Operator ID' },
+                            value: { html: data | formatOperatorId},
+                            classes: 'govuk-!-display-none' if (not data.flyerId.length) or data.ageGroup === 'junior'
+                        },
+                        {
+                            key: { text: 'Flyer ID' },
+                            value: { html: data | formatFlyerId },
+                            classes: 'govuk-!-display-none' if not data.flyerId
+                        },
+                        {
+                            key: { text: 'Achievements' },
+                            value: { html: formatAchievements(data, achievements) },
+                            classes: 'govuk-!-display-none' if data.achievements.length === 0
+                        }
+                    ]
+                }) }}
+            {% else %}
+                <h1 class="govuk-heading-l">Application for membership</h1>
+
+                <p class="govuk-body">Hi, please enter the required information in the following pages to allow us to process your application for membership.</p>
+            {% endif %}
         </div>
     </div>
 
