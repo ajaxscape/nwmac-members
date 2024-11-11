@@ -7,10 +7,6 @@ export const viewEnterEmail = (req, res) => {
     req.session.email = email
     res.redirect('/details')
   } else {
-    // Clear session
-    for (const sessionKey of Object.keys(req.session)) {
-      delete req.session[sessionKey]
-    }
     res.render('pages/auth/enter-email', { locals: res.locals })
   }
 }
@@ -24,6 +20,11 @@ export const postEnterEmail = async (req, res) => {
       data: { email },
       errors: errors.array()
     })
+  }
+
+  // Clear session
+  for (const sessionKey of Object.keys(req.session)) {
+    delete req.session[sessionKey]
   }
 
   req.session.email = email
