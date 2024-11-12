@@ -1,6 +1,6 @@
 import sendEmail from '#utils/send-email.js'
 
-export const sendConfirmationEmail = async (req, res) => {
+export const sendSecurityTokenEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: 'Club member' }
   req.session.securityCode =
     Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
