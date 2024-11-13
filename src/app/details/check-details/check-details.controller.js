@@ -9,6 +9,14 @@ import {
 } from '#repos/member-achievement.repository.js'
 import { validationResult } from 'express-validator'
 
+/**
+ * Load the body with the session data so the validators will work correctly
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
 export const loadBodyForValidation = async (req, res, next) => {
   Object.keys(req.session).forEach((key) => {
     req.body[key] = req.session[key] ?? null
@@ -16,7 +24,6 @@ export const loadBodyForValidation = async (req, res, next) => {
   next()
 }
 
-// redirect-url.js
 export const viewCheckDetails = async (req, res) => {
   const achievements = await getAchievements()
   res.render('pages/details/check-details', {
