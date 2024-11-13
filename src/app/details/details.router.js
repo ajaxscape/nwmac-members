@@ -10,8 +10,10 @@ import bmfaMembershipRouter from './bmfa-membership/bmfa-membership.router.js'
 import caaRegistrationRouter from './caa-registration/caa-registration.router.js'
 import checkDetailsRouter from './check-details/check-details.router.js'
 import nonClubContactRouter from './non-club-contact/non-club-contact.router.js'
-import confirmationOfDetailsRouter from './confirmation-of-details/confirmation-of-details.router.js'
+import applicationConfirmationRouter from './application-confirmation/application-confirmation.router.js'
 import introRouter from './intro/intro.router.js'
+import renewalConfirmationRouter from './renewal-confirmation/renewal-confirmation.router.js'
+import sendConfirmationEmailRouter from './send-confirmation-email/send-confirmation-email.router.js'
 
 const router = express.Router()
 
@@ -28,7 +30,9 @@ router.use('/bmfa-membership', bmfaMembershipRouter)
 router.use('/caa-registration', caaRegistrationRouter)
 router.use('/non-club-contact', nonClubContactRouter)
 router.use('/check-details', checkDetailsRouter)
-router.use('/confirmation-of-details', confirmationOfDetailsRouter)
+router.use('/application-confirmation', applicationConfirmationRouter)
+router.use('/renewal-confirmation', renewalConfirmationRouter)
+router.use('/send-confirmation-email', sendConfirmationEmailRouter)
 
 router.get('/', (req, res) => {
   res.redirect('/details/intro')

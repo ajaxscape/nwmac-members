@@ -1,0 +1,26 @@
+{% extends "layouts/main-layout.njk" %}
+{% set mainClasses = "govuk-main-wrapper--l" %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukPanel({
+                titleText: "Renewal complete",
+                html: "Your renewal for " + data.currentRenewalYear + " will now be processed"
+            }) }}
+
+            <p class="govuk-body">We have sent you a confirmation email including details of how to pay your club membership.</p>
+
+            <h2 class="govuk-heading-m">What happens next</h2>
+
+            <p class="govuk-body">
+                Our treasurer will now await your payment.
+            </p>
+            <p class="govuk-body">
+                You will receive a confirmation email when your payment has been received and confirmed.
+            </p>
+        </div>
+    </div>
+{% endblock %}

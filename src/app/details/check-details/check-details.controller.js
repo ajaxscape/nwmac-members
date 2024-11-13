@@ -121,5 +121,6 @@ export const postCheckDetails = async (req, res) => {
     await deleteMemberAchievementsByMemberId(member.id, tx)
     await createMemberAchievementsByMemberId(member.id, achievements, tx)
   })
-  res.redirect(redirectUrl('confirmation-of-details', res))
+
+  res.redirect(redirectUrl('send-confirmation-email', res))
 }

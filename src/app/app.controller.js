@@ -1,4 +1,5 @@
 import { getMembers } from '#repos/member.repository.js'
+import currentRenewalYear from '#utils/current-renewal-year.js'
 
 export const restoreData = async (req, res, next) => {
   if (!req.session.email) {
@@ -84,6 +85,7 @@ export const setLocals = (req, res, next) => {
   if (achievements) {
     res.locals.data.achievements = [achievements].flat()
   }
+  res.locals.data.currentRenewalYear = currentRenewalYear()
   next()
 }
 
