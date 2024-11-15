@@ -13,7 +13,8 @@ import nonClubContactRouter from './non-club-contact/non-club-contact.router.js'
 import applicationConfirmationRouter from './application-confirmation/application-confirmation.router.js'
 import introRouter from './intro/intro.router.js'
 import renewalConfirmationRouter from './renewal-confirmation/renewal-confirmation.router.js'
-import sendConfirmationEmailRouter from './send-confirmation-email/send-confirmation-email.router.js'
+import sendApplicationConfirmationEmailRouter from './send-application-confirmation-email/send-application-confirmation-email.router.js'
+import sendRenewalConfirmationEmailRouter from './send-renewal-confirmation-email/send-renewal-confirmation-email.router.js'
 
 const router = express.Router()
 
@@ -32,7 +33,14 @@ router.use('/non-club-contact', nonClubContactRouter)
 router.use('/check-details', checkDetailsRouter)
 router.use('/application-confirmation', applicationConfirmationRouter)
 router.use('/renewal-confirmation', renewalConfirmationRouter)
-router.use('/send-confirmation-email', sendConfirmationEmailRouter)
+router.use(
+  '/send-application-confirmation-email',
+  sendApplicationConfirmationEmailRouter
+)
+router.use(
+  '/send-renewal-confirmation-email',
+  sendRenewalConfirmationEmailRouter
+)
 
 router.get('/', (req, res) => {
   res.redirect('/details/intro')

@@ -129,5 +129,9 @@ export const postCheckDetails = async (req, res) => {
     await createMemberAchievementsByMemberId(member.id, achievements, tx)
   })
 
-  res.redirect(redirectUrl('send-confirmation-email', res))
+  if (req.session.membershipNumber) {
+    res.redirect(redirectUrl('send-renewal-confirmation-email', res))
+  } else {
+    res.redirect(redirectUrl('send-application-confirmation-email', res))
+  }
 }

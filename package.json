@@ -57,6 +57,7 @@
   },
   "imports": {
     "#utils/*.js": "./src/lib/utils/*.js",
+    "#nunjucks-filters/*.js": "./src/lib/nunjucks-filters/*.js",
     "#middleware/*.js": "./src/lib/middleware/*.js",
     "#repos/*.js": "./src/repositories/*.js"
   }

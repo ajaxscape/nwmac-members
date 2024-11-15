@@ -27,7 +27,7 @@ export const postEnterEmail = async (req, res) => {
   const emailIsRecognised = await identifyEmail(email)
 
   if (emailIsRecognised) {
-    res.redirect('/auth/send-confirmation-email')
+    res.redirect('/auth/send-security-token-email')
   } else {
     res.redirect('/auth/unknown-email')
   }

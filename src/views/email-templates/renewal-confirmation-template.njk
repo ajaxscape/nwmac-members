@@ -1,8 +1,11 @@
+<body>
+<p>Dear {{ fullName }},</p>
+<p>We have received your renewal request with the following answers:</p>
 <table>
     <tbody>
-    <tr>
-        <th>Name</th>
-        <td>{{ fullName }}</td>
-    </tr>
+    {% for answer in answers %}
+        <tr><td style="vertical-align: top"><strong>{{ answer.key }}</strong></td><td>{{ answer.value | safe }}</td></tr>
+    {% endfor %}
     </tbody>
 </table>
+</body>
