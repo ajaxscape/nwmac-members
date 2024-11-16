@@ -3,6 +3,7 @@ import {
   TransactionalEmailsApi,
   TransactionalEmailsApiApiKeys
 } from '@getbrevo/brevo'
+import config from '#config/config.js'
 
 export default async function ({
   subject = '',
@@ -13,7 +14,7 @@ export default async function ({
 
   apiInstance.setApiKey(
     TransactionalEmailsApiApiKeys.apiKey,
-    process.env.EMAIL_API_KEY
+    config.emailApiKey
   )
 
   const sendSmtpEmail = new SendSmtpEmail()
@@ -22,7 +23,7 @@ export default async function ({
   sendSmtpEmail.htmlContent = content
   sendSmtpEmail.sender = {
     name: 'Club Secretary',
-    email: process.env.EMAIL_SENT_FROM_ADDRESS
+    email: config.emailFromAddress
   }
   sendSmtpEmail.to = recipients
 

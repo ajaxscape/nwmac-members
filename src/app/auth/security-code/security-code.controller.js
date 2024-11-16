@@ -1,11 +1,10 @@
 import { getMembers } from '#repos/member.repository.js'
+import config from '#config/config.js'
 
 export const viewSecurityCode = (req, res) => {
   res.render('pages/auth/security-code', {
     locals: res.locals,
-    securityCode: process.env.SKIP_SECURITY_CODE_EMAIL
-      ? req.session.securityCode
-      : ''
+    securityCode: config.skipSecurityCodeEmail ? req.session.securityCode : ''
   })
 }
 

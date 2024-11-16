@@ -16,7 +16,10 @@ export const postTrustBrowser = (req, res) => {
   storeData(req, res)
 
   if (req.body.trustBrowser === 'yes') {
-    res.cookie('email', req.session.email, { signed: true })
+    res.cookie('email', req.session.email, {
+      signed: true,
+      maxAge: 2592000000 // 30 days
+    })
   }
 
   res.redirect('/details')

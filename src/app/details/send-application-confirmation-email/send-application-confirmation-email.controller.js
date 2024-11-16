@@ -2,6 +2,7 @@ import sendEmail from '#utils/send-email.js'
 import nunjucks from 'nunjucks'
 import formatName from '../../../lib/nunjucks-filters/format-name.js'
 import { redirectUrl } from '#utils/redirect-url.js'
+import config from '#config/config.js'
 
 export const sendApplicationConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: formatName(req.session) }
@@ -12,13 +13,13 @@ export const sendApplicationConfirmationEmail = async (req, res) => {
       fullName: formatName(req.session)
     }
   )
-  const success =
-    process.env.SKIP_SECURITY_CODE_EMAIL ??
-    (await sendEmail({
-      subject: 'North Wilts Model Aircraft Club Membership Application',
-      content: emailTemplate,
-      recipients: [recipient]
-    }))
+  const success = config.skipSecurityCodeEmail
+    ? true
+    : await sendEmail({
+        subject: 'North Wilts Model Aircraft Club Membership Application',
+        content: emailTemplate,
+        recipients: [recipient]
+      })
   if (!success) {
     throw new Error('Failed to send application confirmation email')
   } else {
