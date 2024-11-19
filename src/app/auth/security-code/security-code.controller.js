@@ -4,7 +4,7 @@ import config from '#config/config.js'
 export const viewSecurityCode = (req, res) => {
   res.render('pages/auth/security-code', {
     locals: res.locals,
-    securityCode: config.skipSecurityCodeEmail ? req.session.securityCode : ''
+    securityCode: config.canSendEmail ? '' : req.session.securityCode
   })
 }
 

@@ -4,12 +4,32 @@ import {
   TransactionalEmailsApiApiKeys
 } from '@getbrevo/brevo'
 import config from '#config/config.js'
+import * as fs from 'node:fs'
+
+const dumpEmail = async (content) => {
+  const dir = `${process.cwd()}/temp/email`
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  fs.writeFile(`${dir}/email-${Date.now()}.html`, content, err => {
+    if (err) {
+      console.error(err);
+    } else {
+      // file written successfully
+    }
+  });
+}
 
 export default async function ({
   subject = '',
   content = '',
   recipients = []
 }) {
+  if (!config.canSendEmail) {
+    await dumpEmail(content)
+    return true;
+  }
+
   const apiInstance = new TransactionalEmailsApi()
 
   apiInstance.setApiKey(

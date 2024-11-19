@@ -7,7 +7,6 @@ import formatAmount from '#nunjucks-filters/format-amount.js'
 import mapAnswers from '#utils/map-answers.js'
 import mapBankDetails from '#utils/map-bank-details.js'
 import mapFees from '#utils/map-fees.js'
-import config from '#config/config.js'
 
 export const sendRenewalConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: formatName(req.session) }
@@ -35,9 +34,7 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
     }
   )
 
-  const success = config.skipSecurityCodeEmail
-    ? true
-    : await sendEmail({
+  const success = await sendEmail({
         subject: 'North Wilts Model Aircraft Club Membership Renewal',
         content: emailTemplate,
         recipients: [recipient]
