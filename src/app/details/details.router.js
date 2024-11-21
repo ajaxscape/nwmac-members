@@ -15,6 +15,7 @@ import introRouter from './intro/intro.router.js'
 import renewalConfirmationRouter from './renewal-confirmation/renewal-confirmation.router.js'
 import sendApplicationConfirmationEmailRouter from './send-application-confirmation-email/send-application-confirmation-email.router.js'
 import sendRenewalConfirmationEmailRouter from './send-renewal-confirmation-email/send-renewal-confirmation-email.router.js'
+import confirmPaymentRouter from './confirm-payment/confirm-payment.router.js'
 
 const router = express.Router()
 
@@ -33,6 +34,7 @@ router.use('/non-club-contact', nonClubContactRouter)
 router.use('/check-details', checkDetailsRouter)
 router.use('/application-confirmation', applicationConfirmationRouter)
 router.use('/renewal-confirmation', renewalConfirmationRouter)
+router.use('/confirm-payment', confirmPaymentRouter)
 router.use(
   '/send-application-confirmation-email',
   sendApplicationConfirmationEmailRouter

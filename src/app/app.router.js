@@ -3,6 +3,7 @@ import detailsRouter from './details/details.router.js'
 import authRouter from './auth/auth-router.js'
 import {
   authenticate,
+  registerCurrentFees,
   registerMembershipState,
   setLocals
 } from './app.controller.js'
@@ -15,6 +16,7 @@ router.use('/details', [
   authenticate,
   setLocals,
   registerMembershipState,
+  registerCurrentFees,
   detailsRouter
 ])
 

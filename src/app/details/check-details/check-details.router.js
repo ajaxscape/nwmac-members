@@ -22,12 +22,13 @@ import {
   validateFlyerId,
   validateOperatorId
 } from '../caa-registration/caa-registration.validator.js'
+import { restoreData, setLocals } from '../../app.controller.js'
 
 const router = express.Router()
 
 router
   .route('/')
-  .get(viewCheckDetails)
+  .get(restoreData, setLocals, viewCheckDetails)
   .post(
     loadBodyForValidation,
     validateFirstName(),

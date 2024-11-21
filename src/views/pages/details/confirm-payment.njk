@@ -1,0 +1,32 @@
+{% extends "layouts/form-layout.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+
+{% set pageTitle="Confirm payment" %}
+
+{% block formContent %}
+        {{ govukRadios({
+            name: "confirmPayment",
+            value: data.confirmPayment,
+            hint: { text: "Please select yes if you have paid via your online bank" },
+            fieldset: {
+                legend: {
+                    text: pageTitle,
+                    classes: "govuk-fieldset__legend--l",
+                    isPageHeading: true
+                }
+            },
+            items: [
+                {
+                    value: "yes",
+                    text: "Yes"
+                },
+                {
+                    value: "No",
+                    text: "No"
+                }
+            ],
+            errorMessage: mapToError(errors, "confirmPayment")
+        }) }}
+{% endblock %}

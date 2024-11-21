@@ -20,7 +20,7 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-  res.redirect(`/auth/enter-email`)
+  res.redirect('/auth/enter-email')
 })
 
 export default router

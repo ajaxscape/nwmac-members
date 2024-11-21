@@ -7,7 +7,7 @@
 {% set pageTitle="Welcome to the NWMAC membership portal" %}
 
 {% block content %}
-  <form method="post" novalidate="novalidate" action="">
+  <form method="post" novalidate="novalidate" action="?nextUrl={{ nextUrl }}">
     {% include "includes/csrf.njk" %}
 
     {% call govukFieldset({

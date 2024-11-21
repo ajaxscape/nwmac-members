@@ -1,7 +1,17 @@
 import prisma from './utils/prisma-client.js'
 
 export function getMembers(data, tx = prisma) {
-  const options = { include: { address: true, memberAchievements: true } }
+  const options = {
+    include: {
+      address: true,
+      memberAchievements: true,
+      memberCommitteeRoles: {
+        include: {
+          committeeRole: true
+        }
+      }
+    }
+  }
   if (data) {
     options.where = data
   }
@@ -21,7 +31,18 @@ export function upsertMember(data, tx = prisma) {
 }
 
 export function getMemberById(id, tx = prisma) {
-  return tx.member.findUnique({ where: { id } })
+  return tx.member.findUnique({
+    include: {
+      address: true,
+      memberAchievements: true,
+      memberCommitteeRoles: {
+        include: {
+          committeeRole: true
+        }
+      }
+    },
+    where: { id }
+  })
 }
 
 export function deleteMember(id, tx = prisma) {

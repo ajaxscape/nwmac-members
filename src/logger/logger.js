@@ -1,10 +1,11 @@
 import pino from 'pino'
+import config from '#config/config.js'
 
 const transportTarget = new URL('./pino-pretty-transport.js', import.meta.url)
 
 const options = {}
 
-if (process.env.NODE_ENV === 'development') {
+if (config.isDevelopment) {
   options.transport = {
     target: transportTarget.href
   }
@@ -12,4 +13,4 @@ if (process.env.NODE_ENV === 'development') {
 
 export const transportOptions = options
 
-export default pino({})
+export default pino(options)

@@ -1,5 +1,6 @@
 import { getMembers } from '#repos/member.repository.js'
 import currentRenewalYear from '#utils/current-renewal-year.js'
+import { getSubscription } from '#repos/subscription.repository.js'
 
 export const restoreData = async (req, res, next) => {
   if (!req.session.email) {
@@ -91,12 +92,18 @@ export const setLocals = (req, res, next) => {
 
 export const authenticate = (req, res, next) => {
   if (!req.session.email) {
-    return res.redirect('/auth')
+    req.session.nextUrl = req.originalUrl
+    return res.redirect(`/auth`)
   }
   next()
 }
 
 export const registerMembershipState = (req, res, next) => {
   res.locals.edit = req.url.split('/').some((tag) => tag === 'edit')
+  next()
+}
+
+export const registerCurrentFees = async (req, res, next) => {
+  req.session.fees = await getSubscription(currentRenewalYear())
   next()
 }

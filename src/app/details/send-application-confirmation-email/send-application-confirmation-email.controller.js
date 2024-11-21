@@ -12,13 +12,11 @@ export const sendApplicationConfirmationEmail = async (req, res) => {
       fullName: formatName(req.session)
     }
   )
-  const success =
-    process.env.SKIP_SECURITY_CODE_EMAIL ??
-    (await sendEmail({
-      subject: 'North Wilts Model Aircraft Club Membership Application',
-      content: emailTemplate,
-      recipients: [recipient]
-    }))
+  const success = await sendEmail({
+        subject: 'North Wilts Model Aircraft Club Membership Application',
+        content: emailTemplate,
+        recipients: [recipient]
+      })
   if (!success) {
     throw new Error('Failed to send application confirmation email')
   } else {
