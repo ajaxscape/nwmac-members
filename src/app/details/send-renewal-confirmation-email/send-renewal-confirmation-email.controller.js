@@ -30,15 +30,16 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
       items,
       total: formatAmount(total),
       fullName: formatName(req.session),
-      clubSecretaryName: await clubSecretaryName()
+      clubSecretaryName: await clubSecretaryName(),
+      confirmPaymentUrl: `${req.protocol}://${req.get('host')}/details/confirm-payment`
     }
   )
 
   const success = await sendEmail({
-        subject: 'North Wilts Model Aircraft Club Membership Renewal',
-        content: emailTemplate,
-        recipients: [recipient]
-      })
+    subject: 'North Wilts Model Aircraft Club Membership Renewal',
+    content: emailTemplate,
+    recipients: [recipient]
+  })
   if (!success) {
     throw new Error('Failed to send renewal confirmation email')
   } else {

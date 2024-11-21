@@ -1,5 +1,5 @@
 import pino from 'pino'
-import config from '#config/config.js.js'
+import config from '#config/config.js'
 
 const transportTarget = new URL('./pino-pretty-transport.js', import.meta.url)
 

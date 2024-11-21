@@ -19,6 +19,10 @@ export const postSecurityCode = async (req, res) => {
       ]
     })
   }
+  const { nextUrl } = req.session || {}
+  if (nextUrl) {
+    return res.redirect(nextUrl)
+  }
   const [member] = await getMembers({ email: req.session.email })
   if (member) {
     res.redirect(`/auth/trust-browser`)

@@ -7,7 +7,10 @@ export const viewEnterEmail = (req, res) => {
     req.session.email = email
     res.redirect('/details')
   } else {
-    res.render('pages/auth/enter-email', { locals: res.locals })
+    res.render('pages/auth/enter-email', {
+      locals: res.locals,
+      nextUrl: req.session.nextUrl
+    })
   }
 }
 
@@ -23,6 +26,7 @@ export const postEnterEmail = async (req, res) => {
   }
 
   req.session.email = email
+  req.session.nextUrl = req.query.nextUrl
 
   const emailIsRecognised = await identifyEmail(email)
 

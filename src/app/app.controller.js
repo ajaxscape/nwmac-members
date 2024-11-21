@@ -92,7 +92,8 @@ export const setLocals = (req, res, next) => {
 
 export const authenticate = (req, res, next) => {
   if (!req.session.email) {
-    return res.redirect('/auth')
+    req.session.nextUrl = req.originalUrl
+    return res.redirect(`/auth`)
   }
   next()
 }
