@@ -10,7 +10,7 @@ import mapFees from '#utils/map-fees.js'
 
 export const sendRenewalConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: formatName(req.session) }
-  const { clubFee = 0, bmfaFee = 0, caaReg = 0 } = req.session.fees || {}
+  const { clubFee = 0, bmfaFee = 0, caaReg = 0 } = req.session.fees
 
   let total = clubFee
   if (req.session.bmfaThroughClub) {
