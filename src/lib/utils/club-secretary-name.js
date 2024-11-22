@@ -9,8 +9,8 @@ export default async () => {
   )
 
   return `${
-    clubSecretary.preferredName
+    clubSecretary?.preferredName
       ? clubSecretary.preferredName
-      : clubSecretary.firstName
-  } ${clubSecretary.lastName}`
+      : (clubSecretary?.firstName ?? '')
+  } ${clubSecretary?.lastName ?? ''}`.trim()
 }
