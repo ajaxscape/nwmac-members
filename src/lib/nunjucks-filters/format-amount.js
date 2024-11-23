@@ -1,3 +1,3 @@
 export default function formatAmount(amountInPence) {
-  return `£${(amountInPence / 100).toFixed(2)}`
+  return `&pound;${(amountInPence / 100).toFixed(2)}`
 }

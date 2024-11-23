@@ -17,36 +17,7 @@
             <h2 class="govuk-heading-m">What you should do now</h2>
 
             <p class="govuk-body">
-                You should now pay the total shown below using the bank details provided.
-            </p>
-
-            {{ govukSummaryList({
-                classes: "govuk-!-margin-bottom-9",
-                rows: [
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'NWMAC' },
-                        value: { text: clubFee | formatAmount }
-                    },
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'BMFA' },
-                        value: { text: bmfaFee | formatAmount }
-                    },
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'CAA' },
-                        value: { text: caaReg | formatAmount }
-                    },
-                    {
-                        key: { text: 'Total' },
-                        value: { classes: 'govuk-!-font-weight-bold', text: total | formatAmount }
-                    }
-                ]
-            })}}
-
-            <p class="govuk-body">
-                The club's bank account details are as follows.
+                Please pay <span class="govuk-!-font-weight-bold">{{ total | formatAmount | safe }}</span> using the bank details provided.
             </p>
 
             {{ govukSummaryList({
@@ -75,14 +46,21 @@
                 ]
             })}}
 
+            <p class="govuk-body">
+                After you have paid please <a href="/details/confirm-payment" class="govuk-link">click this confirmation link</a> to confirm your payment.
+            </p>
+
+            <p class="govuk-body govuk-hint">
+                Please note that there is also a confirmation of payment link in the email we just sent you just in case you lose this page.
+            </p>
+
             <h2 class="govuk-heading-m">What happens next</h2>
 
             <p class="govuk-body">
-                Please pay for your membership online with the following bank details and a
                 Our treasurer will now await your payment.
             </p>
             <p class="govuk-body">
-                You will receive a confirmation email when your payment has been received and confirmed.
+                You will receive a confirmation email when your payment has been confirmed.
             </p>
         </div>
     </div>

@@ -1,4 +1,3 @@
-import { getMembers } from '#repos/member.repository.js'
 import config from '#config/config.js'
 
 export const viewSecurityCode = (req, res) => {
@@ -19,14 +18,5 @@ export const postSecurityCode = async (req, res) => {
       ]
     })
   }
-  const { nextUrl } = req.session || {}
-  if (nextUrl) {
-    return res.redirect(nextUrl)
-  }
-  const [member] = await getMembers({ email: req.session.email })
-  if (member) {
-    res.redirect(`/auth/trust-browser`)
-  } else {
-    res.redirect('/details')
-  }
+  res.redirect('/auth/restore-data')
 }

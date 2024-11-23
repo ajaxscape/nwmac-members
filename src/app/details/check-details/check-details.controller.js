@@ -8,6 +8,8 @@ import {
   deleteMemberAchievementsByMemberId
 } from '#repos/member-achievement.repository.js'
 import { validationResult } from 'express-validator'
+import calculateFees from '#utils/calculate-fees.js'
+import currentRenewalYear from '#utils/current-renewal-year.js'
 
 /**
  * Load the body with the session data so the validators will work correctly
@@ -28,7 +30,9 @@ export const viewCheckDetails = async (req, res) => {
   const achievements = await getAchievements()
   res.render('pages/details/check-details', {
     locals: res.locals,
-    achievements
+    achievements,
+    fees: calculateFees(req.session),
+    year: currentRenewalYear()
   })
 }
 
@@ -58,6 +62,8 @@ export const postCheckDetails = async (req, res) => {
     return res.render('pages/details/check-details', {
       locals: res.locals,
       achievements,
+      fees: calculateFees(req.session),
+      year: currentRenewalYear(),
       errors: summaryErrors,
       errorFields
     })

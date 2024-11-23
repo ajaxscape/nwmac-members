@@ -1,14 +1,7 @@
 export default (data) => {
-  const { firstName='', lastName='', middleName='', preferredName='' } = data
-  let fullName = ''
+  const { firstName = '', lastName = '', preferredName = '' } = data
 
-  if (preferredName) {
-    fullName += `(${preferredName}) `
-  }
-  fullName += firstName
-  if (middleName) {
-    fullName += ` ${middleName}`
-  }
-  fullName += ` ${lastName}`
-  return fullName
+  return `${
+    preferredName ? preferredName : (firstName ?? '')
+  } ${lastName ?? ''}`.trim()
 }

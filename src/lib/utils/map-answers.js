@@ -1,15 +1,14 @@
-import formatName from '#nunjucks-filters/format-name.js'
+import formatFullName from '#nunjucks-filters/format-full-name.js'
 import formatAddress from '#nunjucks-filters/format-address.js'
 import formatPhoneNumbers from '#nunjucks-filters/format-phone-numbers.js'
-import formatBmfaMembership
-  from '#nunjucks-filters/format-bmfa-membership.js'
+import formatBmfaMembership from '#nunjucks-filters/format-bmfa-membership.js'
 import formatOperatorId from '#nunjucks-filters/format-operator-id.js'
 import formatFlyerId from '#nunjucks-filters/format-flyer-id.js'
 
 export default function mapAnswers(req) {
   return [
     { key: 'Membership number', value: req.session.membershipNumber },
-    { key: 'Name', value: formatName(req.session) },
+    { key: 'Name', value: formatFullName(req.session) },
     {
       key: 'Address',
       value: formatAddress(req.session).replace(/\n/g, ',<br>')

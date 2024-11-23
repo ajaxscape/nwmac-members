@@ -22,7 +22,7 @@
                     },
                     {
                         key: { text: 'Name' },
-                        value: { text: data | formatName },
+                        value: { text: data | formatFullName },
                         classes: 'nwmac-error' if errorFields.name,
                         actions: formatActions('name')
                     },
@@ -80,6 +80,33 @@
                     }
                 ]
             }) }}
+
+            <h2 class="govuk-heading-m">Cost for {{ year }}</h2>
+
+            {{ govukSummaryList({
+                classes: "govuk-!-margin-bottom-9",
+                rows: [
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'NWMAC' },
+                        value: { text: fees.clubFee | formatAmount | safe }
+                    },
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'BMFA' },
+                        value: { text: fees.bmfaFee | formatAmount | safe }
+                    },
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'CAA' },
+                        value: { text: fees.caaReg | formatAmount | safe }
+                    },
+                    {
+                        key: { text: 'Total' },
+                        value: { classes: 'govuk-!-font-weight-bold', text: fees.total | formatAmount | safe }
+                    }
+                ]
+            })}}
 
             <h2 class="govuk-heading-m">Now send your application</h2>
 

@@ -10,7 +10,10 @@ import mapFees from '#utils/map-fees.js'
 import calculateFees from '#utils/calculate-fees.js'
 
 export const sendRenewalConfirmationEmail = async (req, res) => {
-  const recipient = { email: req.session.email, name: formatName(req.session) }
+  const recipient = {
+    email: req.session.email,
+    name: formatName(req.session)
+  }
   const { total } = calculateFees(req.session)
 
   const answers = mapAnswers(req)

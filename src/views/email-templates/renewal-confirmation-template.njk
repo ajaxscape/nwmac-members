@@ -17,14 +17,14 @@
 <table>
     <tbody>
     {% for item in items %}
-        <tr><td style="vertical-align: top"><strong>{{ item.key }}</strong></td><td style="vertical-align: top">{{ item.value }}</td></tr>
+        <tr><td style="vertical-align: top"><strong>{{ item.key }}</strong></td><td style="vertical-align: top">{{ item.value | safe }}</td></tr>
     {% endfor %}
     <tr><td colspan="2"><hr></td></tr>
-    <tr><td style="vertical-align: top"><strong>Total</strong></td><td style="vertical-align: top">{{ total }}</td></tr>
+    <tr><td style="vertical-align: top"><strong>Total</strong></td><td style="vertical-align: top">{{ total | safe }}</td></tr>
     </tbody>
 </table>
 
-<h3>Please can you make an online payment to the following account:</h3>
+<h3>If you haven't yet paid, please can you make an online payment of {{ total | safe }} to the following account:</h3>
 
 <table>
     <tbody>

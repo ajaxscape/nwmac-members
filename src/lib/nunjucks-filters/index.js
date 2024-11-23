@@ -1,5 +1,6 @@
 import mapToErrorSummary from './map-to-error-summary.js'
 import mapAchievementsToItems from './map-achievements-to-items.js'
+import formatFullName from './format-full-name.js'
 import formatName from './format-name.js'
 import formatAddress from './format-address.js'
 import formatBmfaMembership from './format-bmfa-membership.js'
@@ -11,6 +12,7 @@ import formatAmount from '#nunjucks-filters/format-amount.js'
 const filters = {
   mapToErrorSummary,
   mapAchievementsToItems,
+  formatFullName,
   formatName,
   formatAddress,
   formatBmfaMembership,
