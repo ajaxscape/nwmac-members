@@ -2,6 +2,9 @@ import { validationResult } from 'express-validator'
 import { storeData } from '#utils/store-session-data.js'
 
 export const viewTrustBrowser = (req, res) => {
+  if (req.body.trustBrowser) {
+    res.redirect('/details')
+  }
   res.render('pages/auth/trust-browser', { locals: res.locals })
 }
 
