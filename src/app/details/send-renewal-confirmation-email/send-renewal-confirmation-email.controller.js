@@ -7,15 +7,11 @@ import formatAmount from '#nunjucks-filters/format-amount.js'
 import mapAnswers from '#utils/map-answers.js'
 import mapBankDetails from '#utils/map-bank-details.js'
 import mapFees from '#utils/map-fees.js'
+import calculateFees from '#utils/calculate-fees.js'
 
 export const sendRenewalConfirmationEmail = async (req, res) => {
   const recipient = { email: req.session.email, name: formatName(req.session) }
-  const { clubFee = 0, bmfaFee = 0, caaReg = 0 } = req.session.fees
-
-  let total = clubFee
-  if (req.session.bmfaThroughClub) {
-    total += bmfaFee + caaReg
-  }
+  const { total } = calculateFees(req.session)
 
   const answers = mapAnswers(req)
   const bankDetails = mapBankDetails(req)

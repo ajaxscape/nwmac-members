@@ -6,6 +6,7 @@ import formatBmfaMembership from './format-bmfa-membership.js'
 import formatPhoneNumbers from './format-phone-numbers.js'
 import formatFlyerId from './format-flyer-id.js'
 import formatOperatorId from './format-operator-id.js'
+import formatAmount from '#nunjucks-filters/format-amount.js'
 
 const filters = {
   mapToErrorSummary,
@@ -15,7 +16,8 @@ const filters = {
   formatBmfaMembership,
   formatPhoneNumbers,
   formatFlyerId,
-  formatOperatorId
+  formatOperatorId,
+  formatAmount
 }
 
 export default (env) => {
