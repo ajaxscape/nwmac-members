@@ -20,6 +20,8 @@ export const postTrustBrowser = (req, res) => {
       signed: true,
       maxAge: 2592000000 // 30 days
     })
+  } else {
+    res.clearCookie('email')
   }
 
   res.redirect('/details')

@@ -16,8 +16,23 @@ import renewalConfirmationRouter from './renewal-confirmation/renewal-confirmati
 import sendApplicationConfirmationEmailRouter from './send-application-confirmation-email/send-application-confirmation-email.router.js'
 import sendRenewalConfirmationEmailRouter from './send-renewal-confirmation-email/send-renewal-confirmation-email.router.js'
 import confirmPaymentRouter from './confirm-payment/confirm-payment.router.js'
+import authenticate from '#middleware/authenticate.js'
+import setLocals from '#middleware/set-locals.js'
+import registerMembershipState from '#middleware/register-membership-state.js'
+import registerCurrentFees from '#middleware/register-current-fees.js'
 
 const router = express.Router()
+
+router.use(
+  authenticate,
+  setLocals,
+  registerMembershipState,
+  registerCurrentFees
+)
+
+router.get('/', (req, res) => {
+  res.redirect('/details/intro')
+})
 
 router.use('/edit', router)
 
@@ -43,9 +58,5 @@ router.use(
   '/send-renewal-confirmation-email',
   sendRenewalConfirmationEmailRouter
 )
-
-router.get('/', (req, res) => {
-  res.redirect('/details/intro')
-})
 
 export default router

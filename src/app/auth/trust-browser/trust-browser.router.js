@@ -1,6 +1,5 @@
 import express from 'express'
 
-import { authenticate, setLocals } from '../../app.controller.js'
 import {
   postTrustBrowser,
   viewTrustBrowser
@@ -11,7 +10,7 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(authenticate, setLocals, viewTrustBrowser)
-  .post(authenticate, setLocals, validateTrustBrowser(), postTrustBrowser)
+  .get(viewTrustBrowser)
+  .post(validateTrustBrowser(), postTrustBrowser)
 
 export default router

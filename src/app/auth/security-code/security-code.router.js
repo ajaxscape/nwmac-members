@@ -1,6 +1,5 @@
 import express from 'express'
 
-import { authenticate, setLocals } from '../../app.controller.js'
 import {
   postSecurityCode,
   viewSecurityCode
@@ -8,9 +7,6 @@ import {
 
 const router = express.Router()
 
-router
-  .route('/')
-  .get(authenticate, setLocals, viewSecurityCode)
-  .post(authenticate, setLocals, postSecurityCode)
+router.route('/').get(viewSecurityCode).post(postSecurityCode)
 
 export default router
