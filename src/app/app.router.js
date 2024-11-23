@@ -4,13 +4,18 @@ import authRouter from './auth/auth-router.js'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.redirect('/details')
+router.use((req, res, next) => {
+  console.log(`>>>> ${req.ip} >>>> ${req.method} >>>> ${req.originalUrl}`)
+  next()
 })
 
 router.use('/auth', authRouter)
 
 router.use('/details', detailsRouter)
+
+router.get('/', (req, res) => {
+  res.redirect('/details')
+})
 
 // Page not found
 router.all('*', (req, res) => {
