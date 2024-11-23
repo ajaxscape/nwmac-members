@@ -9,7 +9,7 @@ export const restoreDataController = async (req, res) => {
   }
 
   const [member] = await getMembers({ email: req.session.email })
-  if (member && req.signedCookies.email) {
+  if (member && !req.signedCookies.email) {
     res.redirect(`/auth/trust-browser`)
   } else {
     res.redirect('/details')
