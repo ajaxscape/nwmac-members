@@ -8,7 +8,7 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(viewEnterEmail)
+  .get(clearSession, viewEnterEmail)
   .post(clearSession, validateEmail(), postEnterEmail)
 
 export default router
