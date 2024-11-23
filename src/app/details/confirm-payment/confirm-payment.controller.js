@@ -17,5 +17,9 @@ export const postEnterConfirmPayment = (req, res) => {
     })
   }
   storeData(req, res)
-  res.redirect(redirectUrl('check-details', res))
+  if (req.body.confirmPayment === 'yes') {
+    res.redirect(redirectUrl('payment-confirmation', res))
+  } else {
+    res.redirect(redirectUrl('', res))
+  }
 }

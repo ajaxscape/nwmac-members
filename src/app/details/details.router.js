@@ -20,6 +20,7 @@ import authenticate from '#middleware/authenticate.js'
 import setLocals from '#middleware/set-locals.js'
 import registerMembershipState from '#middleware/register-membership-state.js'
 import registerCurrentFees from '#middleware/register-current-fees.js'
+import paymentConfirmationRouter from './payment-confirmation/payment-confirmation.router.js'
 
 const router = express.Router()
 
@@ -50,6 +51,7 @@ router.use('/check-details', checkDetailsRouter)
 router.use('/application-confirmation', applicationConfirmationRouter)
 router.use('/renewal-confirmation', renewalConfirmationRouter)
 router.use('/confirm-payment', confirmPaymentRouter)
+router.use('/payment-confirmation', paymentConfirmationRouter)
 router.use(
   '/send-application-confirmation-email',
   sendApplicationConfirmationEmailRouter
