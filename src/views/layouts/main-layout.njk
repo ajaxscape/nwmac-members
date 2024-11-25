@@ -2,7 +2,8 @@
 
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-    {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set assetPath = "/public" %}
 {% set themeColor = "#1d70b8" %}
@@ -18,6 +19,27 @@
         <div class="govuk-width-container">
             <h2 class="govuk-!-padding-top-5">North Wiltshire Model Aircraft Club (NWMAC)</h2>
         </div>
+
+        {% if data.isTreasurer or data.isSecretary %}
+            {{ govukServiceNavigation({
+                navigation: [
+                    {
+                        href: "#",
+                        text: "Profile",
+                        active: true
+                    },
+                    {
+                        href: "#",
+                        text: "Fees for " + data.nextRenewalYear
+                    },
+                    {
+                        href: "#",
+                        text: "Pending payments"
+                    }
+                ]
+            }) }}
+        {% endif %}
+
     </header>
 {% endblock %}
 

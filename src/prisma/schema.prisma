@@ -20,7 +20,6 @@ model Member {
   membershipNumber     Int?                  @map("membership_number")
   subscriptionYear     Int?                  @default(0) @map("membership_year")
   bmfaNumber           Int?                  @map("bmfa_number")
-  committeeRoleId      Int?                  @map("committee_role_id")
   flyerId              String?               @map("flyer_id")
   operatorId           String?               @map("operator_id")
   addressId            Int?                  @map("address_id")
@@ -79,7 +78,7 @@ model CommitteeRole {
   title                String                @db.VarChar(40)
   createdAt            DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
   updatedAt            DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
-  memberCommitteeRoles MemberCommitteeRole[] @relation(map: "FK_member_comittee_role_member_comittee_role_id")
+  memberCommitteeRoles MemberCommitteeRole[] @relation(map: "FK_member_comittee_role_comittee_role_id")
 
   @@map("committee_role")
 }

@@ -6,7 +6,11 @@ export default (req, res, next) => {
       res.locals.data = { ...res.locals.data, ...req.session }
       break
     case 'post':
-      res.locals.data = { ...req.body }
+      res.locals.data = {
+        ...req.body,
+        isSecretary: req.session.isSecretary,
+        isTreasurer: req.session.isTreasurer
+      }
       break
     default:
       break
@@ -22,5 +26,6 @@ export default (req, res, next) => {
     res.locals.data.achievements = [achievements].flat()
   }
   res.locals.data.currentRenewalYear = currentRenewalYear()
+  res.locals.data.nextRenewalYear = currentRenewalYear() + 1
   next()
 }

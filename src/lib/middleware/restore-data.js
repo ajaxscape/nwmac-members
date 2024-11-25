@@ -54,6 +54,19 @@ export default async (req, res, next) => {
             ({ achievementId }) => achievementId
           )
           break
+        case 'memberCommitteeRoles':
+          if (!mbrValue?.length) {
+            break
+          }
+          mbrValue.forEach(({ committeeRole }) => {
+            if (committeeRole.title === 'Secretary') {
+              req.session.isSecretary = true
+            }
+            if (committeeRole.title === 'Treasurer') {
+              req.session.isTreasurer = true
+            }
+          })
+          break
         default:
           req.session[mbrKey] = mbrValue
       }
