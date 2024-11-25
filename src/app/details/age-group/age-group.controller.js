@@ -1,9 +1,13 @@
 import { validationResult } from 'express-validator'
 import { storeData } from '#utils/store-session-data.js'
 import { redirectUrl } from '#utils/redirect-url.js'
+import currentRenewalYear from '#utils/current-renewal-year.js'
 
 export const viewEnterAgeGroup = (req, res) => {
-  res.render('pages/details/age-group', { locals: res.locals })
+  res.render('pages/details/age-group', {
+    locals: res.locals,
+    membershipYear: currentRenewalYear()
+  })
 }
 
 export const postEnterAgeGroup = (req, res) => {
@@ -11,6 +15,7 @@ export const postEnterAgeGroup = (req, res) => {
   if (!errors.isEmpty()) {
     return res.render('pages/details/age-group', {
       locals: res.locals,
+      membershipYear: currentRenewalYear(),
       errors: errors.array()
     })
   }

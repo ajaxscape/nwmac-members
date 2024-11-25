@@ -1,19 +1,65 @@
-export default ({ fees, bmfaThroughClub }) => {
+export default ({
+  fees,
+  bmfaThroughClub,
+  ageGroup,
+  membershipType,
+  nonFlyer,
+  operatorId
+}) => {
   const {
-    clubSeniorFee = 0,
-    bmfaSeniorFee = 0,
+    clubJunior = 0,
+    clubSenior = 0,
+    clubFamily = 0,
+    bmfaJunior = 0,
+    bmfaSenior = 0,
+    bmfaFamilyPartner = 0,
+    bmfaFamilyJunior = 0,
+    bmfaNonFlyer = 0,
     caaOperatorRegistration = 0
   } = fees
 
-  let total = clubSeniorFee
-  if (bmfaThroughClub) {
-    total += bmfaSeniorFee + caaOperatorRegistration
+  const subscription = {}
+
+  if (ageGroup === 'junior') {
+    if (membershipType === 'family') {
+      if (bmfaThroughClub) {
+        subscription.bmfaFamilyJunior = bmfaFamilyJunior
+      }
+    } else {
+      subscription.clubJunior = clubJunior
+      if (bmfaThroughClub) {
+        subscription.bmfaJunior = bmfaJunior
+      }
+    }
+  } else if (ageGroup === 'senior') {
+    if (membershipType === 'family') {
+      subscription.clubFamily = clubFamily
+    } else {
+      subscription.clubSenior = clubSenior
+    }
+    if (bmfaThroughClub) {
+      if (nonFlyer) {
+        subscription.bmfaNonFlyer = bmfaNonFlyer
+      } else {
+        if (membershipType === 'family') {
+          subscription.bmfaFamilyPartner = bmfaFamilyPartner
+        } else {
+          subscription.bmfaSenior = bmfaSenior
+        }
+      }
+      if (operatorId) {
+        subscription.caaOperatorRegistration = caaOperatorRegistration
+      }
+    }
   }
 
+  let total = Object.values(subscription).reduce(
+    (accumulator, fee) => accumulator + Number(fee),
+    0
+  )
+
   return {
-    total,
-    clubSeniorFee,
-    bmfaSeniorFee,
-    caaOperatorRegistration
+    ...subscription.map((fee) => Number(fee)),
+    total
   }
 }
