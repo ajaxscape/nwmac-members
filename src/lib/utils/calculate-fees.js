@@ -53,13 +53,17 @@ export default ({
     }
   }
 
+  Object.keys(subscription).forEach((key) => {
+    subscription[key] = Number(subscription[key])
+  })
+
   let total = Object.values(subscription).reduce(
     (accumulator, fee) => accumulator + Number(fee),
     0
   )
 
   return {
-    ...subscription.map((fee) => Number(fee)),
+    ...subscription,
     total
   }
 }
