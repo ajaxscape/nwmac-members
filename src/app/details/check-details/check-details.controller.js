@@ -10,6 +10,7 @@ import {
 import { validationResult } from 'express-validator'
 import calculateFees from '#utils/calculate-fees.js'
 import currentRenewalYear from '#utils/current-renewal-year.js'
+import mapFees from '#utils/map-fees.js'
 
 /**
  * Load the body with the session data so the validators will work correctly
@@ -28,16 +29,18 @@ export const loadBodyForValidation = async (req, res, next) => {
 
 export const viewCheckDetails = async (req, res) => {
   const achievements = await getAchievements()
+  const fees = mapFees(calculateFees(req.session))
   res.render('pages/details/check-details', {
     locals: res.locals,
     achievements,
-    fees: calculateFees(req.session),
+    fees,
     year: currentRenewalYear()
   })
 }
 
 export const postCheckDetails = async (req, res) => {
   const errors = validationResult(req)
+  const fees = mapFees(calculateFees(req.session))
 
   if (!errors.isEmpty()) {
     const summaryErrors = errors.array().map(({ path, ...rest }) => {
@@ -62,7 +65,7 @@ export const postCheckDetails = async (req, res) => {
     return res.render('pages/details/check-details', {
       locals: res.locals,
       achievements,
-      fees: calculateFees(req.session),
+      fees,
       year: currentRenewalYear(),
       errors: summaryErrors,
       errorFields

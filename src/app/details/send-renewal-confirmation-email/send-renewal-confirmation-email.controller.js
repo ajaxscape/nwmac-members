@@ -3,7 +3,6 @@ import nunjucks from 'nunjucks'
 import formatName from '#nunjucks-filters/format-name.js'
 import { redirectUrl } from '#utils/redirect-url.js'
 import clubSecretaryName from '#utils/club-secretary-name.js'
-import formatAmount from '#nunjucks-filters/format-amount.js'
 import mapAnswers from '#utils/map-answers.js'
 import mapBankDetails from '#utils/map-bank-details.js'
 import mapFees from '#utils/map-fees.js'
@@ -14,11 +13,10 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
     email: req.session.email,
     name: formatName(req.session)
   }
-  const fees = calculateFees(req.session)
 
   const answers = mapAnswers(req)
   const bankDetails = mapBankDetails(req)
-  const items = mapFees(req, fees)
+  const fees = mapFees(calculateFees(req.session))
 
   const emailTemplate = nunjucks.render(
     'email-templates/renewal-confirmation-template.njk',
@@ -26,8 +24,7 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
       ...req.session,
       answers,
       bankDetails,
-      items,
-      total: formatAmount(fees.total),
+      fees,
       fullName: formatName(req.session),
       clubSecretaryName: await clubSecretaryName(),
       confirmPaymentUrl: `${req.protocol}://${req.get('host')}/details/confirm-payment`

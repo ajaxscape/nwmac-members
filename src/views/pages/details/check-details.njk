@@ -83,29 +83,20 @@
 
             <h2 class="govuk-heading-m">Cost for {{ year }}</h2>
 
+            {% set rows = [] %}
+
+            {% for fee in fees %}
+                {% set row = {
+                    classes: 'govuk-!-font-weight-bold' if fee.key === 'Total' else 'govuk-body-s',
+                    key: { text: fee.key },
+                    value: { text: fee.value | formatAmount | safe, classes: 'nwmac-text-align-right' }
+                } %}
+                {% set rows = rows.concat(row) %}
+            {% endfor %}
+
             {{ govukSummaryList({
                 classes: "govuk-!-margin-bottom-9",
-                rows: [
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'NWMAC' },
-                        value: { text: fees.clubSeniorFee | formatAmount | safe }
-                    },
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'BMFA' },
-                        value: { text: fees.bmfaSeniorFee | formatAmount | safe }
-                    },
-                    {
-                        classes: 'govuk-body-s',
-                        key: { text: 'CAA' },
-                        value: { text: fees.caaOperatorRegistration | formatAmount | safe }
-                    },
-                    {
-                        key: { text: 'Total' },
-                        value: { classes: 'govuk-!-font-weight-bold', text: fees.total | formatAmount | safe }
-                    }
-                ]
+                rows: rows
             })}}
 
             <h2 class="govuk-heading-m">Now send your application</h2>
