@@ -1,8 +1,8 @@
 import express from 'express'
 
 import {
-  postEnterCAARegistration,
-  viewEnterCAARegistration
+  postEntercaaOperatorRegistrationistration,
+  viewEntercaaOperatorRegistrationistration
 } from './caa-registration.controller.js'
 import {
   validateFlyerId,
@@ -13,7 +13,11 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(viewEnterCAARegistration)
-  .post(validateOperatorId(), validateFlyerId(), postEnterCAARegistration)
+  .get(viewEntercaaOperatorRegistrationistration)
+  .post(
+    validateOperatorId(),
+    validateFlyerId(),
+    postEntercaaOperatorRegistrationistration
+  )
 
 export default router

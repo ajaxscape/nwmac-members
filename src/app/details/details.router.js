@@ -7,7 +7,7 @@ import achievementsRouter from './achievements/achievements.router.js'
 import addressRouter from './address/address.router.js'
 import ageGroupRouter from './age-group/age-group.router.js'
 import bmfaMembershipRouter from './bmfa-membership/bmfa-membership.router.js'
-import caaRegistrationRouter from './caa-registration/caa-registration.router.js'
+import caaOperatorRegistrationistrationRouter from './caa-registration/caa-registration.router.js'
 import checkDetailsRouter from './check-details/check-details.router.js'
 import nonClubContactRouter from './non-club-contact/non-club-contact.router.js'
 import applicationConfirmationRouter from './application-confirmation/application-confirmation.router.js'
@@ -45,7 +45,7 @@ router.use('/achievements', achievementsRouter)
 router.use('/address', addressRouter)
 router.use('/age-group', ageGroupRouter)
 router.use('/bmfa-membership', bmfaMembershipRouter)
-router.use('/caa-registration', caaRegistrationRouter)
+router.use('/caa-registration', caaOperatorRegistrationistrationRouter)
 router.use('/non-club-contact', nonClubContactRouter)
 router.use('/check-details', checkDetailsRouter)
 router.use('/application-confirmation', applicationConfirmationRouter)

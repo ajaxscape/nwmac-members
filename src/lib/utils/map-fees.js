@@ -1,11 +1,12 @@
 import formatAmount from '#nunjucks-filters/format-amount.js'
 
 export default function mapFees(req, subscriptions) {
-  const { clubFee, bmfaFee, caaReg } = subscriptions
-  const items = [{ key: 'NWMAC', value: formatAmount(clubFee) }]
+  const { clubSeniorFee, bmfaSeniorFee, caaOperatorRegistration } =
+    subscriptions
+  const items = [{ key: 'NWMAC', value: formatAmount(clubSeniorFee) }]
   if (req.session.bmfaThroughClub) {
-    items.push({ key: 'BMFA', value: formatAmount(bmfaFee) })
-    items.push({ key: 'CAA', value: formatAmount(caaReg) })
+    items.push({ key: 'BMFA', value: formatAmount(bmfaSeniorFee) })
+    items.push({ key: 'CAA', value: formatAmount(caaOperatorRegistration) })
   }
   return items
 }

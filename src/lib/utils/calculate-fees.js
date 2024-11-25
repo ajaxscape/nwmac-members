@@ -1,15 +1,19 @@
 export default ({ fees, bmfaThroughClub }) => {
-  const { clubFee = 0, bmfaFee = 0, caaReg = 0 } = fees
+  const {
+    clubSeniorFee = 0,
+    bmfaSeniorFee = 0,
+    caaOperatorRegistration = 0
+  } = fees
 
-  let total = clubFee
+  let total = clubSeniorFee
   if (bmfaThroughClub) {
-    total += bmfaFee + caaReg
+    total += bmfaSeniorFee + caaOperatorRegistration
   }
 
   return {
     total,
-    clubFee,
-    bmfaFee,
-    caaReg
+    clubSeniorFee,
+    bmfaSeniorFee,
+    caaOperatorRegistration
   }
 }

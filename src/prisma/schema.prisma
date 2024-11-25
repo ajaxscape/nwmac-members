@@ -109,17 +109,23 @@ model MemberAchievement {
 }
 
 model Subscription {
-  year                Int                  @id
-  clubFee             Int                  @default(0) @map("club_fee")
-  bmfaFee             Int                  @default(0) @map("bmfa_fee")
-  caaReg              Int                  @default(0) @map("caa_reg")
-  other               Int                  @default(0) @map("other")
-  otherDescription    String?              @map("other_description")
-  amountPaid          Int                  @default(0) @map("amount_paid")
-  paymentMethod       String?              @map("payment_method")
-  createdAt           DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
-  updatedAt           DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
-  memberSubscriptions MemberSubscription[] @relation(map: "FK_member_subscription_subscription_year")
+  year                    Int                  @id
+  clubSeniorFee           Int                  @default(0) @map("club_fee_senior")
+  clubJunior              Int                  @default(0) @map("club_fee_junior")
+  clubFamily              Int                  @default(0) @map("club_fee_family")
+  bmfaSeniorFee           Int                  @default(0) @map("bmfa_fee_senior")
+  bmfaJunior              Int                  @default(0) @map("bmfa_fee_junior")
+  bmfaFamilyPartner       Int                  @default(0) @map("bmfa_fee_family_partner")
+  bmfaFamilyJunior        Int                  @default(0) @map("bmfa_fee_family_junior")
+  bmfaNonFlyer            Int                  @default(0) @map("bmfa_fee_non_flyer")
+  caaOperatorRegistration Int                  @default(0) @map("caa_operator_registration")
+  other                   Int                  @default(0) @map("other")
+  otherDescription        String?              @map("other_description")
+  amountPaid              Int                  @default(0) @map("amount_paid")
+  paymentMethod           String?              @map("payment_method")
+  createdAt               DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
+  updatedAt               DateTime             @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
+  memberSubscriptions     MemberSubscription[] @relation(map: "FK_member_subscription_subscription_year")
 
   @@map("subscription")
 }
