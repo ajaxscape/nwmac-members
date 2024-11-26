@@ -1,6 +1,7 @@
 import express from 'express'
 import detailsRouter from './details/details.router.js'
 import authRouter from './auth/auth-router.js'
+import adminRouter from './admin/admin.router.js'
 
 const router = express.Router()
 
@@ -12,6 +13,7 @@ router.use((req, res, next) => {
 router.use('/auth', authRouter)
 
 router.use('/details', detailsRouter)
+router.use('/admin', adminRouter)
 
 router.get('/', (req, res) => {
   res.redirect('/details')

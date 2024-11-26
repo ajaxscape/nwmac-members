@@ -1,0 +1,19 @@
+{% if data.isTreasurer or data.isSecretary %}
+    {{ govukServiceNavigation({
+        navigation: [
+            {
+                href: "/details",
+                text: "My Profile",
+                active: true
+            },
+            {
+                href: "/admin/confirm-pending-payments",
+                text: "Confirm pending payments for " + data.currentRenewalYear
+            },
+            {
+                href: "/admin/fees",
+                text: "Update Fees for " + data.nextRenewalYear
+            }
+        ]
+    }) }}
+{% endif %}

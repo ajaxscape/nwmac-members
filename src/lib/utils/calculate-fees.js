@@ -16,7 +16,7 @@ export default ({
     bmfaFamilyJunior = 0,
     bmfaNonFlyer = 0,
     caaOperatorRegistration = 0
-  } = fees
+  } = fees || {}
 
   const subscription = {}
 

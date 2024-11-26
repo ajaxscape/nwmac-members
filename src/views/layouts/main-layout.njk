@@ -19,27 +19,7 @@
         <div class="govuk-width-container">
             <h2 class="govuk-!-padding-top-5">North Wiltshire Model Aircraft Club (NWMAC)</h2>
         </div>
-
-        {% if data.isTreasurer or data.isSecretary %}
-            {{ govukServiceNavigation({
-                navigation: [
-                    {
-                        href: "#",
-                        text: "Profile",
-                        active: true
-                    },
-                    {
-                        href: "#",
-                        text: "Fees for " + data.nextRenewalYear
-                    },
-                    {
-                        href: "#",
-                        text: "Pending payments"
-                    }
-                ]
-            }) }}
-        {% endif %}
-
+        {% include "includes/admin-navigation.njk" %}
     </header>
 {% endblock %}
 
