@@ -66,7 +66,7 @@ export const postCheckDetails = async (req, res) => {
       achievements,
       fees,
       year: res.locals.data.fees.year,
-      feesAvailable: res.locals.data.available,
+      feesAvailable: res.locals.data.fees.available,
       errors: summaryErrors,
       errorFields
     })
@@ -141,7 +141,11 @@ export const postCheckDetails = async (req, res) => {
   })
 
   if (req.session.membershipNumber) {
-    res.redirect(redirectUrl('send-renewal-confirmation-email', res))
+    if (req.session.fees.available) {
+      res.redirect(redirectUrl('send-renewal-confirmation-email', res))
+    } else {
+      res.redirect(redirectUrl('send-details-confirmation-email', res))
+    }
   } else {
     res.redirect(redirectUrl('send-application-confirmation-email', res))
   }

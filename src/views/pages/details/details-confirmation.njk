@@ -1,0 +1,26 @@
+{% extends "layouts/main-layout.njk" %}
+{% set mainClasses = "govuk-main-wrapper--l" %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageTitle="Updated details confirmation" %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {{ govukPanel({
+                titleText: "Update details complete",
+                html: "Your updated details for " + data.currentRenewalYear + " will now be processed"
+            }) }}
+
+            <p class="govuk-body">We have sent you a confirmation email with the details you have entered.</p>
+
+            <h2 class="govuk-heading-m">What happens next</h2>
+
+            <p class="govuk-body">
+                We will let you know once we know what the updated fees are for this year, you will be able to renew online with the details you have just entered.
+            </p>
+        </div>
+    </div>
+{% endblock %}

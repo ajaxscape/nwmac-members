@@ -1,0 +1,21 @@
+<body>
+<p>
+    Dear {{ fullName }},<br>
+    We have updated your details with the following answers:
+</p>
+
+<table>
+    <tbody>
+    {% for answer in answers %}
+        <tr><td style="vertical-align: top"><strong>{{ answer.key }}</strong></td><td style="vertical-align: top">{{ answer.value | safe }}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    Kind regards,<br>
+    {{ clubSecretaryName }},<br>
+    NWMAC Club Secretary
+</p>
+
+</body>
