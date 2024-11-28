@@ -7,9 +7,11 @@
     {% include "includes/csrf.njk" %}
     {% block formContent %}{% endblock %}
 
+    {% block formSubmit %}
     {{ govukButton({
         text: ("Save and return" if edit else "Save and continue")
     }) }}
+    {% endblock %}
 
 </form>
 {% endblock %}

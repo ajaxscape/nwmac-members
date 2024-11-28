@@ -5,7 +5,6 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 {% set pageTitle="Enter the fees for " + nextRenewalYear %}
-{% set backLink="/details/check-details" if edit else "/details/name" %}
 
 {% block formContent %}
     {% call govukFieldset({
@@ -19,8 +18,11 @@
         {% set type = '' %}
         {% for fee in fees %}
             {% if type !== fee.type %}
+                {% if type !== '' %}
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                {% endif %}
+                <h2 class="govuk-heading-m">{{ fee.type }}</h2>
                 {% set type = fee.type %}
-                <h2 class="govuk-heading-m">{{ type }}</h2>
             {% endif %}
             {% set prevValue = fee.prevValue %}
             {{ govukInput({
@@ -40,6 +42,8 @@
             }) }}
         {% endfor %}
 
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
         {{ govukCheckboxes({
             name: "available",
             fieldset: {
@@ -56,5 +60,18 @@
                 }
             ]
         }) }}
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
     {% endcall %}
+{% endblock %}
+
+{% block formSubmit %}
+    <div class="govuk-button-group">
+        {{ govukButton({
+            text: ("Save")
+        }) }}
+
+        <a class="govuk-link" href="/details">Cancel</a>
+    </div>
 {% endblock %}

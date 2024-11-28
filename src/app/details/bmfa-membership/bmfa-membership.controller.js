@@ -3,14 +3,14 @@ import { storeData } from '#utils/store-session-data.js'
 import { redirectUrl } from '#utils/redirect-url.js'
 import formatAmount from '#nunjucks-filters/format-amount.js'
 
-function formatBmfaMembersCardHint(data) {
-  return `Only available when registered through the club. <br>  Approximately ${formatAmount(data?.fees?.bmfaMembersCard || 600)}`
+function formatBmfaMembersCardLabel(data) {
+  return `Approximately ${formatAmount(data?.fees?.bmfaMembersCard || 600)}`
 }
 
 export const viewEnterBMFAMembership = (req, res) => {
   res.render('pages/details/bmfa-membership', {
     locals: res.locals,
-    bmfaMembersCardHint: formatBmfaMembersCardHint(res.locals.data)
+    bmfaMembersCardLabel: formatBmfaMembersCardLabel(res.locals.data)
   })
 }
 
@@ -19,7 +19,7 @@ export const postEnterBMFAMembership = (req, res) => {
   if (!errors.isEmpty()) {
     return res.render('pages/details/bmfa-membership', {
       locals: res.locals,
-      bmfaMembersCardHint: formatBmfaMembersCardHint(res.locals.data),
+      bmfaMembersCardLabel: formatBmfaMembersCardLabel(res.locals.data),
       errors: errors.array()
     })
   }

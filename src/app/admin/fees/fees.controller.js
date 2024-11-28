@@ -21,11 +21,14 @@ const formatFees = (nextYearsFees = {}, currentYearsFees = {}, isError) => {
   return Object.entries(nextFees)
     .filter(([name]) => name !== 'available')
     .map(([name, value]) => {
+      const title = sentenceCase(name)
+        .replace('Bmfa ', 'BMFA ')
+        .replace('Caa ', 'CAA ')
       return {
         name,
-        title: sentenceCase(name),
+        title,
         value: isError ? value : (value / 100).toFixed(2),
-        type: sentenceCase(name).split(' ')[0],
+        type: title.split(' ')[0] + ' fees',
         prevValue: (currentYearsFees[name] / 100 || 0).toFixed(2)
       }
     })
