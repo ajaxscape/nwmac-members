@@ -2,6 +2,8 @@ export default ({
   fees,
   bmfaThroughClub,
   ageGroup,
+  isPartner,
+  bmfaMembersCardRequired,
   membershipType,
   nonFlyer,
   operatorId
@@ -9,12 +11,15 @@ export default ({
   const {
     clubJunior = 0,
     clubSenior = 0,
-    clubFamily = 0,
+    clubFamilySenior = 0,
+    clubFamilyPartner = 0,
+    clubFamilyJunior = 0,
     bmfaJunior = 0,
     bmfaSenior = 0,
     bmfaFamilyPartner = 0,
     bmfaFamilyJunior = 0,
     bmfaNonFlyer = 0,
+    bmfaMembersCard = 0,
     caaOperatorRegistration = 0
   } = fees || {}
 
@@ -22,6 +27,7 @@ export default ({
 
   if (ageGroup === 'junior') {
     if (membershipType === 'family') {
+      subscription.clubFamilyJunior = clubFamilyJunior
       if (bmfaThroughClub) {
         subscription.bmfaFamilyJunior = bmfaFamilyJunior
       }
@@ -33,7 +39,11 @@ export default ({
     }
   } else if (ageGroup === 'senior') {
     if (membershipType === 'family') {
-      subscription.clubFamily = clubFamily
+      if (isPartner) {
+        subscription.clubFamilyPartner = clubFamilyPartner
+      } else {
+        subscription.clubFamilySenior = clubFamilySenior
+      }
     } else {
       subscription.clubSenior = clubSenior
     }
@@ -41,15 +51,18 @@ export default ({
       if (nonFlyer) {
         subscription.bmfaNonFlyer = bmfaNonFlyer
       } else {
-        if (membershipType === 'family') {
+        if (membershipType === 'family' && isPartner) {
           subscription.bmfaFamilyPartner = bmfaFamilyPartner
         } else {
           subscription.bmfaSenior = bmfaSenior
         }
       }
-      if (operatorId) {
-        subscription.caaOperatorRegistration = caaOperatorRegistration
+      if (bmfaMembersCardRequired) {
+        subscription.bmfaMembersCard = bmfaMembersCard
       }
+    }
+    if (operatorId) {
+      subscription.caaOperatorRegistration = caaOperatorRegistration
     }
   }
 

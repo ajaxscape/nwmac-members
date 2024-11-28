@@ -16,7 +16,8 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
 
   const answers = mapAnswers(req)
   const bankDetails = mapBankDetails(req)
-  const fees = mapFees(calculateFees(req.session))
+  const calculatedFees = calculateFees(req.session)
+  const fees = mapFees(calculatedFees)
 
   const emailTemplate = nunjucks.render(
     'email-templates/renewal-confirmation-template.njk',
@@ -25,6 +26,7 @@ export const sendRenewalConfirmationEmail = async (req, res) => {
       answers,
       bankDetails,
       fees,
+      total: calculatedFees.total,
       fullName: formatName(req.session),
       clubSecretaryName: await clubSecretaryName(),
       confirmPaymentUrl: `${req.protocol}://${req.get('host')}/details/confirm-payment`

@@ -7,5 +7,5 @@ export const viewUnknownEmail = (req, res) => {
 }
 
 export const postUnknownEmail = (req, res) => {
-  res.redirect('/auth/send-confirmation-email')
+  res.redirect('/auth/send-security-token-email')
 }

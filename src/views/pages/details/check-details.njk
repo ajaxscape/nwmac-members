@@ -9,9 +9,13 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds-from-desktop">
 
-            <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
-
-            <h2 class="govuk-heading-m">Application details</h2>
+            {% if data.membershipNumber > 1 %}
+                <h1 class="govuk-heading-l">Check your answers before updating your details</h1>
+                <h2 class="govuk-heading-m">Your details</h2>
+            {% else %}
+                <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
+                <h2 class="govuk-heading-m">Application details</h2>
+            {% endif %}
 
             {{ govukSummaryList({
                 classes: "govuk-!-margin-bottom-9",
@@ -60,13 +64,13 @@
                         key: { text: 'Operator ID' },
                         value: { html: data | formatOperatorId},
                         classes: ('nwmac-error' if errorFields.operatorId) + (' govuk-!-display-none' if data.ageGroup === 'junior'),
-                        actions: formatActions('caaOperatorRegistrationistration')
+                        actions: formatActions('caaOperatorRegistration')
                     },
                     {
                         key: { text: 'Flyer ID' },
                         value: { html: data | formatFlyerId },
                         classes: 'nwmac-error' if errorFields.flyerId,
-                        actions: formatActions('caaOperatorRegistrationistration')
+                        actions: formatActions('caaOperatorRegistration')
                     },
                     {
                         key: { text: 'Achievements' },
@@ -81,32 +85,37 @@
                 ]
             }) }}
 
-            <h2 class="govuk-heading-m">Cost for {{ year }}</h2>
+            {% if feesAvailable %}
+                <h2 class="govuk-heading-m">Cost for {{ year }}</h2>
 
-            {% set rows = [] %}
+                {% set rows = [] %}
 
-            {% for fee in fees %}
-                {% set row = {
-                    classes: 'govuk-!-font-weight-bold' if fee.key === 'Total' else 'govuk-body-s',
-                    key: { text: fee.key },
-                    value: { text: fee.value | formatAmount | safe, classes: 'nwmac-text-align-right' }
-                } %}
-                {% set rows = rows.concat(row) %}
-            {% endfor %}
+                {% for fee in fees %}
+                    {% set row = {
+                        classes: 'govuk-!-font-weight-bold' if fee.key === 'Total' else 'govuk-body-s',
+                        key: { text: fee.key },
+                        value: { text: fee.value | formatAmount | safe, classes: 'nwmac-text-align-right' }
+                    } %}
+                    {% set rows = rows.concat(row) %}
+                {% endfor %}
 
-            {{ govukSummaryList({
-                classes: "govuk-!-margin-bottom-9",
-                rows: rows
-            })}}
+                {{ govukSummaryList({
+                    classes: "govuk-!-margin-bottom-9",
+                    rows: rows
+                })}}
+            {% endif %}
 
-            <h2 class="govuk-heading-m">Now send your application</h2>
 
-            <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+            {% if data.membershipNumber < 1 %}
+                <h2 class="govuk-heading-m">Now send your application</h2>
+
+                <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
+            {% endif %}
 
             <form action="" method="post" novalidate>
 
                 {{ govukButton({
-                    text: "Accept and send"
+                    text: ("Accept details" if data.membershipNumber > 1 else "Accept and send")
                 }) }}
 
             </form>

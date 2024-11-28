@@ -1,0 +1,1 @@
+UPDATE subscription SET available=true WHERE year=2024

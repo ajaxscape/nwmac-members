@@ -56,6 +56,7 @@
     "prisma-generate": "cd src && npx prisma generate"
   },
   "imports": {
+    "#constants/*.js": "./src/lib/constants/*.js",
     "#config/*.js": "./src/lib/config/*.js",
     "#utils/*.js": "./src/lib/utils/*.js",
     "#nunjucks-filters/*.js": "./src/lib/nunjucks-filters/*.js",

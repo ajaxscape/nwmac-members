@@ -3,10 +3,14 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set renewal = data.membershipNumber > 1 %}
+{% set existingMember = data.membershipNumber > 1 %}
 
-{% if renewal %}
-    {% set pageTitle="Renewal of membership" %}
+{% if existingMember %}
+    {% if data.fees.available %}
+        {% set pageTitle="Renewal of membership" %}
+    {% else %}
+        {% set pageTitle="Your membership details" %}
+    {% endif %}
 {% else %}
     {% set pageTitle="Application for membership" %}
 {% endif %}
@@ -18,8 +22,12 @@
 
             <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
 
-            {% if renewal %}
-                <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, it's time to renew your membership for the next year.</p>
+            {% if existingMember %}
+                {% if data.fees.available %}
+                    <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, it's time to renew your membership for the next year.</p>
+                {% else %}
+                    <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }},</p>
+                {% endif %}
                 <p class="govuk-body">Please make your way through the next few pages updating any missing information or any information that has changed.</p>
 
 
