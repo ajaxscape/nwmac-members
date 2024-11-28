@@ -4,6 +4,7 @@ export const viewIntro = async (req, res) => {
   const achievements = await getAchievements()
   res.render('pages/details/intro', {
     locals: res.locals,
+    feesAvailable: res.locals.data.fees.available,
     achievements
   })
 }

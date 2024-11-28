@@ -38,5 +38,24 @@
                 spellcheck: false
             }) }}
         {% endfor %}
+
+        {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+        {{ govukCheckboxes({
+            name: "available",
+            fieldset: {
+                legend: {
+                    text: "Make subscriptions available for " + nextRenewalYear,
+                    classes: "govuk-fieldset__legend--m"
+                }
+            },
+            items: [
+                {
+                    value: "available",
+                    text: "Yes",
+                    checked: available
+                }
+            ]
+        }) }}
     {% endcall %}
 {% endblock %}

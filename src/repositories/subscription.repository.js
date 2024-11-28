@@ -1,5 +1,47 @@
 import prisma from './utils/prisma-client.js'
+import { FEES } from '#constants/fees.js'
+
+const buildSelects = () => {
+  const selects = {}
+  FEES.forEach((feeType) => {
+    selects[feeType] = true
+  })
+  selects.available = true
+  selects.year = true
+  return selects
+}
 
 export async function getSubscription(year, tx = prisma) {
-  return (await tx.subscription.findUnique({ where: { year } })) || {}
+  return (
+    (await tx.subscription.findUnique({
+      select: buildSelects(),
+      where: { year }
+    })) || {}
+  )
+}
+export async function getLatestSubscription(tx = prisma) {
+  return (
+    (
+      await tx.subscription.findMany({
+        select: buildSelects(),
+        orderBy: [
+          {
+            year: 'desc'
+          }
+        ],
+        take: 1
+      })
+    )?.pop() || {}
+  )
+}
+export function upsertSubscription(data, tx = prisma) {
+  const { year, ...rest } = data || {}
+  if (year) {
+    return tx.subscription.update({
+      data: rest,
+      where: { year }
+    })
+  } else {
+    return tx.subscription.create({ data: rest })
+  }
 }

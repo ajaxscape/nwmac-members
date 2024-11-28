@@ -9,7 +9,6 @@ import {
 } from '#repos/member-achievement.repository.js'
 import { validationResult } from 'express-validator'
 import calculateFees from '#utils/calculate-fees.js'
-import currentRenewalYear from '#utils/current-renewal-year.js'
 import mapFees from '#utils/map-fees.js'
 
 /**
@@ -34,7 +33,7 @@ export const viewCheckDetails = async (req, res) => {
     locals: res.locals,
     achievements,
     fees,
-    year: currentRenewalYear()
+    year: res.locals.data.fees.year
   })
 }
 
@@ -66,7 +65,8 @@ export const postCheckDetails = async (req, res) => {
       locals: res.locals,
       achievements,
       fees,
-      year: currentRenewalYear(),
+      year: res.locals.data.fees.year,
+      feesAvailable: res.locals.data.available,
       errors: summaryErrors,
       errorFields
     })
