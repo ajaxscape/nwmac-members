@@ -34,14 +34,15 @@ export async function getLatestSubscription(tx = prisma) {
     )?.pop() || {}
   )
 }
-export function upsertSubscription(data, tx = prisma) {
+export async function upsertSubscription(data, tx = prisma) {
   const { year, ...rest } = data || {}
-  if (year) {
+  const subscription = await getSubscription(year, tx)
+  if (subscription?.year) {
     return tx.subscription.update({
       data: rest,
-      where: { year }
+      where: { year: subscription.year }
     })
   } else {
-    return tx.subscription.create({ data: rest })
+    return tx.subscription.create({ data })
   }
 }
