@@ -64,6 +64,12 @@ app.use(
   )
 )
 
+// Serve static govuk-frontend javascript from govuk-frontend
+app.use(
+  '/govuk-frontend/client-side',
+  express.static(path.join(__dirname, 'node_modules/govuk-frontend/dist/govuk'))
+)
+
 // Set the view engine to Nunjucks
 app.set('view engine', 'njk')
 

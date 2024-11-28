@@ -12,6 +12,11 @@
 
 {% block head %}
     <link href="/public/css/index.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="/govuk-frontend/client-side/govuk-frontend.min.js"></script>
+    <script type="module">
+      import { initAll } from '/govuk-frontend/client-side/govuk-frontend.min.js'
+      initAll()
+    </script>
 {% endblock %}
 
 {% block header %}

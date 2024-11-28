@@ -4,6 +4,7 @@
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 {% set pageTitle="Change BMFA number" if edit else "Enter BMFA number" %}
 {% set backLink="/details/check-details" if edit else "/details/age-group" %}
@@ -17,6 +18,26 @@
     }
   }) %}
 
+    {% set bmfaMembersCardHtml %}
+      {{ govukCheckboxes({
+        name: "bmfaMembersCardRequired",
+        fieldset: {
+          legend: {
+            text: "Would you like a BMFA Members card?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: true,
+            text: "Yes",
+            hint: {text: bmfaMembersCardHint | safe},
+            checked: data.bmfaMembersCardRequired
+          }
+        ]
+      }) }}
+    {% endset -%}
+
     {{ govukRadios({
       name: "bmfaThroughClub",
       value: data.bmfaThroughClub,
@@ -29,7 +50,10 @@
       items: [
         {
           value: "yes",
-          text: "Yes"
+          text: "Yes",
+          conditional: {
+            html: bmfaMembersCardHtml
+          }
         },
         {
           value: "no",

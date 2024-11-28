@@ -93,6 +93,7 @@ export const postCheckDetails = async (req, res) => {
     achievements,
     bmfaNumber,
     bmfaThroughClub,
+    bmfaMembersCardRequired,
     operatorId,
     flyerId,
     nonClubContact
@@ -124,6 +125,7 @@ export const postCheckDetails = async (req, res) => {
         ageGroup,
         bmfaNumber: Number(bmfaNumber),
         bmfaThroughClub: bmfaThroughClub === 'yes',
+        bmfaMembersCardRequired,
         operatorId,
         flyerId,
         nonClubContact: nonClubContact === 'yes',

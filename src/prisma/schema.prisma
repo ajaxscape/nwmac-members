@@ -8,30 +8,31 @@ datasource db {
 }
 
 model Member {
-  id                   Int                   @id @default(autoincrement())
-  firstName            String?               @map("first_name") @db.VarChar(30)
-  middleName           String?               @map("middle_name") @db.VarChar(30)
-  lastName             String?               @map("last_name") @db.VarChar(30)
-  preferredName        String?               @map("preferred_name") @db.VarChar(30)
-  email                String?               @unique
-  mobile               String?               @db.VarChar(30)
-  ageGroup             String?               @map("age_group") @db.VarChar(10)
-  membershipType       String?               @map("membership_type") @db.VarChar(10)
-  membershipNumber     Int?                  @map("membership_number")
-  subscriptionYear     Int?                  @default(0) @map("membership_year")
-  bmfaNumber           Int?                  @map("bmfa_number")
-  flyerId              String?               @map("flyer_id")
-  operatorId           String?               @map("operator_id")
-  addressId            Int?                  @map("address_id")
-  nonClubContact       Boolean?              @map("non_club_contact")
-  bmfaThroughClub      Boolean?              @map("bmfa_through_club")
-  confirmed            Boolean               @default(false) @db.Boolean
-  createdAt            DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
-  updatedAt            DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
-  memberAchievements   MemberAchievement[]   @relation(map: "FK_member_achievement_member_id")
-  address              Address?              @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
-  memberCommitteeRoles MemberCommitteeRole[] @relation(map: "FK_member_committee_role_member_id")
-  memberSubscriptions  MemberSubscription[]  @relation(map: "FK_member_subscription_member_id")
+  id                      Int                   @id @default(autoincrement())
+  firstName               String?               @map("first_name") @db.VarChar(30)
+  middleName              String?               @map("middle_name") @db.VarChar(30)
+  lastName                String?               @map("last_name") @db.VarChar(30)
+  preferredName           String?               @map("preferred_name") @db.VarChar(30)
+  email                   String?               @unique
+  mobile                  String?               @db.VarChar(30)
+  ageGroup                String?               @map("age_group") @db.VarChar(10)
+  membershipType          String?               @map("membership_type") @db.VarChar(10)
+  membershipNumber        Int?                  @map("membership_number")
+  subscriptionYear        Int?                  @default(0) @map("membership_year")
+  bmfaNumber              Int?                  @map("bmfa_number")
+  flyerId                 String?               @map("flyer_id")
+  operatorId              String?               @map("operator_id")
+  addressId               Int?                  @map("address_id")
+  nonClubContact          Boolean?              @map("non_club_contact")
+  bmfaThroughClub         Boolean?              @map("bmfa_through_club")
+  bmfaMembersCardRequired Boolean?              @default(false) @map("bmfa_members_card_required") @db.Boolean
+  confirmed               Boolean               @default(false) @db.Boolean
+  createdAt               DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
+  updatedAt               DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("updated_at") @db.Timestamp(6)
+  memberAchievements      MemberAchievement[]   @relation(map: "FK_member_achievement_member_id")
+  address                 Address?              @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
+  memberCommitteeRoles    MemberCommitteeRole[] @relation(map: "FK_member_committee_role_member_id")
+  memberSubscriptions     MemberSubscription[]  @relation(map: "FK_member_subscription_member_id")
 
   @@map("member")
 }

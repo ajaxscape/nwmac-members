@@ -64,13 +64,13 @@
                         key: { text: 'Operator ID' },
                         value: { html: data | formatOperatorId},
                         classes: ('nwmac-error' if errorFields.operatorId) + (' govuk-!-display-none' if data.ageGroup === 'junior'),
-                        actions: formatActions('caaOperatorRegistration')
+                        actions: formatActions('caaRegistration')
                     },
                     {
                         key: { text: 'Flyer ID' },
                         value: { html: data | formatFlyerId },
                         classes: 'nwmac-error' if errorFields.flyerId,
-                        actions: formatActions('caaOperatorRegistration')
+                        actions: formatActions('caaRegistration')
                     },
                     {
                         key: { text: 'Achievements' },
