@@ -25,10 +25,10 @@ export const postEnterEmail = async (req, res) => {
     })
   }
 
-  req.session.email = email
+  req.session.email = email.trim().toLowerCase()
   req.session.nextUrl = req.query.nextUrl
 
-  const emailIsRecognised = await identifyEmail(email)
+  const emailIsRecognised = await identifyEmail(req.session.email)
 
   if (emailIsRecognised) {
     res.redirect('/auth/send-security-token-email')

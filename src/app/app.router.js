@@ -2,6 +2,7 @@ import express from 'express'
 import detailsRouter from './details/details.router.js'
 import authRouter from './auth/auth-router.js'
 import adminRouter from './admin/admin.router.js'
+import logger from '../logger/logger.js'
 
 const router = express.Router()
 
@@ -19,9 +20,16 @@ router.get('/', (req, res) => {
   res.redirect('/details')
 })
 
-// Page not found
-router.all('*', (req, res) => {
-  res.status(404).render('pages/error/404')
+// Error handling
+router.use((req, res, next) => {
+  logger.error(`Page not found: ${req.originalUrl}`)
+  res.status(404).render('pages/error/not-found')
+  next()
 })
+// .use((err, req, res, next) => {
+//   logger.error({ err }, `Unhandled exception in: ${req.originalUrl}`)
+//   res.status(err.statusCode).render('pages/error/unhandled-exception')
+//   next()
+// })
 
 export default router

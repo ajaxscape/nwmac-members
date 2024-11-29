@@ -1,9 +1,9 @@
 export default (data) => {
-  const { mobileNumber, landLine } = data
+  const { mobileNumber, landline } = data
   let formattedPhoneNumbers = mobileNumber
 
-  if (landLine) {
-    formattedPhoneNumbers += `<br>${landLine}`
+  if (landline) {
+    formattedPhoneNumbers += `<br>${landline}`
   }
   return formattedPhoneNumbers
 }
