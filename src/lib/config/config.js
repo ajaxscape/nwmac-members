@@ -7,5 +7,6 @@ export default {
     account: process.env.BANK_ACCOUNT_NUMBER || '',
     name: process.env.BANK_ACCOUNT_NAME || ''
   },
-  isDevelopment: process.env.NODE_ENV?.toLowerCase() === 'development'
+  isDevelopment: process.env.NODE_ENV?.toLowerCase() === 'development',
+  adminEmail: process.env.ADMIN_EMAIL || 'bensurgison@gmail.com'
 }

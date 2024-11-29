@@ -4,6 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set assetPath = "/public" %}
 {% set themeColor = "#1d70b8" %}
@@ -29,6 +30,12 @@
 {% endblock %}
 
 {% block beforeContent %}
+    {{ govukPhaseBanner({
+        tag: {
+            text: "Beta"
+        },
+        html: 'This is a new service. Help us improve it and <a class="govuk-link" href="mailto:bensurgison@gmail.com?subject=NWMAC Membership site query">give your feedback by email</a>.'
+    }) }}
     {% if backLink %}
         {{ govukBackLink({
             text: "Back",
