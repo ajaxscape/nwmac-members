@@ -25,9 +25,5 @@ export function createMemberAchievementsByMemberId(
 }
 
 export function deleteMemberAchievementsByMemberId(memberId, tx = prisma) {
-  try {
-    return tx.memberAchievement.deleteMany({ where: { memberId } })
-  } catch (error) {
-    console.error(JSON.stringify({ error }, null, 2))
-  }
+  return tx.memberAchievement.deleteMany({ where: { memberId } })
 }

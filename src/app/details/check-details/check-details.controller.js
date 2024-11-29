@@ -11,6 +11,7 @@ import { validationResult } from 'express-validator'
 import calculateFees from '#utils/calculate-fees.js'
 import mapFees from '#utils/map-fees.js'
 import logger from '../../../logger/logger.js'
+import { upsertMemberSubscription } from '#repos/member-subscription.repository.js'
 
 /**
  * Load the body with the session data so the validators will work correctly
@@ -40,7 +41,8 @@ export const viewCheckDetails = async (req, res) => {
 
 export const postCheckDetails = async (req, res) => {
   const errors = validationResult(req)
-  const fees = mapFees(calculateFees(req.session))
+  const calculatedFees = calculateFees(req.session)
+  const fees = mapFees(calculatedFees)
 
   if (!errors.isEmpty()) {
     const summaryErrors = errors.array().map(({ path, ...rest }) => {
@@ -143,6 +145,13 @@ export const postCheckDetails = async (req, res) => {
 
       if (req.session.membershipNumber) {
         if (req.session.fees.available) {
+          delete calculatedFees.total
+          const memberSubscriptionData = {
+            memberId: member.id,
+            subscriptionYear: req.session.nextRenewalYear,
+            ...calculatedFees
+          }
+          await upsertMemberSubscription(memberSubscriptionData)
           return res.redirect(
             redirectUrl('send-renewal-confirmation-email', res)
           )
