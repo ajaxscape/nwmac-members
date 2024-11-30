@@ -31,19 +31,13 @@ export async function upsertMemberSubscription(data, tx = prisma) {
     subscriptionYear,
     tx
   )
+  // Delete existing here if it exists
   if (memberSubscription) {
     data = { ...data, ...memberSubscription }
     await tx.memberSubscription.deleteMany({
       where: { memberId, subscriptionYear }
     })
   }
-  // Delete existing here
-  // create a new one here
-  // return tx.memberSubscription.update({
-  //   data: rest,
-  //   where: { memberId, subscriptionYear }
-  // })
-  // } else {
+  // Create a new one with updated data here
   return tx.memberSubscription.create({ data })
-  // }
 }
