@@ -8,7 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "@getbrevo/brevo": "^2.2.0",
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.0",
     "csrf-csrf": "^3.0.8",
@@ -33,7 +33,7 @@
     "globals": "^15.11.0",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
-    "prisma": "^5.22.0"
+    "prisma": "^6.0.0"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",

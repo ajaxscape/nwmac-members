@@ -148,7 +148,7 @@ export const postCheckDetails = async (req, res) => {
           delete calculatedFees.total
           const memberSubscriptionData = {
             memberId: member.id,
-            subscriptionYear: req.session.nextRenewalYear,
+            subscriptionYear: req.session.currentRenewalYear,
             ...calculatedFees
           }
           await upsertMemberSubscription(memberSubscriptionData)

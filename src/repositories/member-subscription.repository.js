@@ -31,13 +31,15 @@ export async function upsertMemberSubscription(data, tx = prisma) {
     subscriptionYear,
     tx
   )
-  // Delete existing here if it exists
-  if (memberSubscription) {
-    data = { ...data, ...memberSubscription }
-    await tx.memberSubscription.deleteMany({
-      where: { memberId, subscriptionYear }
-    })
-  }
-  // Create a new one with updated data here
-  return tx.memberSubscription.create({ data })
+  return tx.$transaction(async (tx) => {
+    // Delete existing here if it exists
+    if (memberSubscription) {
+      data = { ...memberSubscription, ...data }
+      await tx.memberSubscription.deleteMany({
+        where: { memberId, subscriptionYear }
+      })
+    }
+    // Create a new one with updated data here
+    return tx.memberSubscription.create({ data })
+  })
 }
