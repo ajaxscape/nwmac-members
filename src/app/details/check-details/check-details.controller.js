@@ -12,6 +12,9 @@ import calculateFees from '#utils/calculate-fees.js'
 import mapFees from '#utils/map-fees.js'
 import logger from '../../../logger/logger.js'
 import { upsertMemberSubscription } from '#repos/member-subscription.repository.js'
+import currentRenewalYear from '#utils/current-renewal-year.js'
+import { getSubscription } from '#repos/subscription.repository.js'
+import memberSubscriptionStatuses from '#utils/member-subscription-statuses.js'
 
 /**
  * Load the body with the session data so the validators will work correctly
@@ -23,23 +26,33 @@ import { upsertMemberSubscription } from '#repos/member-subscription.repository.
  */
 export const loadBodyForValidation = async (req, res, next) => {
   Object.keys(req.session).forEach((key) => {
-    req.body[key] = req.session[key] ?? null
+    if (key === 'operatorIdRequired' && req.session.ageGroup === 'junior') {
+      /* empty */
+    } else {
+      req.body[key] = req.session[key] ?? null
+    }
   })
   next()
 }
 
 export const viewCheckDetails = async (req, res) => {
+  const { subscriptionPaymentMade, subscriptionAvailable } =
+    await memberSubscriptionStatuses(req.session.memberId)
   const achievements = await getAchievements()
   const fees = mapFees(calculateFees(req.session))
   res.render('pages/details/check-details', {
     locals: res.locals,
     achievements,
     fees,
-    year: res.locals.data.fees.year
+    subscriptionPaymentMade,
+    subscriptionAvailable,
+    year: currentRenewalYear()
   })
 }
 
 export const postCheckDetails = async (req, res) => {
+  const { subscriptionAvailable, subscriptionPaymentMade } =
+    await memberSubscriptionStatuses(req.session.memberId)
   const errors = validationResult(req)
   const calculatedFees = calculateFees(req.session)
   const fees = mapFees(calculatedFees)
@@ -54,6 +67,15 @@ export const postCheckDetails = async (req, res) => {
         case 'town':
         case 'postcode':
           return { ...rest, path: 'address' }
+        case 'mobileNumber':
+          return { ...rest, path: 'phoneNumbers' }
+        case 'bmfaThroughClub':
+        case 'bmfaNumber':
+          return { ...rest, path: 'bmfaMembership' }
+        case 'caaThroughClub':
+        case 'flyerId':
+        case 'operatorId':
+          return { ...rest, path: 'caaRegistration' }
         default:
           return { ...rest, path }
       }
@@ -64,12 +86,16 @@ export const postCheckDetails = async (req, res) => {
       {}
     )
     const achievements = await getAchievements()
+    const { available = false } =
+      (await getSubscription(currentRenewalYear())) || {}
     return res.render('pages/details/check-details', {
       locals: res.locals,
       achievements,
       fees,
-      year: res.locals.data.fees.year,
-      feesAvailable: res.locals.data.fees.available,
+      subscriptionPaymentMade,
+      subscriptionAvailable,
+      year: currentRenewalYear(),
+      feesAvailable: available,
       errors: summaryErrors,
       errorFields
     })
@@ -97,6 +123,7 @@ export const postCheckDetails = async (req, res) => {
     bmfaNumber,
     bmfaThroughClub,
     bmfaMembersCardRequired,
+    caaThroughClub,
     operatorId,
     flyerId,
     nonClubContact
@@ -129,6 +156,7 @@ export const postCheckDetails = async (req, res) => {
           ageGroup,
           bmfaNumber: Number(bmfaNumber),
           bmfaThroughClub: bmfaThroughClub === 'yes',
+          caaThroughClub: caaThroughClub === 'yes',
           bmfaMembersCardRequired,
           operatorId,
           flyerId,
@@ -144,7 +172,11 @@ export const postCheckDetails = async (req, res) => {
       await createMemberAchievementsByMemberId(member.id, achievements, tx)
 
       if (req.session.membershipNumber) {
-        if (req.session.fees.available) {
+        if (subscriptionPaymentMade || !subscriptionAvailable) {
+          return res.redirect(
+            redirectUrl('send-details-confirmation-email', res)
+          )
+        } else {
           delete calculatedFees.total
           const memberSubscriptionData = {
             memberId: member.id,
@@ -154,10 +186,6 @@ export const postCheckDetails = async (req, res) => {
           await upsertMemberSubscription(memberSubscriptionData)
           return res.redirect(
             redirectUrl('send-renewal-confirmation-email', res)
-          )
-        } else {
-          return res.redirect(
-            redirectUrl('send-details-confirmation-email', res)
           )
         }
       } else {

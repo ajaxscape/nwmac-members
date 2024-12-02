@@ -1,6 +1,7 @@
 import currentRenewalYear from '#utils/current-renewal-year.js'
+import { getSubscription } from '#repos/subscription.repository.js'
 
-export default (req, res, next) => {
+export default async (req, res, next) => {
   switch (req.method.toLowerCase()) {
     case 'get':
       res.locals.data = { ...res.locals.data, ...req.session }
@@ -26,6 +27,8 @@ export default (req, res, next) => {
     res.locals.data.achievements = [achievements].flat()
   }
   res.locals.data.currentRenewalYear = currentRenewalYear()
-  res.locals.data.nextRenewalYear = currentRenewalYear() + 1
+  const { available = false } =
+    (await getSubscription(res.locals.data.currentRenewalYear)) || {}
+  res.locals.feesAvailable = available
   next()
 }

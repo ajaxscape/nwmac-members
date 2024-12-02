@@ -26,6 +26,31 @@
 
     {% if operatorIdRequired %}
       <input type="hidden" name="operatorIdRequired" value="true" />
+        {{ govukRadios({
+          name: "caaThroughClub",
+          value: data.caaThroughClub,
+          fieldset: {
+            legend: {
+              text: 'CAA registration through the club.',
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              conditional: {
+              html: caaMembersCardHtml
+            }
+            },
+            {
+              value: "no",
+              text: "No"
+            }
+          ],
+          errorMessage: mapToError(errors, "caaThroughClub")
+        }) }}
+
       <div class="govuk-!-width-full">
           {{ govukLabel ({
               text: "Operator ID"
@@ -37,7 +62,8 @@
             value: data.operatorId,
             classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
             inputmode: "alphanumeric",
-            attributes: { maxlength: 12, autocapitalize:"characters" }
+            attributes: { maxlength: 12, autocapitalize:"characters" },
+            errorMessage: mapToError(errors, "operatorId")
           }) }}
       </div>
     {% endif %}
@@ -50,10 +76,11 @@
         {{ govukInput({
           id: "flyerId",
           name: "flyerId",
-            value: data.flyerId,
-            classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
-            inputmode: "alphanumeric",
-            attributes: { maxlength: 12, autocapitalize:"characters" }
+          value: data.flyerId,
+          classes: "govuk-input--width-7 govuk-input--extra-letter-spacing govuk-!-display-inline-block",
+          inputmode: "alphanumeric",
+          attributes: { maxlength: 12, autocapitalize:"characters" },
+          errorMessage: mapToError(errors, "flyerId")
         }) }}
       </div>
 

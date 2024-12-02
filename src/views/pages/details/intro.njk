@@ -6,7 +6,7 @@
 {% set existingMember = data.membershipNumber > 1 %}
 
 {% if existingMember %}
-    {% if data.fees.available %}
+    {% if subscriptionAvailable or subscriptionPending %}
         {% set pageTitle="Renewal of membership" %}
     {% else %}
         {% set pageTitle="Your membership details" %}
@@ -23,7 +23,14 @@
             <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
 
             {% if existingMember %}
-                {% if data.fees.available %}
+                {% if subscriptionPaymentRequired %}
+                    <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, your membership payment needs to be confirmed.</p>
+                    <p class="govuk-body"><a class="govuk-link" href="/details/confirm-payment">Please click here to confirm your payment</a></p>
+                {% elseif subscriptionPaymentPending %}
+                    <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, your membership payment is currently awaiting confirmation.</p>
+                {% elseif subscriptionPaymentConfirmed %}
+                    <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, your membership is paid and confirmed for the year.</p>
+                {% elseif subscriptionAvailable %}
                     <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }}, it's time to renew your membership for the next year.</p>
                 {% else %}
                     <p class="govuk-body">Hi {{ data.preferredName if data.preferredName else data.firstName }},</p>

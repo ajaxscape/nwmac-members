@@ -7,7 +7,7 @@
         href: "/admin/fees",
         text: "Update Fees for " + data.currentRenewalYear
     }] %}
-    {%  if data.fees.available %}
+    {%  if feesAvailable %}
         {% set navigation = navigation.concat({
             href: "/admin/confirm-pending-payments",
             text: "Confirm pending payments for " + data.currentRenewalYear

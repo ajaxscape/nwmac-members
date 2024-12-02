@@ -7,7 +7,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 {% set pageTitle="Change BMFA number" if edit else "Enter BMFA number" %}
-{% set backLink="/details/check-details" if edit else "/details/age-group" %}
+{% set backLink="/details/check-details" if edit else ("/details/phone-numbers" if subscriptionPaymentMade else "/details/age-group") %}
 
 {% block formContent %}
   {% call govukFieldset({
@@ -18,50 +18,54 @@
     }
   }) %}
 
-    {% set bmfaMembersCardHtml %}
-      {{ govukCheckboxes({
-        name: "bmfaMembersCardRequired",
+    {% if subscriptionPaymentMade %}
+      <input type="hidden" name="bmfaThroughClub" value="{{ data.bmfaThroughClub }}">
+    {% else %}
+      {% set bmfaMembersCardHtml %}
+        {{ govukCheckboxes({
+          name: "bmfaMembersCardRequired",
+          fieldset: {
+            legend: {
+              text: "Would you like a BMFA Members card?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: true,
+              text: bmfaMembersCardLabel | safe,
+              hint: {text: "Only available when registered through the club."},
+              checked: data.bmfaMembersCardRequired
+            }
+          ]
+        }) }}
+      {% endset -%}
+
+      {{ govukRadios({
+        name: "bmfaThroughClub",
+        value: data.bmfaThroughClub,
         fieldset: {
           legend: {
-            text: "Would you like a BMFA Members card?",
+            text: 'BMFA membership registered through the club.',
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           {
-            value: true,
-            text: bmfaMembersCardLabel | safe,
-            hint: {text: "Only available when registered through the club."},
-            checked: data.bmfaMembersCardRequired
+            value: "yes",
+            text: "Yes",
+            conditional: {
+              html: bmfaMembersCardHtml
+            }
+          },
+          {
+            value: "no",
+            text: "No"
           }
-        ]
+        ],
+        errorMessage: mapToError(errors, "bmfaThroughClub")
       }) }}
-    {% endset -%}
-
-    {{ govukRadios({
-      name: "bmfaThroughClub",
-      value: data.bmfaThroughClub,
-      fieldset: {
-        legend: {
-          text: 'BMFA membership registered through the club.',
-          classes: "govuk-fieldset__legend--m"
-        }
-      },
-      items: [
-        {
-          value: "yes",
-          text: "Yes",
-          conditional: {
-            html: bmfaMembersCardHtml
-          }
-        },
-        {
-          value: "no",
-          text: "No"
-        }
-      ],
-      errorMessage: mapToError(errors, "nonClubContact")
-    }) }}
+    {% endif %}
 
     {{ govukInput({
       label: {
