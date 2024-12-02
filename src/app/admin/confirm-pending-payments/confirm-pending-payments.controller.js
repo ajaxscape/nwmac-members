@@ -14,7 +14,12 @@ async function getMembersWithPayments(subscriptionYear) {
         (memberSubscription) =>
           memberSubscription.subscriptionYear === subscriptionYear
       )
-      const { amountPaid = 0, confirmed = false } = memberSubscription || {}
+      const {
+        amountPaid = 0,
+        confirmed = false,
+        paymentReference = '',
+        paymentMethod
+      } = memberSubscription || {}
       const totalDue = memberSubscription
         ? FEES.reduce((acc, cur) => {
             return acc + memberSubscription[cur]
@@ -25,6 +30,8 @@ async function getMembersWithPayments(subscriptionYear) {
         membershipNumber,
         memberName,
         amountPaid,
+        paymentMethod,
+        paymentReference,
         totalDue,
         confirmed
       }
@@ -38,9 +45,11 @@ export const viewPaymentsConfirmed = async (req, res) => {
   res.render('pages/admin/confirm-pending-payments', {
     locals: res.locals,
     membersPendingPayments: membersWithPayments.filter(
-      ({ confirmed }) => confirmed
+      ({ paymentMethod }) => paymentMethod
     ),
-    remainingMembers: membersWithPayments.filter(({ confirmed }) => !confirmed),
+    remainingMembers: membersWithPayments.filter(
+      ({ paymentMethod }) => !paymentMethod
+    ),
     data,
     currentRenewalYear
   })

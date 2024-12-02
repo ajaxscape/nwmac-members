@@ -13,7 +13,7 @@
         value: member.memberId,
         text: member.memberName,
         hint: {
-            html: ("Ref: NWMAC-" + member.membershipNumber + "<br> Due: " + member.totalDue | formatAmount + "<br> Paid: " + member.amountPaid | formatAmount + "<br> ") | safe
+            html: ("Type: " + member.paymentMethod + ("<br> Ref: " + member.paymentReference if member.paymentMethod === 'BACS' else '') + "<br> Due: " + member.totalDue | formatAmount + "<br> Paid: " + member.amountPaid | formatAmount + "<br> ") | safe
         },
         checked: member.confirmed
     }

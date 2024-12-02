@@ -1,32 +1,87 @@
 {% extends "layouts/form-layout.njk" %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 
-{% set pageTitle="Confirm payment" %}
+{% set pageTitle="Confirm payment for " + subscriptionYear %}
 
 {% block formContent %}
-        {{ govukRadios({
-            name: "confirmPayment",
-            value: data.confirmPayment,
-            hint: { text: "Please select yes if you have paid via your online bank" },
-            fieldset: {
-                legend: {
-                    text: pageTitle,
-                    classes: "govuk-fieldset__legend--l",
-                    isPageHeading: true
-                }
+    {% call govukFieldset({
+        legend: {
+            text: pageTitle,
+            classes: "govuk-fieldset__legend--l",
+            isPageHeading: true
+        }
+    }) %}
+        {{ govukInput({
+            id: 'amountPaid',
+            name: 'amountPaid',
+            label: {
+                text: "Amount paid"
             },
+            prefix: {
+                text: "£"
+            },
+            value: amountPaid,
+            hint: { text: "Change if you paid a different amount"},
+            errorMessage: mapToError(errors, 'amountPaid'),
+            classes: "govuk-input--width-5",
+            spellcheck: false
+        }) }}
+
+        {% set paymentRefHtml %}
+            {{ govukInput({
+                label: {
+                    text: "Payment reference"
+                },
+                classes: "govuk-!-width-two-thirds",
+                id: "paymentReference",
+                name: "paymentReference",
+                value: paymentReference,
+                hint: {text: "Please update if different from the reference you used."}
+            }) }}
+        {% endset -%}
+
+        {% set paymentCashHtml %}
+            <span class="govuk-body">Cash or Cheque assumed.</span><br>
+            <span class="govuk-hint">Please make sure the club treasurer has received your payment</span>
+        {% endset %}
+
+        {{ govukRadios({
+            name: "paymentMethod",
+            value: paymentMethod,
+            hint: { text: "Did you pay via your online bank?" },
             items: [
                 {
-                    value: "yes",
-                    text: "Yes"
+                    value: "BACS",
+                    text: "Yes",
+                    conditional: {
+                        html: paymentRefHtml
+                    },
+                    checked: paymentMethod === 'BACS'
                 },
                 {
-                    value: "No",
-                    text: "No"
+                    value: "CASH",
+                    text: "No",
+                    conditional: {
+                        html: paymentCashHtml
+                    },
+                    checked: paymentMethod === 'CASH'
                 }
             ],
-            errorMessage: mapToError(errors, "confirmPayment")
+            errorMessage: mapToError(errors, "paymentMethod")
         }) }}
+    {% endcall %}
+{% endblock %}
+
+{% block formSubmit %}
+    <div class="govuk-button-group">
+        {{ govukButton({
+            text: ("Confirm")
+        }) }}
+
+        <a class="govuk-link" href="/details">Cancel</a>
+    </div>
 {% endblock %}

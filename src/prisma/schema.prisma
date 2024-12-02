@@ -165,6 +165,7 @@ model MemberSubscription {
   bmfaMembersCard         Int          @default(0) @map("bmfa_members_card")
   amountPaid              Int          @default(0) @map("amount_paid")
   paymentMethod           String?      @map("payment_method")
+  paymentReference        String?      @map("payment_reference") @db.VarChar(30)
   confirmed               Boolean      @default(false) @db.Boolean
   createdAt               DateTime     @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
   updatedAt               DateTime     @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @updatedAt @map("updated_at") @db.Timestamp(6)

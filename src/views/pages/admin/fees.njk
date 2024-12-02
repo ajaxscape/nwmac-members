@@ -35,7 +35,7 @@
                     text: "£"
                 },
                 value: fee.value,
-                hint: { text: "Was £" + prevValue + " in " + currentRenewalYear },
+                hint: { text: ("Was " + prevValue | formatAmount + " in " + currentRenewalYear) | safe },
                 errorMessage: mapToError(errors, fee.name),
                 classes: "govuk-input--width-5",
                 spellcheck: false

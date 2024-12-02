@@ -29,7 +29,7 @@ const formatFees = (nextYearsFees = {}, currentYearsFees = {}, isError) => {
         title,
         value: isError ? value : (value / 100).toFixed(2),
         type: title.split(' ')[0] + ' fees',
-        prevValue: (currentYearsFees[name] / 100 || 0).toFixed(2)
+        prevValue: currentYearsFees[name] || 0
       }
     })
 }
