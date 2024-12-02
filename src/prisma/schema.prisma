@@ -24,8 +24,12 @@ model Member {
   flyerId                 String?               @map("flyer_id")
   operatorId              String?               @map("operator_id")
   addressId               Int?                  @map("address_id")
+  leadFamilyMemberId      Int?                  @map("lead_family_member_id")
   nonClubContact          Boolean?              @map("non_club_contact")
   bmfaThroughClub         Boolean?              @map("bmfa_through_club")
+  caaThroughClub          Boolean?              @map("caa_through_club")
+  flyerIdRequired         Boolean?              @map("flyer_id_required")
+  operatorIdRequired      Boolean?              @map("operator_id_required")
   bmfaMembersCardRequired Boolean?              @default(false) @map("bmfa_members_card_required") @db.Boolean
   confirmed               Boolean               @default(false) @db.Boolean
   createdAt               DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
@@ -34,8 +38,18 @@ model Member {
   address                 Address?              @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_member_address_id")
   memberCommitteeRoles    MemberCommitteeRole[] @relation(map: "FK_member_committee_role_member_id")
   memberSubscriptions     MemberSubscription[]  @relation(map: "FK_member_subscription_member_id")
+  family                  Family[]              @relation(map: "FK_family_member_id")
 
   @@map("member")
+}
+
+model Family {
+  familyMemberId     Int    @map("family_member_id")
+  leadFamilyMemberId Int    @map("lead_family_member_id")
+  familyMember       Member @relation(fields: [familyMemberId], references: [id])
+
+  @@id([familyMemberId, leadFamilyMemberId])
+  @@map("family_member")
 }
 
 model Address {
@@ -151,6 +165,7 @@ model MemberSubscription {
   bmfaMembersCard         Int          @default(0) @map("bmfa_members_card")
   amountPaid              Int          @default(0) @map("amount_paid")
   paymentMethod           String?      @map("payment_method")
+  paymentReference        String?      @map("payment_reference") @db.VarChar(30)
   confirmed               Boolean      @default(false) @db.Boolean
   createdAt               DateTime     @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
   updatedAt               DateTime     @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @updatedAt @map("updated_at") @db.Timestamp(6)

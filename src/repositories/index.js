@@ -3,3 +3,4 @@ export * as achievementCategoryRepository from './achievement-category.repositor
 export * as addressRepository from './address.repository.js'
 export * as memberRepository from './member.repository.js'
 export * as memberAchievementRepository from './member-achievement.repository.js'
+export * as memberSubscriptionRepository from './member-subscription.repository.js'

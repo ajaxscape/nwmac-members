@@ -1,11 +1,12 @@
 export default ({
   fees,
-  bmfaThroughClub,
+  bmfaThroughClub = true,
+  caaThroughClub = true,
   ageGroup,
-  isPartner,
-  bmfaMembersCardRequired,
+  isPartner = false,
+  bmfaMembersCardRequired = false,
   membershipType,
-  nonFlyer,
+  nonFlyer = false,
   operatorId
 }) => {
   const {
@@ -61,7 +62,7 @@ export default ({
         subscription.bmfaMembersCard = bmfaMembersCard
       }
     }
-    if (operatorId) {
+    if (caaThroughClub && operatorId) {
       subscription.caaOperatorRegistration = caaOperatorRegistration
     }
   }

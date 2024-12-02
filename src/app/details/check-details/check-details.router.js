@@ -19,6 +19,7 @@ import {
   validateBMFAThroughClub
 } from '../bmfa-membership/bmfa-membership.validator.js'
 import {
+  validateCAAThroughClub,
   validateFlyerId,
   validateOperatorId
 } from '../caa-registration/caa-registration.validator.js'
@@ -38,6 +39,7 @@ router
     validateMobileNumber(),
     validateMembershipType(),
     validateAgeGroup(),
+    validateCAAThroughClub(),
     validateBMFAThroughClub(),
     validateBMFANumber(),
     validateOperatorId(),

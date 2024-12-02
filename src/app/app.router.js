@@ -21,15 +21,19 @@ router.get('/', (req, res) => {
 })
 
 // Error handling
-router.use((req, res, next) => {
-  logger.error(`Page not found: ${req.originalUrl}`)
-  res.status(404).render('pages/error/not-found')
-  next()
-})
-// .use((err, req, res, next) => {
-//   logger.error({ err }, `Unhandled exception in: ${req.originalUrl}`)
-//   res.status(err.statusCode).render('pages/error/unhandled-exception')
-//   next()
-// })
+router
+  .use((req, res, next) => {
+    logger.error(`Page not found: ${req.originalUrl}`)
+    res.status(404).render('pages/error/not-found')
+    next()
+  })
+  .use((error, req, res, next) => {
+    logger.error(
+      { err: error },
+      `Unhandled exception in: ${req.originalUrl} for user: ${req.session?.email ?? 'unknown'}`
+    )
+    res.status(500).render('pages/error/unhandled-exception', { error })
+    next()
+  })
 
 export default router

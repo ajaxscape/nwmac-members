@@ -1,0 +1,81 @@
+{% extends "layouts/form-layout.njk" %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% set pageTitle = 'Confirm payments received for ' + currentRenewalYear %}
+
+{% set items = [] %}
+
+{% for member in membersPendingPayments %}
+    {% set item = {
+        value: member.memberId,
+        text: member.memberName,
+        hint: {
+            html: ("Type: " + member.paymentMethod + ("<br> Ref: " + member.paymentReference if member.paymentMethod === 'BACS' else '') + "<br> Due: " + member.totalDue | formatAmount + "<br> Paid: " + member.amountPaid | formatAmount + "<br> ") | safe
+        },
+        checked: member.confirmed
+    }
+    %}
+    {% set items = (items.push(item), items) %}
+{% endfor %}
+
+{% block formContent %}
+    {% call govukFieldset({
+        legend: {
+            text: pageTitle,
+            classes: "govuk-fieldset__legend--l",
+            isPageHeading: true
+        }
+    }) %}
+
+        {% if items.length %}
+        {% set membersWhoHavePaid = govukCheckboxes({
+                name: "payments",
+                hint: {
+                    text: "Tick members who have paid"
+                },
+                items: items
+            })
+        %}
+
+        {{ govukDetails({
+            summaryText: "Members who have paid",
+            html: membersWhoHavePaid
+        }) }}
+
+        {% else %}
+
+            {{ govukInsetText({
+                text: "No members have paid as yet"
+            }) }}
+
+        {% endif %}
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+        {% set list = "<ul class='govuk-list govuk-list--spaced'>" %}
+        {% for member in remainingMembers %}
+            {% set list = list + "<li>" + member.memberName + " <br> <span class='govuk-hint'>NWMAC-" + member.membershipNumber + "</span></li>" %}
+        {% endfor %}
+        {% set list = list + "</ul>" %}
+
+        {{ govukDetails({
+            summaryText: "Members yet to pay",
+            html: list
+        }) }}
+
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    {% endcall %}
+{% endblock %}
+
+{% block formSubmit %}
+    <div class="govuk-button-group">
+        {{ govukButton({
+            text: ("Save")
+        }) }}
+
+        <a class="govuk-link" href="/details">Cancel</a>
+    </div>
+{% endblock %}

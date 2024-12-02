@@ -1,5 +1,12 @@
 import { body } from 'express-validator'
 
+export const validateCAAThroughClub = () =>
+  body('caaThroughClub')
+    .if(body('operatorIdRequired').exists())
+    .trim()
+    .notEmpty()
+    .withMessage('Yes or No must be selected')
+
 export const validateOperatorId = () =>
   body('operatorId')
     .if(body('operatorIdRequired').exists())

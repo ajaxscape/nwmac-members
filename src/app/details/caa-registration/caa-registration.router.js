@@ -5,6 +5,7 @@ import {
   viewEnterCaaOperatorRegistration
 } from './caa-registration.controller.js'
 import {
+  validateCAAThroughClub,
   validateFlyerId,
   validateOperatorId
 } from './caa-registration.validator.js'
@@ -15,6 +16,7 @@ router
   .route('/')
   .get(viewEnterCaaOperatorRegistration)
   .post(
+    validateCAAThroughClub(),
     validateOperatorId(),
     validateFlyerId(),
     postEnterCaaOperatorRegistration

@@ -22,6 +22,7 @@ export default async (req, res, next) => {
           break
         case 'nonClubContact':
         case 'bmfaThroughClub':
+        case 'caaThroughClub':
           if (typeof mbrValue === 'boolean') {
             req.session[mbrKey] = mbrValue ? 'yes' : 'no'
           } else {

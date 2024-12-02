@@ -1,19 +1,19 @@
 {% if data.isTreasurer or data.isSecretary %}
+    {% set navigation = [{
+        href: "/details",
+        text: "My Profile",
+        active: true
+    },{
+        href: "/admin/fees",
+        text: "Update Fees for " + data.currentRenewalYear
+    }] %}
+    {%  if feesAvailable %}
+        {% set navigation = navigation.concat({
+            href: "/admin/confirm-pending-payments",
+            text: "Confirm pending payments for " + data.currentRenewalYear
+        }) %}
+    {% endif %}
     {{ govukServiceNavigation({
-        navigation: [
-            {
-                href: "/details",
-                text: "My Profile",
-                active: true
-            },
-            {
-                href: "/admin/confirm-pending-payments",
-                text: "Confirm pending payments for " + data.currentRenewalYear
-            },
-            {
-                href: "/admin/fees",
-                text: "Update Fees for " + data.nextRenewalYear
-            }
-        ]
+        navigation: navigation
     }) }}
 {% endif %}
