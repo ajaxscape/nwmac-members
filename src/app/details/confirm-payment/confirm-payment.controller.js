@@ -33,6 +33,10 @@ async function buildMemberSubscription({ memberId, currentRenewalYear }) {
 }
 
 export const viewEnterConfirmPayment = async (req, res) => {
+  const { available = false } = res.locals.data?.fees || {}
+  if (!available) {
+    return res.status(404).render('pages/error/not-found')
+  }
   const { amountPaid, confirmed, paymentMethod, paymentReference } =
     await buildMemberSubscription(res.locals.data)
   if (confirmed) {

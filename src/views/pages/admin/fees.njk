@@ -4,7 +4,7 @@
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
-{% set pageTitle="Enter the fees for " + nextRenewalYear %}
+{% set pageTitle="Enter the fees for " + currentRenewalYear %}
 
 {% block formContent %}
     {% call govukFieldset({
@@ -35,7 +35,7 @@
                     text: "£"
                 },
                 value: fee.value,
-                hint: { text: ("Was " + prevValue | formatAmount + " in " + currentRenewalYear) | safe },
+                hint: { text: ("Was " + prevValue | formatAmount + " in " + previousRenewalYear) | safe },
                 errorMessage: mapToError(errors, fee.name),
                 classes: "govuk-input--width-5",
                 spellcheck: false
@@ -48,7 +48,7 @@
             name: "available",
             fieldset: {
                 legend: {
-                    text: "Make subscriptions available for " + nextRenewalYear,
+                    text: "Make subscriptions available for " + currentRenewalYear,
                     classes: "govuk-fieldset__legend--m"
                 }
             },

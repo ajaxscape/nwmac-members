@@ -13,12 +13,12 @@ FEES.forEach((feeType) => {
   feesTemplate[feeType] = 0
 })
 
-const formatFees = (nextYearsFees = {}, currentYearsFees = {}, isError) => {
-  const nextFees = {
+const formatFees = (currentYearsFees = {}, previousYearsFees = {}, isError) => {
+  const currentFees = {
     ...feesTemplate,
-    ...nextYearsFees
+    ...currentYearsFees
   }
-  return Object.entries(nextFees)
+  return Object.entries(currentFees)
     .filter(([name]) => name !== 'available')
     .map(([name, value]) => {
       const title = sentenceCase(name)
@@ -29,55 +29,55 @@ const formatFees = (nextYearsFees = {}, currentYearsFees = {}, isError) => {
         title,
         value: isError ? value : (value / 100).toFixed(2),
         type: title.split(' ')[0] + ' fees',
-        prevValue: currentYearsFees[name] || 0
+        prevValue: previousYearsFees[name] || 0
       }
     })
 }
 
 export const viewEnterFees = async (req, res) => {
   const currentRenewalYear = renewalYear()
-  const nextRenewalYear = currentRenewalYear + 1
+  const previousRenewalYear = currentRenewalYear - 1
   // eslint-disable-next-line no-unused-vars
-  const { available, year, ...nextSubscription } =
-    await getSubscription(nextRenewalYear)
-  const fees = formatFees(
-    nextSubscription,
+  const { available, year, ...currentSubscription } =
     await getSubscription(currentRenewalYear)
+  const fees = formatFees(
+    currentSubscription,
+    await getSubscription(previousRenewalYear)
   )
   res.render('pages/admin/fees', {
     locals: res.locals,
     fees,
     available: !!available,
-    currentRenewalYear,
-    nextRenewalYear
+    previousRenewalYear,
+    currentRenewalYear
   })
 }
 
 export const postEnterFees = async (req, res) => {
   const currentRenewalYear = renewalYear()
-  const nextRenewalYear = currentRenewalYear + 1
+  const previousRenewalYear = currentRenewalYear - 1
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    const currentSubscription = {}
+    const previousSubscription = {}
     FEES.forEach(
-      (feeType) => (currentSubscription[feeType] = req.body[feeType])
+      (feeType) => (previousSubscription[feeType] = req.body[feeType])
     )
     const fees = formatFees(
-      currentSubscription,
-      await getSubscription(currentRenewalYear),
+      previousSubscription,
+      await getSubscription(previousRenewalYear),
       true
     )
     return res.render('pages/admin/fees', {
       locals: res.locals,
       fees,
       available: !!req.body.available,
+      previousRenewalYear,
       currentRenewalYear,
-      nextRenewalYear,
       errors: errors.array()
     })
   }
 
-  const subscription = { year: nextRenewalYear }
+  const subscription = { year: currentRenewalYear }
   Object.keys(feesTemplate).forEach(
     (key) => (subscription[key] = Number(req.body[key].trim().replace('.', '')))
   )
