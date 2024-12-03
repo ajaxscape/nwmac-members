@@ -7,20 +7,20 @@ export default async (memberId) => {
   const { available = false } = (await getSubscription(renewalYear)) || {}
   const { memberSubscriptions = [] } = (await getMemberById(memberId)) || {}
   const {
-    subscriptionAvailable = available,
+    subscriptionExists = available,
     amountPaid = 0,
     confirmed = false
   } = memberSubscriptions.find(
     ({ subscriptionYear }) => subscriptionYear === renewalYear
-  ) || { subscriptionAvailable: false }
-  const subscriptionPaymentRequired = subscriptionAvailable && !amountPaid
+  ) || { subscriptionExists: false }
+  const subscriptionPaymentRequired = subscriptionExists && !amountPaid
   const subscriptionPaymentPending =
-    subscriptionAvailable && !!amountPaid && !confirmed
+    subscriptionExists && !!amountPaid && !confirmed
   const subscriptionPaymentConfirmed =
-    subscriptionAvailable && !!amountPaid && !!confirmed
+    subscriptionExists && !!amountPaid && !!confirmed
 
   return {
-    subscriptionAvailable,
+    subscriptionAvailable: subscriptionExists || available,
     subscriptionPaymentRequired,
     subscriptionPaymentPending,
     subscriptionPaymentConfirmed,
