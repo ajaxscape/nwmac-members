@@ -4,6 +4,7 @@ import { upsertMemberSubscription } from '#repos/member-subscription.repository.
 import logger from '../../../logger/logger.js'
 import { FEES } from '#constants/fees.js'
 import { getMemberById } from '#repos/member.repository.js'
+import config from '#config/config.js'
 
 async function buildMemberSubscription({ memberId, currentRenewalYear }) {
   const { memberSubscriptions, membershipNumber } =
@@ -47,6 +48,7 @@ export const viewEnterConfirmPayment = async (req, res) => {
     amountPaid: amountPaid.toFixed(2),
     paymentMethod,
     paymentReference,
+    ...config.bankDetails,
     subscriptionYear: req.session.currentRenewalYear,
     confirmed
   })
@@ -61,6 +63,7 @@ export const postEnterConfirmPayment = async (req, res) => {
       amountPaid,
       paymentMethod,
       paymentReference,
+      ...config.bankDetails,
       subscriptionYear: req.session.currentRenewalYear,
       errors: errors.array()
     })

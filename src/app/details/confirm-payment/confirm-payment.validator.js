@@ -4,9 +4,9 @@ export const validateAmountPaid = () =>
   body('amountPaid')
     .trim()
     .escape()
-    .matches(/^-?\d\d?\.\d\d$/)
+    .matches(/^-?\d\d\d?\.\d\d$/)
     .withMessage(
-      'Amount must be between 99.99 and 0.00 including the two decimal places'
+      'Amount must be between 999.99 and 0.00 including the two decimal places'
     )
 
 export const validatePaymentMethod = () =>

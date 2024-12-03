@@ -3,6 +3,8 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 
 {% set pageTitle="Confirm payment for " + subscriptionYear %}
@@ -29,6 +31,39 @@
             errorMessage: mapToError(errors, 'amountPaid'),
             classes: "govuk-input--width-5",
             spellcheck: false
+        }) }}
+
+
+        {% set bankDetailsHtml %}
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'Sortcode' },
+                        value: { text: sortcode }
+                    },
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'Account number' },
+                        value: { text: account }
+                    },
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'Account name' },
+                        value: { text: name }
+                    },
+                    {
+                        classes: 'govuk-body-s',
+                        key: { text: 'Reference' },
+                        value: { text: paymentReference }
+                    }
+                ]
+            })}}
+        {% endset -%}
+
+        {{ govukDetails({
+            summaryText: "Club bank details",
+            html: bankDetailsHtml
         }) }}
 
         {% set paymentRefHtml %}
