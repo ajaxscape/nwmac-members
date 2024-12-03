@@ -8,6 +8,7 @@ const buildSelects = () => {
   })
   selects.amountPaid = true
   selects.paymentMethod = true
+  selects.paymentReference = true
   selects.confirmed = true
   return selects
 }
@@ -25,7 +26,7 @@ export async function getMemberSubscription(
 }
 
 export async function upsertMemberSubscription(data, tx = prisma) {
-  const { memberId, subscriptionYear } = data || {}
+  const { memberId, subscriptionYear, paymentReference } = data || {}
   const memberSubscription = await getMemberSubscription(
     memberId,
     subscriptionYear,
@@ -34,7 +35,12 @@ export async function upsertMemberSubscription(data, tx = prisma) {
   return tx.$transaction(async (tx) => {
     // Delete existing here if it exists
     if (memberSubscription) {
-      data = { ...memberSubscription, ...data }
+      data = {
+        ...memberSubscription,
+        ...data,
+        paymentReference:
+          memberSubscription.paymentReference || paymentReference
+      }
       await tx.memberSubscription.deleteMany({
         where: { memberId, subscriptionYear }
       })

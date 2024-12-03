@@ -181,6 +181,7 @@ export const postCheckDetails = async (req, res) => {
           const memberSubscriptionData = {
             memberId: member.id,
             subscriptionYear: req.session.currentRenewalYear,
+            paymentReference: 'NWMAC-' + req.session.membershipNumber,
             ...calculatedFees
           }
           await upsertMemberSubscription(memberSubscriptionData)
