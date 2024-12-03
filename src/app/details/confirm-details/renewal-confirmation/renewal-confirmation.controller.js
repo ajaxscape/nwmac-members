@@ -7,6 +7,6 @@ export const viewRenewalConfirmation = (req, res) => {
     locals: res.locals,
     total,
     ...config.bankDetails,
-    reference: `NWMAC${req.session.membershipNumber}`
+    reference: `NWMAC-${req.session.membershipNumber}`
   })
 }

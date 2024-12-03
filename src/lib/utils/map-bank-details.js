@@ -7,7 +7,7 @@ export default function mapBankDetails(req) {
     { key: 'Account name', value: name },
     {
       key: 'Reference',
-      value: `NWMAC${req.session.membershipNumber}`
+      value: `NWMAC-${req.session.membershipNumber}`
     }
   ]
 }
