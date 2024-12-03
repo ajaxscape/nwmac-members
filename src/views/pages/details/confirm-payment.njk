@@ -33,6 +33,27 @@
             spellcheck: false
         }) }}
 
+        {% set rows = [] %}
+
+        {% for fee in fees %}
+            {% set row = {
+                classes: 'govuk-!-font-weight-bold' if fee.key === 'Total' else 'govuk-body-s',
+                key: { text: fee.key },
+                value: { text: fee.value | formatAmount | safe, classes: 'nwmac-text-align-right' }
+            } %}
+            {% set rows = rows.concat(row) %}
+        {% endfor %}
+
+        {% set feeDetailsHtml %}
+            {{ govukSummaryList({
+                rows: rows
+            })}}
+        {% endset -%}
+
+        {{ govukDetails({
+            summaryText: "Fee breakdown",
+            html: feeDetailsHtml
+        }) }}
 
         {% set bankDetailsHtml %}
             {{ govukSummaryList({

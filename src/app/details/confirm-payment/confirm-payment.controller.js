@@ -6,6 +6,7 @@ import { FEES } from '#constants/fees.js'
 import { getMemberById } from '#repos/member.repository.js'
 import config from '#config/config.js'
 import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
+import mapFees from '#utils/map-fees.js'
 
 async function buildMemberSubscription({ memberId, currentRenewalYear }) {
   const { memberSubscriptions, membershipNumber } =
@@ -21,25 +22,31 @@ async function buildMemberSubscription({ memberId, currentRenewalYear }) {
     paymentMethod = '',
     paymentReference = defaultBankReference(membershipNumber)
   } = memberSubscription || {}
+  const fees = {}
   const totalDue = memberSubscription
     ? FEES.reduce((acc, cur) => {
-        return acc + memberSubscription[cur]
+        const value = memberSubscription[cur]
+        if (value) {
+          fees[cur] = value
+        }
+        return acc + value
       }, 0)
     : 0
+  fees.total = totalDue
   return {
     amountPaid: (amountPaid || totalDue) / 100,
     confirmed,
+    fees,
     paymentMethod,
     paymentReference
   }
 }
 
 export const viewEnterConfirmPayment = async (req, res) => {
-  const { available = false } = res.locals.data?.fees || {}
-  if (!available) {
+  if (!req.session.fees.available) {
     return res.status(404).render('pages/error/not-found')
   }
-  const { amountPaid, confirmed, paymentMethod, paymentReference } =
+  const { amountPaid, confirmed, paymentMethod, paymentReference, fees } =
     await buildMemberSubscription(res.locals.data)
   if (confirmed) {
     return res.redirect(redirectUrl('payment-confirmation', res))
@@ -50,6 +57,7 @@ export const viewEnterConfirmPayment = async (req, res) => {
     paymentMethod,
     paymentReference,
     ...config.bankDetails,
+    fees: mapFees(fees),
     subscriptionYear: req.session.currentRenewalYear,
     confirmed
   })
@@ -59,12 +67,14 @@ export const postEnterConfirmPayment = async (req, res) => {
   const { amountPaid, paymentMethod, paymentReference } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
+    const { fees } = await buildMemberSubscription(req.session)
     return res.render('pages/details/confirm-payment', {
       locals: res.locals,
       amountPaid,
       paymentMethod,
       paymentReference,
       ...config.bankDetails,
+      fees: mapFees(fees),
       subscriptionYear: req.session.currentRenewalYear,
       errors: errors.array()
     })
