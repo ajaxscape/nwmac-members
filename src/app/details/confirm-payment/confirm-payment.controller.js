@@ -5,6 +5,7 @@ import logger from '../../../logger/logger.js'
 import { FEES } from '#constants/fees.js'
 import { getMemberById } from '#repos/member.repository.js'
 import config from '#config/config.js'
+import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
 
 async function buildMemberSubscription({ memberId, currentRenewalYear }) {
   const { memberSubscriptions, membershipNumber } =
@@ -18,7 +19,7 @@ async function buildMemberSubscription({ memberId, currentRenewalYear }) {
     amountPaid = 0,
     confirmed = false,
     paymentMethod = '',
-    paymentReference = 'NWMAC-' + membershipNumber
+    paymentReference = defaultBankReference(membershipNumber)
   } = memberSubscription || {}
   const totalDue = memberSubscription
     ? FEES.reduce((acc, cur) => {

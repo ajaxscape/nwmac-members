@@ -15,6 +15,7 @@ import { upsertMemberSubscription } from '#repos/member-subscription.repository.
 import currentRenewalYear from '#utils/current-renewal-year.js'
 import { getSubscription } from '#repos/subscription.repository.js'
 import memberSubscriptionStatuses from '#utils/member-subscription-statuses.js'
+import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
 
 /**
  * Load the body with the session data so the validators will work correctly
@@ -181,7 +182,9 @@ export const postCheckDetails = async (req, res) => {
           const memberSubscriptionData = {
             memberId: member.id,
             subscriptionYear: req.session.currentRenewalYear,
-            paymentReference: 'NWMAC-' + req.session.membershipNumber,
+            paymentReference: defaultBankReference(
+              req.session.membershipNumber
+            ),
             ...calculatedFees
           }
           await upsertMemberSubscription(memberSubscriptionData)

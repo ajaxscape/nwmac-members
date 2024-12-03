@@ -1,4 +1,5 @@
 import config from '#config/config.js'
+import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
 export default function mapBankDetails(req) {
   const { sortcode, account, name } = config.bankDetails
   return [
@@ -7,7 +8,7 @@ export default function mapBankDetails(req) {
     { key: 'Account name', value: name },
     {
       key: 'Reference',
-      value: `NWMAC-${req.session.membershipNumber}`
+      value: defaultBankReference(req.session.membershipNumber)
     }
   ]
 }

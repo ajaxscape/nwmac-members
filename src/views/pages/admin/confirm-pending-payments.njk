@@ -57,7 +57,7 @@
 
         {% set list = "<ul class='govuk-list govuk-list--spaced'>" %}
         {% for member in remainingMembers %}
-            {% set list = list + "<li>" + member.memberName + " <br> <span class='govuk-hint'>NWMAC-" + member.membershipNumber + "</span></li>" %}
+            {% set list = list + "<li>" + member.memberName + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span></li>" %}
         {% endfor %}
         {% set list = list + "</ul>" %}
 

@@ -1,5 +1,6 @@
 import calculateFees from '#utils/calculate-fees.js'
 import config from '#config/config.js'
+import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
 
 export const viewRenewalConfirmation = (req, res) => {
   const { total } = calculateFees(req.session)
@@ -7,6 +8,6 @@ export const viewRenewalConfirmation = (req, res) => {
     locals: res.locals,
     total,
     ...config.bankDetails,
-    reference: `NWMAC-${req.session.membershipNumber}`
+    reference: defaultBankReference(req.session.membershipNumber)
   })
 }
