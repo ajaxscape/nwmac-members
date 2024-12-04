@@ -45,7 +45,10 @@ export const viewPaymentsConfirmed = async (req, res) => {
   res.render('pages/admin/confirm-pending-payments', {
     locals: res.locals,
     membersPendingPayments: membersWithPayments.filter(
-      ({ paymentMethod }) => paymentMethod
+      ({ paymentMethod, confirmed }) => paymentMethod && !confirmed
+    ),
+    membersConfirmedPaid: membersWithPayments.filter(
+      ({ confirmed }) => confirmed
     ),
     remainingMembers: membersWithPayments.filter(
       ({ paymentMethod }) => !paymentMethod
@@ -65,4 +68,6 @@ export const postPaymentsConfirmed = async (req, res) => {
       errors: errors.array()
     })
   }
+
+  res.redirect('confirm-pending-payments')
 }

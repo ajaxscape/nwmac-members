@@ -11,6 +11,9 @@ import mapFees from '#utils/map-fees.js'
 async function buildMemberSubscription({ memberId, currentRenewalYear }) {
   const { memberSubscriptions, membershipNumber } =
     await getMemberById(memberId)
+  if (!memberSubscriptions?.length) {
+    return null
+  }
   const memberSubscription =
     memberSubscriptions?.length &&
     memberSubscriptions.find(
@@ -46,8 +49,12 @@ export const viewEnterConfirmPayment = async (req, res) => {
   if (!req.session.fees.available) {
     return res.status(404).render('pages/error/not-found')
   }
+  const memberSubscription = await buildMemberSubscription(res.locals.data)
+  if (!memberSubscription) {
+    return res.status(404).render('pages/error/not-found')
+  }
   const { amountPaid, confirmed, paymentMethod, paymentReference, fees } =
-    await buildMemberSubscription(res.locals.data)
+    memberSubscription
   if (confirmed) {
     return res.redirect(redirectUrl('payment-confirmation', res))
   }
@@ -67,7 +74,11 @@ export const postEnterConfirmPayment = async (req, res) => {
   const { amountPaid, paymentMethod, paymentReference } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    const { fees } = await buildMemberSubscription(req.session)
+    const memberSubscription = await buildMemberSubscription(req.session)
+    if (!memberSubscription) {
+      return res.status(404).render('pages/error/not-found')
+    }
+    const { fees } = memberSubscription
     return res.render('pages/details/confirm-payment', {
       locals: res.locals,
       amountPaid,

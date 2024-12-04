@@ -1,8 +1,21 @@
 import express from 'express'
 import feesRouter from './fees/fees.router.js'
 import confirmPendingPaymentsRouter from './confirm-pending-payments/confirm-pending-payments.router.js'
+import authenticate from '#middleware/authenticate.js'
+import setLocals from '#middleware/set-locals.js'
+import registerMembershipState from '#middleware/register-membership-state.js'
+import registerCurrentFees from '#middleware/register-current-fees.js'
+import adminOnly from '#middleware/admin-only.js'
 
 const router = express.Router()
+
+router.use(
+  authenticate,
+  setLocals,
+  registerMembershipState,
+  registerCurrentFees,
+  adminOnly
+)
 
 router.use('/fees', feesRouter)
 router.use('/confirm-pending-payments', confirmPendingPaymentsRouter)
