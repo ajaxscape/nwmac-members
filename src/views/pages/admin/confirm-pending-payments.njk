@@ -61,7 +61,7 @@
         {% if membersConfirmedPaid.length %}
             <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-            {% set membersConfirmedPaidList = "<ul class='govuk-remainingMembersList govuk-remainingMembersList--spaced'>" %}
+            {% set membersConfirmedPaidList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in membersConfirmedPaid %}
                 {% set membersConfirmedPaidList = membersConfirmedPaidList + "<li>" + member.memberName + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span></li>" %}
             {% endfor %}
@@ -76,7 +76,7 @@
         {% if remainingMembers.length %}
             <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-            {% set remainingMembersList = "<ul class='govuk-remainingMembersList govuk-remainingMembersList--spaced'>" %}
+            {% set remainingMembersList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in remainingMembers %}
                 {% set remainingMembersList = remainingMembersList + "<li>" + member.memberName + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span></li>" %}
             {% endfor %}
