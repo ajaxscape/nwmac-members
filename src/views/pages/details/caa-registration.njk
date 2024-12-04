@@ -25,7 +25,10 @@
   }) %}
 
     {% if operatorIdRequired %}
-      <input type="hidden" name="operatorIdRequired" value="true" />
+    <input type="hidden" name="operatorIdRequired" value="true" />
+    {% if subscriptionPaymentMade %}
+      <input type="hidden" name="caaThroughClub" value="{{ data.caaThroughClub }}">
+    {% else %}
         {{ govukRadios({
           name: "caaThroughClub",
           value: data.caaThroughClub,
@@ -50,6 +53,7 @@
           ],
           errorMessage: mapToError(errors, "caaThroughClub")
         }) }}
+      {% endif %}
 
       <div class="govuk-!-width-full">
           {{ govukLabel ({
