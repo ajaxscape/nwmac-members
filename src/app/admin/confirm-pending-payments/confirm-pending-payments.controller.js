@@ -31,10 +31,10 @@ async function getMembersWithPayments(subscriptionYear, memberIds) {
           membershipNumber,
           memberName,
           email,
-          amountPaid,
+          amountPaid: amountPaid * 100,
           paymentMethod,
           paymentReference,
-          totalDue,
+          totalDue: totalDue * 100,
           confirmed
         }
       })
