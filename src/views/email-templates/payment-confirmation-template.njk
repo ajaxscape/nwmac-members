@@ -1,0 +1,13 @@
+<body>
+<p>
+    Dear {{ memberName }},<br><br>
+    We have confirmed that we have received your payment of {{ amountPaid | formatAmount | safe }}.<br>
+    Your membership is now valid for {{ subscriptionYear }}.
+</p>
+
+<p>
+    Kind regards,<br>
+    {{ clubSecretaryName }},<br>
+    NWMAC Club Secretary
+</p>
+</body>
