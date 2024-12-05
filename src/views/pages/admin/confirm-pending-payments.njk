@@ -47,13 +47,14 @@
 
         {{ govukDetails({
             summaryText: "Members who have paid",
+            open: true,
             html: membersWhoHavePaid
         }) }}
 
         {% else %}
 
             {{ govukInsetText({
-                text: "No members have paid as yet"
+                text: "No members payments to be confirmed"
             }) }}
 
         {% endif %}
@@ -63,13 +64,18 @@
 
             {% set membersConfirmedPaidList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in membersConfirmedPaid %}
-                {% set membersConfirmedPaidList = membersConfirmedPaidList + "<li>" + member.memberName + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span></li>" %}
+                {% set membersConfirmedPaidList = membersConfirmedPaidList
+                    + "<li>" + member.memberName
+                    + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
+                    + " <br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong><br> "
+                    + "</li>"
+                %}
             {% endfor %}
             {% set membersConfirmedPaidList = membersConfirmedPaidList + "</ul>" %}
 
             {{ govukDetails({
                 summaryText: "Members confirmed paid",
-                html: membersConfirmedPaidList
+                html: membersConfirmedPaidList | safe
             }) }}
         {% endif %}
 
@@ -78,7 +84,11 @@
 
             {% set remainingMembersList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in remainingMembers %}
-                {% set remainingMembersList = remainingMembersList + "<li>" + member.memberName + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span></li>" %}
+                {% set remainingMembersList = remainingMembersList
+                    + "<li>" + member.memberName
+                    + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
+                    + "</li>"
+                %}
             {% endfor %}
             {% set remainingMembersList = remainingMembersList + "</ul>" %}
 

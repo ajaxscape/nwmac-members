@@ -2,48 +2,9 @@ import { redirectUrl } from '#utils/redirect-url.js'
 import { validationResult } from 'express-validator'
 import { upsertMemberSubscription } from '#repos/member-subscription.repository.js'
 import logger from '../../../logger/logger.js'
-import { FEES } from '#constants/fees.js'
-import { getMemberById } from '#repos/member.repository.js'
 import config from '#config/config.js'
-import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
 import mapFees from '#utils/map-fees.js'
-
-async function buildMemberSubscription({ memberId, currentRenewalYear }) {
-  const { memberSubscriptions, membershipNumber } =
-    await getMemberById(memberId)
-  if (!memberSubscriptions?.length) {
-    return null
-  }
-  const memberSubscription =
-    memberSubscriptions?.length &&
-    memberSubscriptions.find(
-      ({ subscriptionYear }) => subscriptionYear === currentRenewalYear
-    )
-  const {
-    amountPaid = 0,
-    confirmed = false,
-    paymentMethod = '',
-    paymentReference = defaultBankReference(membershipNumber)
-  } = memberSubscription || {}
-  const fees = {}
-  const totalDue = memberSubscription
-    ? FEES.reduce((acc, cur) => {
-        const value = memberSubscription[cur]
-        if (value) {
-          fees[cur] = value
-        }
-        return acc + value
-      }, 0)
-    : 0
-  fees.total = totalDue
-  return {
-    amountPaid: (amountPaid || totalDue) / 100,
-    confirmed,
-    fees,
-    paymentMethod,
-    paymentReference
-  }
-}
+import buildMemberSubscription from '#utils/build-member-subscription.js'
 
 export const viewEnterConfirmPayment = async (req, res) => {
   if (!req.session.fees.available) {
@@ -53,14 +14,20 @@ export const viewEnterConfirmPayment = async (req, res) => {
   if (!memberSubscription) {
     return res.status(404).render('pages/error/not-found')
   }
-  const { amountPaid, confirmed, paymentMethod, paymentReference, fees } =
-    memberSubscription
+  const {
+    amountPaid,
+    totalDue,
+    confirmed,
+    paymentMethod,
+    paymentReference,
+    fees
+  } = memberSubscription
   if (confirmed) {
     return res.redirect(redirectUrl('payment-confirmation', res))
   }
   res.render('pages/details/confirm-payment', {
     locals: res.locals,
-    amountPaid: amountPaid.toFixed(2),
+    amountPaid: (amountPaid || totalDue).toFixed(2),
     paymentMethod,
     paymentReference,
     ...config.bankDetails,
