@@ -11,6 +11,9 @@
         {% set navigation = navigation.concat({
             href: "/admin/confirm-pending-payments",
             text: "Confirm pending payments for " + data.currentRenewalYear
+        },{
+            href: "/admin/payments-breakdown",
+            text: "Payments breakdown for " + data.currentRenewalYear
         }) %}
     {% endif %}
     {{ govukServiceNavigation({

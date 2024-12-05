@@ -1,0 +1,60 @@
+{% extends "layouts/form-layout.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set pageTitle="Payments breakdown for " + currentRenewalYear %}
+
+{% block formContent %}
+
+    {{ govukTable({
+        caption: "Payments to BMFA",
+        captionClasses: "govuk-table__caption--m",
+        firstCellIsHeader: true,
+        head: [
+            {
+                text: "Member"
+            },
+            {
+                text: "BMFA No"
+            },
+            {
+                text: "Amount"
+            }
+        ],
+        rows: [
+            [
+                {
+                    text: "Bill Bloggs"
+                },
+                {
+                    text: "123456"
+                },
+                {
+                    text: "£109.80"
+                }
+            ],
+            [
+                {
+                    text: "Tiny Tim"
+                },
+                {
+                    text: "123456"
+                },
+                {
+                    text: "£121.70"
+                }
+            ],
+            [
+                {
+                    text: ""
+                },
+                {
+                    text: "Total"
+                },
+                {
+                    text: "£231.50"
+                }
+            ]
+        ]
+    }) }}
+{% endblock %}
