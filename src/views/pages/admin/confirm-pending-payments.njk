@@ -15,9 +15,10 @@
         hint: {
             html: (
             "Type: " + member.paymentMethod + (
-            "<br> Ref: " + member.paymentReference if member.paymentMethod === 'BACS' else '') +
+            "<br> Ref: " + member.paymentReference if member.paymentMethod === 'BACS' else ' ****') +
             "<br> Due: " + member.totalDue | formatAmount +
-            "<br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong><br> "
+            "<br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong> " +
+            ('<span class="nwmac-error-text"> ** unexpected ** </span>' if member.totalDue !== member.amountPaid else "")
             ) | safe
         },
         checked: member.confirmed
@@ -66,7 +67,8 @@
             {% for member in membersConfirmedPaid %}
                 {% set membersConfirmedPaidList = membersConfirmedPaidList
                     + "<li>" + member.memberName
-                    + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
+                    + " <br> <span class='govuk-hint'>" + (member.paymentReference if member.paymentMethod === 'BACS' else ' ** CASH **') + "</span>"
+                    + " <br> Due: " + member.totalDue | formatAmount
                     + " <br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong><br> "
                     + "</li>"
                 %}
@@ -87,6 +89,7 @@
                 {% set remainingMembersList = remainingMembersList
                     + "<li>" + member.memberName
                     + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
+                    + ("<br> <span class='govuk-hint nwmac-error-text'> Payment notification sent </span>" if member.paymentNotificationSent else "")
                     + "</li>"
                 %}
             {% endfor %}

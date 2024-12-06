@@ -21,16 +21,18 @@ async function getMembersWithPayments(subscriptionYear, memberIds) {
           totalDue = 0,
           confirmed = false,
           paymentReference = '',
-          paymentMethod
+          paymentMethod,
+          paymentNotificationSent = true
         } = (await buildMemberSubscription({
           memberId,
           currentRenewalYear: subscriptionYear
-        })) || {}
+        })) || { paymentNotificationSent: false }
         return {
           memberId,
           membershipNumber,
           memberName,
           email,
+          paymentNotificationSent,
           amountPaid: amountPaid * 100,
           paymentMethod,
           paymentReference,

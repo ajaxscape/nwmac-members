@@ -11,6 +11,10 @@
   border-left: 5px solid $govuk-error-colour;
 }
 
+.nwmac-error-text {
+  color: $govuk-error-colour;
+}
+
 @media (min-width:40.0625em) {
   .nwmac-text-align-right {
     text-align: right;
