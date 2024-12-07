@@ -20,11 +20,27 @@ export default async ({ memberId, currentRenewalYear }) => {
     paymentReference = defaultBankReference(membershipNumber)
   } = memberSubscription || {}
   const fees = {}
+  const feeSubTotals = {
+    bmfa: 0,
+    club: 0,
+    caa: 0
+  }
   const totalDue = memberSubscription
     ? FEES.reduce((acc, cur) => {
         const value = memberSubscription[cur]
         if (value) {
           fees[cur] = value
+          switch (cur.substring(0, 3)) {
+            case 'clu':
+              feeSubTotals.club += value
+              break
+            case 'bmf':
+              feeSubTotals.bmfa += value
+              break
+            case 'caa':
+              feeSubTotals.caa += value
+              break
+          }
         }
         return acc + value
       }, 0)
@@ -35,6 +51,7 @@ export default async ({ memberId, currentRenewalYear }) => {
     totalDue: totalDue / 100,
     confirmed,
     fees,
+    feeSubTotals,
     paymentMethod,
     paymentReference
   }

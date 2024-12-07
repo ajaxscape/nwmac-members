@@ -73,9 +73,10 @@
       },
       id: "bmfaNumber",
       name: "bmfaNumber",
-      value: data.bmfaNumber,
+      value: data.bmfaNumber if data.bmfaNumber else null,
       inputmode: "numeric",
-      attributes: { maxlength: 6 }
+      attributes: { maxlength: 6 },
+      disabled: data.confirmed and data.bmfaNumber
     }) }}
 
   {% endcall %}
