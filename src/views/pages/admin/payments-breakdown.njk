@@ -1,11 +1,10 @@
-{% extends "layouts/form-layout.njk" %}
+{% extends "layouts/main-layout.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle="Payments breakdown for " + currentRenewalYear %}
 
-{% block formContent %}
-
+{% block content %}
     {{ govukTable({
         caption: "Payments to BMFA",
         captionClasses: "govuk-table__caption--m",
@@ -18,43 +17,29 @@
                 text: "BMFA No"
             },
             {
-                text: "Amount"
+                text: "Amount",
+                classes: "govuk-!-text-align-right"
             }
         ],
-        rows: [
-            [
-                {
-                    text: "Bill Bloggs"
-                },
-                {
-                    text: "123456"
-                },
-                {
-                    text: "£109.80"
-                }
-            ],
-            [
-                {
-                    text: "Tiny Tim"
-                },
-                {
-                    text: "123456"
-                },
-                {
-                    text: "£121.70"
-                }
-            ],
-            [
-                {
-                    text: ""
-                },
-                {
-                    text: "Total"
-                },
-                {
-                    text: "£231.50"
-                }
-            ]
-        ]
+        rows: bmfaPayments | mapBmfaTable
+    }) }}
+
+    {{ govukTable({
+        caption: "Payments to CAA",
+        captionClasses: "govuk-table__caption--m",
+        firstCellIsHeader: true,
+        head: [
+            {
+                text: "Member"
+            },
+            {
+                text: "Operator-ID"
+            },
+            {
+                text: "Amount",
+                classes: "govuk-!-text-align-right"
+            }
+        ],
+        rows: caaPayments | mapCaaTable
     }) }}
 {% endblock %}

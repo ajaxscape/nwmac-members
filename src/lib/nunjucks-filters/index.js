@@ -9,10 +9,14 @@ import formatFlyerId from './format-flyer-id.js'
 import formatOperatorId from './format-operator-id.js'
 import formatAmount from '#nunjucks-filters/format-amount.js'
 import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
+import mapBmfaTable from '#nunjucks-filters/map-bmfa-table.js'
+import mapCaaTable from '#nunjucks-filters/map-caa-table.js'
 
 const filters = {
   mapToErrorSummary,
   mapAchievementsToItems,
+  mapBmfaTable,
+  mapCaaTable,
   formatFullName,
   formatName,
   formatAddress,

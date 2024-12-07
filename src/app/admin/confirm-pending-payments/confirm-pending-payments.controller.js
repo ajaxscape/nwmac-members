@@ -1,47 +1,10 @@
-import { getMembers } from '#repos/member.repository.js'
-import formatName from '#nunjucks-filters/format-name.js'
 import renewalYear from '#utils/current-renewal-year.js'
-import buildMemberSubscription from '#utils/build-member-subscription.js'
 import { upsertMemberSubscription } from '#repos/member-subscription.repository.js'
 import logger from '../../../logger/logger.js'
 import nunjucks from 'nunjucks'
 import sendEmail from '#utils/send-email.js'
 import clubSecretaryName from '#utils/club-secretary-name.js'
-
-async function getMembersWithPayments(subscriptionYear, memberIds) {
-  return await Promise.all(
-    (await getMembers())
-      .filter((member) => !memberIds || memberIds.includes(member.id))
-      .sort((a, b) => a.membershipNumber - b.membershipNumber)
-      .map(async (member) => {
-        const memberName = formatName(member)
-        const { id: memberId, membershipNumber, email } = member
-        const {
-          amountPaid = 0,
-          totalDue = 0,
-          confirmed = false,
-          paymentReference = '',
-          paymentMethod,
-          paymentNotificationSent = true
-        } = (await buildMemberSubscription({
-          memberId,
-          currentRenewalYear: subscriptionYear
-        })) || { paymentNotificationSent: false }
-        return {
-          memberId,
-          membershipNumber,
-          memberName,
-          email,
-          paymentNotificationSent,
-          amountPaid: amountPaid * 100,
-          paymentMethod,
-          paymentReference,
-          totalDue: totalDue * 100,
-          confirmed
-        }
-      })
-  )
-}
+import buildMembersWithSubscription from '#utils/build-members-with-subscription.js'
 
 async function sendPaymentConfirmationEmail({
   memberName,
@@ -75,7 +38,8 @@ async function sendPaymentConfirmationEmail({
 export const viewPaymentsConfirmed = async (req, res) => {
   const currentRenewalYear = renewalYear()
   const { data } = res.locals
-  const membersWithPayments = await getMembersWithPayments(currentRenewalYear)
+  const membersWithPayments =
+    await buildMembersWithSubscription(currentRenewalYear)
 
   res.render('pages/admin/confirm-pending-payments', {
     locals: res.locals,
@@ -96,7 +60,7 @@ export const viewPaymentsConfirmed = async (req, res) => {
 export const postPaymentsConfirmed = async (req, res) => {
   const currentRenewalYear = renewalYear()
   const { payments = [] } = req.body
-  const membersWithPayments = await getMembersWithPayments(
+  const membersWithPayments = await buildMembersWithSubscription(
     currentRenewalYear,
     payments && [payments].flat().map((payment) => Number(payment))
   )
