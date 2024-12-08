@@ -1,10 +1,14 @@
 {% extends "layouts/main-layout.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
 
 {% set pageTitle="Payments breakdown for " + currentRenewalYear %}
 
+
 {% block content %}
+    {% set bmfaRows = bmfaPayments | mapBmfaTable %}
     {{ govukTable({
         caption: "Payments to BMFA",
         captionClasses: "govuk-table__caption--m",
@@ -21,8 +25,29 @@
                 classes: "govuk-!-text-align-right"
             }
         ],
-        rows: bmfaPayments | mapBmfaTable
+        rows: bmfaRows
     }) }}
+
+    {% set caaRows = caaPayments | mapCaaTable %}
+
+    {% for caaRow in caaRows %}
+        {% if loop.index === caaRows.length %}
+            {% set caaRow = caaRow.push({ text: '' }) %}
+        {% else %}
+            {% set checkBox = govukCheckboxes({
+                name: "caaRenewed-" + caaPayments[loop.index].memberId,
+                classes: "govuk-checkboxes--small nwmac-renewal-checkbox",
+                items: [
+                    {
+                        text: ' ',
+                        value: caaPayments[loop.index].confirmedWithCaa,
+                        checked: caaPayments[loop.index].confirmedWithCaa
+                    }
+                ]
+            }) %}
+            {% set caaRow = caaRow.push({ html: checkBox }) %}
+        {% endif %}
+    {% endfor %}
 
     {{ govukTable({
         caption: "Payments to CAA",
@@ -38,8 +63,9 @@
             {
                 text: "Amount",
                 classes: "govuk-!-text-align-right"
-            }
+            },
+            {}
         ],
-        rows: caaPayments | mapCaaTable
+        rows: caaRows
     }) }}
 {% endblock %}
