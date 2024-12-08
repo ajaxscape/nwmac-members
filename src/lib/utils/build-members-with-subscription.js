@@ -22,6 +22,8 @@ export default async (subscriptionYear, memberIds) => {
           fees = {},
           feeSubTotals = {},
           confirmed = false,
+          confirmedWithBmfa = false,
+          confirmedWithCaa = false,
           paymentReference = '',
           paymentMethod,
           paymentNotificationSent = true
@@ -43,7 +45,9 @@ export default async (subscriptionYear, memberIds) => {
           totalDue: totalDue * 100,
           fees,
           feeSubTotals,
-          confirmed
+          confirmed,
+          confirmedWithBmfa,
+          confirmedWithCaa
         }
       })
   )

@@ -21,6 +21,19 @@
   }
 }
 
-.nwmac-renewal-checkbox {
-    margin-top: -0.5rem;
+.nwmac-renewal-table {
+  .govuk-table__header,
+  .govuk-table__cell {
+    vertical-align: middle;
+  }
+  .nwmac-renewal-column {
+    padding: 0 0 0 10% !important;
+  }
+  td.nwmac-renewal-column {
+    padding-left: 12% !important;
+  }
+
+  .nwmac-renewal-checkbox {
+    padding: 0;
+  }
 }

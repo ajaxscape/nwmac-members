@@ -8,7 +8,7 @@
 
 
 {% block content %}
-    {% set bmfaRows = bmfaPayments | mapBmfaTable %}
+    {% set bmfaRows = bmfaPayments | mapBmfaPaymentsTable %}
     {{ govukTable({
         caption: "Payments to BMFA",
         captionClasses: "govuk-table__caption--m",
@@ -28,27 +28,8 @@
         rows: bmfaRows
     }) }}
 
-    {% set caaRows = caaPayments | mapCaaTable %}
-
-    {% for caaRow in caaRows %}
-        {% if loop.index === caaRows.length %}
-            {% set caaRow = caaRow.push({ text: '' }) %}
-        {% else %}
-            {% set checkBox = govukCheckboxes({
-                name: "caaRenewed-" + caaPayments[loop.index].memberId,
-                classes: "govuk-checkboxes--small nwmac-renewal-checkbox",
-                items: [
-                    {
-                        text: ' ',
-                        value: caaPayments[loop.index].confirmedWithCaa,
-                        checked: caaPayments[loop.index].confirmedWithCaa
-                    }
-                ]
-            }) %}
-            {% set caaRow = caaRow.push({ html: checkBox }) %}
-        {% endif %}
-    {% endfor %}
-
+    
+    {% set caaRows = caaPayments | mapCaaPaymentsTable %}
     {{ govukTable({
         caption: "Payments to CAA",
         captionClasses: "govuk-table__caption--m",
@@ -63,8 +44,7 @@
             {
                 text: "Amount",
                 classes: "govuk-!-text-align-right"
-            },
-            {}
+            }
         ],
         rows: caaRows
     }) }}

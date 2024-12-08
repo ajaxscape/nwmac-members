@@ -1,0 +1,58 @@
+{% extends "layouts/form-layout.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+
+{% set pageTitle="Confirm renewals for " + currentRenewalYear %}
+
+
+{% block formContent %}
+    {% set bmfaRows = bmfaPayments | mapBmfaRenewalTable %}
+    {{ govukTable({
+        caption: "Renewals with BMFA",
+        captionClasses: "govuk-table__caption--m",
+        classes: "nwmac-renewal-table",
+        firstCellIsHeader: true,
+        head: [
+            {
+                text: "Member"
+            },
+            {
+                text: "BMFA No"
+            },
+            { text: 'Renewed with BMFA', classes: "nwmac-renewal-column" }
+        ],
+        rows: bmfaRows
+    }) }}
+
+    <br>
+    
+    {% set caaRows = caaPayments | mapCaaRenewalTable %}
+    {{ govukTable({
+        caption: "Renewals with CAA",
+        captionClasses: "govuk-table__caption--m",
+        classes: "nwmac-renewal-table",
+        firstCellIsHeader: true,
+        head: [
+            {
+                text: "Member"
+            },
+            {
+                text: "Operator-ID"
+            },
+            { text: 'Renewed with CAA', classes: "nwmac-renewal-column" }
+        ],
+        rows: caaRows
+    }) }}
+{% endblock %}
+
+{% block formSubmit %}
+    <div class="govuk-button-group nwmac-renewal-submit">
+        {{ govukButton({
+            text: ("Save")
+        }) }}
+
+        <a class="govuk-link" href="/details">Cancel</a>
+    </div>
+{% endblock %}
