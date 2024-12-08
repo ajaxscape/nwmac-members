@@ -1,10 +1,14 @@
 {% extends "layouts/main-layout.njk" %}
 
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
 
 {% set pageTitle="Payments breakdown for " + currentRenewalYear %}
 
+
 {% block content %}
+    {% set bmfaRows = bmfaPayments | mapBmfaPaymentsTable %}
     {{ govukTable({
         caption: "Payments to BMFA",
         captionClasses: "govuk-table__caption--m",
@@ -21,9 +25,11 @@
                 classes: "govuk-!-text-align-right"
             }
         ],
-        rows: bmfaPayments | mapBmfaTable
+        rows: bmfaRows
     }) }}
 
+    
+    {% set caaRows = caaPayments | mapCaaPaymentsTable %}
     {{ govukTable({
         caption: "Payments to CAA",
         captionClasses: "govuk-table__caption--m",
@@ -40,6 +46,6 @@
                 classes: "govuk-!-text-align-right"
             }
         ],
-        rows: caaPayments | mapCaaTable
+        rows: caaRows
     }) }}
 {% endblock %}

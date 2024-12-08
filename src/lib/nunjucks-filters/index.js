@@ -9,14 +9,18 @@ import formatFlyerId from './format-flyer-id.js'
 import formatOperatorId from './format-operator-id.js'
 import formatAmount from '#nunjucks-filters/format-amount.js'
 import defaultBankReference from '#nunjucks-filters/default-bank-reference.js'
-import mapBmfaTable from '#nunjucks-filters/map-bmfa-table.js'
-import mapCaaTable from '#nunjucks-filters/map-caa-table.js'
+import mapBmfaPaymentsTable from '#nunjucks-filters/map-bmfa-payments-table.js'
+import mapCaaPaymentsTable from '#nunjucks-filters/map-caa-payments-table.js'
+import mapBmfaRenewalTable from '#nunjucks-filters/map-bmfa-renewal-table.js'
+import mapCaaRenewalTable from '#nunjucks-filters/map-caa-renewal-table.js'
 
 const filters = {
   mapToErrorSummary,
   mapAchievementsToItems,
-  mapBmfaTable,
-  mapCaaTable,
+  mapBmfaPaymentsTable,
+  mapCaaPaymentsTable,
+  mapBmfaRenewalTable,
+  mapCaaRenewalTable,
   formatFullName,
   formatName,
   formatAddress,

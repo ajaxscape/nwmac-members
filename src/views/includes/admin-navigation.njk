@@ -15,6 +15,12 @@
             href: "/admin/payments-breakdown",
             text: "Payments breakdown for " + data.currentRenewalYear
         }) %}
+        {% if data.isSecretary %}
+            {% set navigation = navigation.concat({
+                href: "/admin/confirm-renewals",
+                text: "Confirm renewals for " + data.currentRenewalYear
+            }) %}
+        {% endif %}
     {% endif %}
     {{ govukServiceNavigation({
         navigation: navigation

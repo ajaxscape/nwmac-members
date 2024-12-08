@@ -16,6 +16,8 @@ export default async ({ memberId, currentRenewalYear }) => {
   const {
     amountPaid = 0,
     confirmed = false,
+    confirmedWithBmfa = false,
+    confirmedWithCaa = false,
     paymentMethod = '',
     paymentReference = defaultBankReference(membershipNumber)
   } = memberSubscription || {}
@@ -50,6 +52,8 @@ export default async ({ memberId, currentRenewalYear }) => {
     amountPaid: amountPaid / 100,
     totalDue: totalDue / 100,
     confirmed,
+    confirmedWithBmfa,
+    confirmedWithCaa,
     fees,
     feeSubTotals,
     paymentMethod,
