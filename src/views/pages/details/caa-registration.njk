@@ -57,7 +57,7 @@
 
       <div class="govuk-!-width-full">
           {{ govukLabel ({
-              text: "Operator ID"
+              html: "Operator ID <br><span class='govuk-hint'>Only the last 12 characters are required</span>"
           }) }}
           <p class="govuk-heading-s govuk-!-display-inline-block">GBR-OP-</p>
           {{ govukInput({
@@ -74,7 +74,7 @@
 
       <div class="govuk-!-width-full">
       {{ govukLabel ({
-          text: "Flyer ID"
+        html: "Flyer ID <br><span class='govuk-hint'>Only the last 12 characters are required</span>"
       }) }}
       <p class="govuk-heading-s govuk-!-display-inline-block">GBR-RP-</p>
         {{ govukInput({

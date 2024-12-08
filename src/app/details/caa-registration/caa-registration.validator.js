@@ -13,6 +13,9 @@ export const validateOperatorId = () =>
     .trim()
     .isLength({ min: 12, max: 12 })
     .withMessage('Operator ID must be 12 characters long')
+    .bail()
+    .isAlphanumeric()
+    .withMessage('Operator ID must only contain letters and numbers')
 
 export const validateFlyerId = () =>
   body('flyerId')
@@ -20,3 +23,6 @@ export const validateFlyerId = () =>
     .trim()
     .isLength({ min: 12, max: 12 })
     .withMessage('Flyer ID must be blank or 12 characters long')
+    .bail()
+    .isAlphanumeric()
+    .withMessage('Flyer ID must only contain letters and numbers')
