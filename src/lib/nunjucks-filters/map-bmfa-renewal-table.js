@@ -1,9 +1,10 @@
 export default (members) => {
   return members.map(
-    ({ memberName, bmfaNumber, memberId, confirmedWithBmfa }) => {
+    ({ memberName, bmfaNumber, memberId, confirmedWithBmfa, fees }) => {
       return [
         { text: memberName },
         { text: bmfaNumber },
+        { text: fees.bmfaMembersCard ? 'Yes' : '' },
         {
           html: `
         <div class="govuk-checkboxes govuk-checkboxes--small nwmac-renewal-checkbox" data-module="govuk-checkboxes" data-govuk-checkboxes-init="">
