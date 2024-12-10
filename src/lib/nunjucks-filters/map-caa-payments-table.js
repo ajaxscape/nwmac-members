@@ -6,7 +6,7 @@ export default (members) => {
     total += feeSubTotals.caa
     return [
       { text: memberName },
-      { text: operatorId },
+      { text: 'GBR-OP-' + operatorId },
       {
         text: formatAmount(feeSubTotals.caa, '£'),
         classes: 'govuk-!-text-align-right  nwmac-amount-column'

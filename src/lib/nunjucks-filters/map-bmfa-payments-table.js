@@ -2,11 +2,12 @@ import formatAmount from '#nunjucks-filters/format-amount.js'
 
 export default (members) => {
   let total = 0
-  const rows = members.map(({ memberName, bmfaNumber, feeSubTotals }) => {
+  const rows = members.map(({ memberName, bmfaNumber, feeSubTotals, fees }) => {
     total += feeSubTotals.bmfa
     return [
       { text: memberName },
       { text: bmfaNumber },
+      { text: fees.bmfaMembersCard ? 'Yes' : '' },
       {
         text: formatAmount(feeSubTotals.bmfa, '£'),
         classes: 'govuk-!-text-align-right  nwmac-amount-column'
@@ -14,6 +15,7 @@ export default (members) => {
     ]
   })
   rows.push([
+    { text: '' },
     { text: '' },
     { text: 'Total', classes: 'govuk-!-font-weight-bold' },
     {

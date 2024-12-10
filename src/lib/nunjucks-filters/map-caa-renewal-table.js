@@ -3,7 +3,7 @@ export default (members) => {
     ({ memberName, operatorId, memberId, confirmedWithCaa }) => {
       return [
         { text: memberName },
-        { text: operatorId },
+        { text: 'GBR-OP-' + operatorId },
         {
           html: `
         <div class="govuk-checkboxes govuk-checkboxes--small nwmac-renewal-checkbox" data-module="govuk-checkboxes" data-govuk-checkboxes-init="">
