@@ -9,6 +9,8 @@ const buildSelects = () => {
   selects.amountPaid = true
   selects.paymentMethod = true
   selects.paymentReference = true
+  selects.confirmedWithBmfa = true
+  selects.confirmedWithCaa = true
   selects.confirmed = true
   return selects
 }
@@ -26,7 +28,13 @@ export async function getMemberSubscription(
 }
 
 export async function upsertMemberSubscription(data, tx = prisma) {
-  const { memberId, subscriptionYear, paymentReference } = data || {}
+  const {
+    memberId,
+    subscriptionYear,
+    paymentReference,
+    confirmedWithBmfa,
+    confirmedWithCaa
+  } = data || {}
   const memberSubscription = await getMemberSubscription(
     memberId,
     subscriptionYear,
@@ -38,8 +46,13 @@ export async function upsertMemberSubscription(data, tx = prisma) {
       data = {
         ...memberSubscription,
         ...data,
-        paymentReference:
-          memberSubscription.paymentReference || paymentReference
+        paymentReference: paymentReference?.trim().length
+          ? paymentReference.trim()
+          : memberSubscription.paymentReference,
+        confirmedWithBmfa:
+          confirmedWithBmfa || memberSubscription.confirmedWithBmfa,
+        confirmedWithCaa:
+          confirmedWithCaa || memberSubscription.confirmedWithCaa
       }
       await tx.memberSubscription.deleteMany({
         where: { memberId, subscriptionYear }

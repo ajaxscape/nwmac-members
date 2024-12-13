@@ -1,8 +1,11 @@
 import express from 'express'
-import { viewConfirmRenewals } from './confirm-renewals.controller.js'
+import {
+  postConfirmRenewals,
+  viewConfirmRenewals
+} from './confirm-renewals.controller.js'
 
 const router = express.Router()
 
-router.route('/').get(viewConfirmRenewals)
+router.route('/').get(viewConfirmRenewals).post(postConfirmRenewals)
 
 export default router
