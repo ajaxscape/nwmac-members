@@ -32,6 +32,7 @@ model Member {
   operatorIdRequired      Boolean?              @map("operator_id_required")
   bmfaMembersCardRequired Boolean?              @default(false) @map("bmfa_members_card_required") @db.Boolean
   confirmed               Boolean               @default(false) @db.Boolean
+  dateCancelled           DateTime?             @map("date-cancelled") @db.Timestamp(6)
   createdAt               DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @map("created_at") @db.Timestamp(6)
   updatedAt               DateTime              @default(dbgenerated("('now'::text)::timestamp(6) with time zone")) @updatedAt @map("updated_at") @db.Timestamp(6)
   memberAchievements      MemberAchievement[]   @relation(map: "FK_member_achievement_member_id")
