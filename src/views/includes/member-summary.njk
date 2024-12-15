@@ -1,0 +1,58 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{{ govukSummaryList({
+    classes: "govuk-!-margin-bottom-9",
+    rows: [
+        {
+            key: { text: 'NWMAC number' },
+            value: { text: data.membershipNumber }
+        },
+        {
+            key: { text: 'Name' },
+            value: { text: data | formatFullName }
+        },
+        {
+            key: { text: 'Email' },
+            value: { text: data.email }
+        },
+        {
+            key: { text: 'BMFA membership' },
+            value: { html: data | formatBmfaMembership }
+        },
+        {
+            key: { text: 'Operator ID' },
+            value: { html: data | formatOperatorId},
+            classes: 'govuk-!-display-none' if (not data.flyerId.length) or data.ageGroup === 'junior'
+        },
+        {
+            key: { text: 'Flyer ID' },
+            value: { html: data | formatFlyerId },
+            classes: 'govuk-!-display-none' if not data.flyerId
+        },
+        {
+            key: { text: 'Achievements' },
+            value: { html: formatAchievements(data, achievements) },
+            classes: 'govuk-!-display-none' if data.achievements.length === 0
+        },
+        {
+            key: { text: 'Address' },
+            value: { html: data | formatAddress }
+        },
+        {
+            key: { text: 'Phone numbers' },
+            value: { html: data | formatPhoneNumbers }
+        },
+        {
+            key: { text: 'Membership type' },
+            value: { text: data.membershipType | capitalize }
+        },
+        {
+            key: { text: 'Age group' },
+            value: { text: data.ageGroup | capitalize }
+        },
+        {
+            key: { text: 'Contact for non-club purposes' },
+            value: { text: data.nonClubContact | capitalize }
+        }
+    ]
+}) }}

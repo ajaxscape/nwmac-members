@@ -1,0 +1,12 @@
+{% extends "layouts/main-layout.njk" %}
+
+{% set pageTitle="Member details" %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+            {% include "includes/member-summary.njk" %}
+        </div>
+    </div>
+{% endblock %}
