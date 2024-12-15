@@ -14,7 +14,8 @@ export default async (subscriptionYear, memberIds) => {
           membershipNumber,
           bmfaNumber,
           operatorId,
-          email
+          email,
+          dateCancelled
         } = member
         const {
           amountPaid = 0,
@@ -38,6 +39,7 @@ export default async (subscriptionYear, memberIds) => {
           bmfaNumber,
           operatorId,
           email,
+          dateCancelled,
           paymentNotificationSent,
           amountPaid: amountPaid * 100,
           paymentMethod,

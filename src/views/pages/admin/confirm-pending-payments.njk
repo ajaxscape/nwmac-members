@@ -89,6 +89,7 @@
                 {% set remainingMembersList = remainingMembersList
                     + "<li><a href='/admin/member-details/" + member.membershipNumber + "' class='govuk-link'>" + member.memberName + "</a>"
                     + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
+                    + ("<br> <span class='govuk-hint nwmac-error-text'> CANCELLED: " + member.dateCancelled | formatDate + "</span>" if member.dateCancelled else "")
                     + ("<br> <span class='govuk-hint nwmac-error-text'> Payment notification sent </span>" if member.paymentNotificationSent else "")
                     + "</li>"
                 %}

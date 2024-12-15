@@ -13,6 +13,7 @@ import mapBmfaPaymentsTable from '#nunjucks-filters/map-bmfa-payments-table.js'
 import mapCaaPaymentsTable from '#nunjucks-filters/map-caa-payments-table.js'
 import mapBmfaRenewalTable from '#nunjucks-filters/map-bmfa-renewal-table.js'
 import mapCaaRenewalTable from '#nunjucks-filters/map-caa-renewal-table.js'
+import formatDate from '#nunjucks-filters/formatDate.js'
 
 const filters = {
   mapToErrorSummary,
@@ -29,6 +30,7 @@ const filters = {
   formatFlyerId,
   formatOperatorId,
   formatAmount,
+  formatDate,
   defaultBankReference
 }
 
