@@ -7,7 +7,7 @@ export default (data) => {
     if (bmfaMembersCardRequired) {
       formattedBmfaMembership += `<br>(BMFA card requested)`
     }
-  } else {
+  } else if (bmfaThroughClub === 'no') {
     formattedBmfaMembership += `<br>(Not registered through the club)`
   }
   return formattedBmfaMembership

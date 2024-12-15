@@ -17,7 +17,8 @@
         },
         {
             key: { text: 'BMFA membership' },
-            value: { html: data | formatBmfaMembership }
+            value: { html: data | formatBmfaMembership },
+            classes: 'govuk-!-display-none' if not data.bmfaThroughClub
         },
         {
             key: { text: 'Operator ID' },
@@ -36,23 +37,28 @@
         },
         {
             key: { text: 'Address' },
-            value: { html: data | formatAddress }
+            value: { html: data | formatAddress },
+            classes: 'govuk-!-display-none' if not data.addressLine1
         },
         {
             key: { text: 'Phone numbers' },
-            value: { html: data | formatPhoneNumbers }
+            value: { html: data | formatPhoneNumbers },
+            classes: 'govuk-!-display-none' if not data.addressLine1
         },
         {
             key: { text: 'Membership type' },
-            value: { text: data.membershipType | capitalize }
+            value: { text: data.membershipType | capitalize },
+            classes: 'govuk-!-display-none' if not data.mobileNumber
         },
         {
             key: { text: 'Age group' },
-            value: { text: data.ageGroup | capitalize }
+            value: { text: data.ageGroup | capitalize },
+            classes: 'govuk-!-display-none' if not data.ageGroup
         },
         {
             key: { text: 'Contact for non-club purposes' },
-            value: { text: data.nonClubContact | capitalize }
+            value: { text: data.nonClubContact | capitalize },
+            classes: 'govuk-!-display-none' if not data.nonClubContact
         }
     ]
 }) }}
