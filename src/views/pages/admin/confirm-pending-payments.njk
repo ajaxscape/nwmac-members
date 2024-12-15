@@ -11,7 +11,7 @@
 {% for member in membersPendingPayments %}
     {% set item = {
         value: member.memberId,
-        text: member.memberName,
+        html: "<a href='/admin/member-details/" + member.membershipNumber + "' class='govuk-link'>" + member.memberName + "</a>",
         hint: {
             html: (
             "Type: " + member.paymentMethod + (
@@ -66,7 +66,7 @@
             {% set membersConfirmedPaidList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in membersConfirmedPaid %}
                 {% set membersConfirmedPaidList = membersConfirmedPaidList
-                    + "<li>" + member.memberName
+                    + "<li><a href='/admin/member-details/" + member.membershipNumber + "' class='govuk-link'>" + member.memberName + "</a>"
                     + " <br> <span class='govuk-hint'>" + (member.paymentReference if member.paymentMethod === 'BACS' else ' ** CASH **') + "</span>"
                     + " <br> Due: " + member.totalDue | formatAmount
                     + " <br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong><br> "
@@ -87,7 +87,7 @@
             {% set remainingMembersList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in remainingMembers %}
                 {% set remainingMembersList = remainingMembersList
-                    + "<li>" + member.memberName
+                    + "<li><a href='/admin/member-details/" + member.membershipNumber + "' class='govuk-link'>" + member.memberName + "</a>"
                     + " <br> <span class='govuk-hint'>" + member.membershipNumber | defaultBankReference + "</span>"
                     + ("<br> <span class='govuk-hint nwmac-error-text'> Payment notification sent </span>" if member.paymentNotificationSent else "")
                     + "</li>"
