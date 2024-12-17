@@ -25,6 +25,9 @@
                 {% set type = fee.type %}
             {% endif %}
             {% set prevValue = fee.prevValue %}
+            {% if available %}
+                <input type="hidden" name="{{ fee.name }}" value="{{ fee.value }}">
+            {% endif %}
             {{ govukInput({
                 id: fee.name,
                 name: fee.name,
@@ -36,6 +39,7 @@
                 },
                 value: fee.value,
                 hint: { text: ("Was " + prevValue | formatAmount + " in " + previousRenewalYear) | safe },
+                disabled: available,
                 errorMessage: mapToError(errors, fee.name),
                 classes: "govuk-input--width-5",
                 spellcheck: false
