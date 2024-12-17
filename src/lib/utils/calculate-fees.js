@@ -5,6 +5,7 @@ export default ({
   ageGroup,
   isPartner = false,
   bmfaMembersCardRequired = false,
+  bmfaPrintedMagazineRequired = false,
   membershipType,
   nonFlyer = false,
   operatorId
@@ -21,6 +22,7 @@ export default ({
     bmfaFamilyJunior = 0,
     bmfaNonFlyer = 0,
     bmfaMembersCard = 0,
+    bmfaPrintedMagazine = 0,
     caaOperatorRegistration = 0
   } = fees || {}
 
@@ -60,6 +62,9 @@ export default ({
       }
       if (bmfaMembersCardRequired) {
         subscription.bmfaMembersCard = bmfaMembersCard
+      }
+      if (bmfaPrintedMagazineRequired) {
+        subscription.bmfaPrintedMagazine = bmfaPrintedMagazine
       }
     }
     if (caaThroughClub === 'yes' && operatorId) {

@@ -39,6 +39,23 @@
             }
           ]
         }) }}
+        {{ govukCheckboxes({
+          name: "bmfaPrintedMagazineRequired",
+          fieldset: {
+            legend: {
+              text: "Would you like printed copies of the BMFA magazine?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: true,
+              text: bmfaPrintedMagazineLabel | safe,
+              hint: {text: "Only available when registered through the club."},
+              checked: data.bmfaPrintedMagazineRequired
+            }
+          ]
+        }) }}
       {% endset -%}
 
       {{ govukRadios({
@@ -67,6 +84,12 @@
       }) }}
     {% endif %}
 
+    {% set bmfaNumberDisabled = data.confirmed and data.bmfaNumber %}
+
+    {% if bmfaNumberDisabled %}
+      <input type="hidden" name="bmfaNumber" value="{{ data.bmfaNumber }}">
+    {% endif %}
+
     {{ govukInput({
       label: {
         text: "BMFA Number"
@@ -76,7 +99,7 @@
       value: data.bmfaNumber if data.bmfaNumber else null,
       inputmode: "numeric",
       attributes: { maxlength: 6 },
-      disabled: data.confirmed and data.bmfaNumber
+      disabled: bmfaNumberDisabled
     }) }}
 
   {% endcall %}

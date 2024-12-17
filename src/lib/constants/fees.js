@@ -10,5 +10,6 @@ export const FEES = [
   'bmfaFamilyJunior',
   'bmfaNonFlyer',
   'bmfaMembersCard',
+  'bmfaPrintedMagazine',
   'caaOperatorRegistration'
 ]

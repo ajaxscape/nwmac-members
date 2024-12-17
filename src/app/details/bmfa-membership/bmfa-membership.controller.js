@@ -8,6 +8,10 @@ function formatBmfaMembersCardLabel(data) {
   return `Approximately ${formatAmount(data?.fees?.bmfaMembersCard || 600)}`
 }
 
+function formatBmfaPrintedMagazineLabel(data) {
+  return `Approximately ${formatAmount(data?.fees?.bmfaPrintedMagazine || 1000)}`
+}
+
 export const viewEnterBMFAMembership = async (req, res) => {
   const { subscriptionPaymentMade } = await memberSubscriptionStatuses(
     req.session.memberId
@@ -15,7 +19,8 @@ export const viewEnterBMFAMembership = async (req, res) => {
   res.render('pages/details/bmfa-membership', {
     locals: res.locals,
     subscriptionPaymentMade,
-    bmfaMembersCardLabel: formatBmfaMembersCardLabel(res.locals.data)
+    bmfaMembersCardLabel: formatBmfaMembersCardLabel(res.locals.data),
+    bmfaPrintedMagazineLabel: formatBmfaPrintedMagazineLabel(res.locals.data)
   })
 }
 
@@ -29,13 +34,20 @@ export const postEnterBMFAMembership = async (req, res) => {
       locals: res.locals,
       subscriptionPaymentMade,
       bmfaMembersCardLabel: formatBmfaMembersCardLabel(res.locals.data),
+      bmfaPrintedMagazineLabel: formatBmfaPrintedMagazineLabel(res.locals.data),
       errors: errors.array()
     })
   }
   if (!subscriptionPaymentMade) {
-    const { bmfaMembersCardRequired, bmfaThroughClub } = res.locals.data
+    const {
+      bmfaMembersCardRequired,
+      bmfaPrintedMagazineRequired,
+      bmfaThroughClub
+    } = res.locals.data
     res.locals.data.bmfaMembersCardRequired =
       bmfaThroughClub === 'yes' && !!bmfaMembersCardRequired
+    res.locals.data.bmfaPrintedMagazineRequired =
+      bmfaThroughClub === 'yes' && !!bmfaPrintedMagazineRequired
   }
   storeData(req, res)
   res.redirect(redirectUrl('caa-registration', res))
