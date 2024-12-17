@@ -8,6 +8,7 @@ export default (members) => {
       { text: memberName },
       { text: bmfaNumber },
       { text: fees.bmfaMembersCard ? 'Yes' : '' },
+      { text: fees.bmfaPrintedMagazine ? 'Yes' : '' },
       {
         text: formatAmount(feeSubTotals.bmfa, '£'),
         classes: 'govuk-!-text-align-right  nwmac-amount-column'
@@ -15,6 +16,7 @@ export default (members) => {
     ]
   })
   rows.push([
+    { text: '' },
     { text: '' },
     { text: '' },
     { text: 'Total', classes: 'govuk-!-font-weight-bold' },

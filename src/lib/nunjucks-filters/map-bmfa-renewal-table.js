@@ -5,6 +5,7 @@ export default (members) => {
         { text: memberName },
         { text: bmfaNumber },
         { text: fees.bmfaMembersCard ? 'Yes' : '' },
+        { text: fees.bmfaPrintedMagazine ? 'Yes' : '' },
         {
           html: `
         <div class="govuk-checkboxes govuk-checkboxes--small nwmac-renewal-checkbox" data-module="govuk-checkboxes" data-govuk-checkboxes-init="">
