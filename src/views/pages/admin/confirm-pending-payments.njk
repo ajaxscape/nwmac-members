@@ -65,11 +65,14 @@
 
             {% set membersConfirmedPaidList = "<ul class='govuk-list govuk-list--spaced'>" %}
             {% for member in membersConfirmedPaid %}
+                {% set diff = member.totalDue - member.amountPaid %}
                 {% set membersConfirmedPaidList = membersConfirmedPaidList
                     + "<li><a href='/admin/member-details/" + member.membershipNumber + "' class='govuk-link'>" + member.memberName + "</a>"
                     + " <br> <span class='govuk-hint'>" + (member.paymentReference if member.paymentMethod === 'BACS' else ' ** CASH **') + "</span>"
                     + " <br> Due: " + member.totalDue | formatAmount
-                    + " <br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong><br> "
+                    + " <br> <strong>Paid: " + member.amountPaid | formatAmount + "</strong>"
+                    + ("<br> <span class='govuk-hint nwmac-error-text'> Underpaid: " + diff | formatAmount + "</span>" if diff > 0 else "")
+                    + ("<br> <span class='govuk-hint nwmac-error-text'> Overpaid: " + (diff * -1) | formatAmount + "</span>" if diff < 0 else "")
                     + "</li>"
                 %}
             {% endfor %}
