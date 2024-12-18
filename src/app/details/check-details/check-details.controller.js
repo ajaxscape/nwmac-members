@@ -174,7 +174,7 @@ export const postCheckDetails = async (req, res) => {
       await deleteMemberAchievementsByMemberId(member.id, tx)
       await createMemberAchievementsByMemberId(member.id, achievements, tx)
 
-      if (req.session.membershipNumber) {
+      if (req.session.confirmed) {
         if (subscriptionPaymentMade || !subscriptionAvailable) {
           return res.redirect(
             redirectUrl('send-details-confirmation-email', res)

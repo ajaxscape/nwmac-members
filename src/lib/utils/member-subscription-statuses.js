@@ -5,7 +5,8 @@ import { getMemberById } from '#repos/member.repository.js'
 export default async (memberId) => {
   const renewalYear = currentRenewalYear()
   const { available = false } = (await getSubscription(renewalYear)) || {}
-  const { memberSubscriptions = [] } = (await getMemberById(memberId)) || {}
+  const { memberSubscriptions = [] } =
+    (await getMemberById(memberId || 0)) || {}
   const {
     subscriptionExists = available,
     amountPaid = 0,
