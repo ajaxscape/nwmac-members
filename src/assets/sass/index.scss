@@ -21,6 +21,18 @@
   }
 }
 
+@media (max-width:40.0624em) {
+  .nwmac-table {
+    .govuk-table__header,
+    .govuk-table__cell {
+      padding-left: 8px;
+    }
+    :last-child {
+      padding-left: 0;
+    }
+  }
+}
+
 .nwmac-renewal-table {
   .govuk-table__header,
   .govuk-table__cell {
