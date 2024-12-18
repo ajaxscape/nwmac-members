@@ -12,10 +12,10 @@
 {% block headIcons %}{% endblock %}
 
 {% block head %}
-    <link href="/public/css/index.css" rel="stylesheet" type="text/css" />
-    <script type="module" src="/govuk-frontend/client-side/govuk-frontend.min.js"></script>
+    <link href="{{ '/public/css/index.css' | cacheBust }}" rel="stylesheet" type="text/css" />
+    <script type="module" src="{{ '/govuk-frontend/client-side/govuk-frontend.min.js' | cacheBust }}"></script>
     <script type="module">
-      import { initAll } from '/govuk-frontend/client-side/govuk-frontend.min.js'
+      import { initAll } from "{{ '/govuk-frontend/client-side/govuk-frontend.min.js' | cacheBust }}";
       initAll()
     </script>
 {% endblock %}
