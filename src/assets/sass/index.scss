@@ -25,10 +25,10 @@
   .nwmac-table {
     .govuk-table__header,
     .govuk-table__cell {
-      padding-left: 8px;
+      padding-right: 8px;
     }
     :last-child {
-      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
