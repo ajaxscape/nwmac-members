@@ -13,7 +13,7 @@ import mapBmfaPaymentsTable from '#nunjucks-filters/map-bmfa-payments-table.js'
 import mapCaaPaymentsTable from '#nunjucks-filters/map-caa-payments-table.js'
 import mapBmfaRenewalTable from '#nunjucks-filters/map-bmfa-renewal-table.js'
 import mapCaaRenewalTable from '#nunjucks-filters/map-caa-renewal-table.js'
-import formatDate from '#nunjucks-filters/formatDate.js'
+import formatDate from '#nunjucks-filters/format-date.js'
 import cacheBust from '#nunjucks-filters/cache-bust.js'
 
 const filters = {
