@@ -29,7 +29,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
+    "cypress": "^13.17.0",
     "eslint": "^9.12.0",
+    "eslint-plugin-cypress": "^4.1.0",
     "globals": "^15.11.0",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
@@ -53,7 +55,8 @@
     "db:push": "npx prisma db push --accept-data-loss",
     "db:reset": "npx prisma migrate reset --force",
     "db:seed": "npm run prisma-generate && npx prisma db seed",
-    "prisma-generate": "cd src && npx prisma generate"
+    "prisma-generate": "cd src && npx prisma generate",
+    "cypress": "node_modules/.bin/cypress open"
   },
   "imports": {
     "#constants/*.js": "./src/lib/constants/*.js",

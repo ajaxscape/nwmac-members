@@ -1,5 +1,6 @@
 import globals from 'globals'
 import pluginJs from '@eslint/js'
+import pluginCypress from 'eslint-plugin-cypress/flat'
 
 export default [
   {
@@ -13,5 +14,12 @@ export default [
     }
   },
   { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended
+  pluginJs.configs.recommended,
+  pluginCypress.configs.recommended,
+  {
+    rules: {
+      'cypress/no-unnecessary-waiting': 'off'
+    }
+  },
+  pluginCypress.configs.globals
 ]
