@@ -1,11 +1,14 @@
 const baseUrl = 'http://localhost:3000'
 
 describe('template spec', () => {
-  it('passes', () => {
+  beforeEach(() => {
     cy.visit(baseUrl)
-    const path = `${baseUrl}/auth/enter-email`
-    cy.url().then(($url) => {
-      expect($url).to.eql(path)
-    })
+  })
+
+  it('passes', () => {
+    cy.get('#email').type('bensurgison@gmail.com')
+    cy.get('button').contains('Continue').click()
+    cy.get('button').contains('Continue').click()
+    cy.get('button').contains('Continue').click()
   })
 })

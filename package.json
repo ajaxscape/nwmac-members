@@ -56,7 +56,7 @@
     "db:reset": "npx prisma migrate reset --force",
     "db:seed": "npm run prisma-generate && npx prisma db seed",
     "prisma-generate": "cd src && npx prisma generate",
-    "cypress": "node_modules/.bin/cypress open"
+    "cypress": "cypress install && node_modules/.bin/cypress open"
   },
   "imports": {
     "#constants/*.js": "./src/lib/constants/*.js",
