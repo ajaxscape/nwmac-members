@@ -1,14 +1,20 @@
-const baseUrl = 'http://localhost:3000'
+import AuthPageObject from '../support/page_objects/auth.page_object.js'
+const authPageObject = new AuthPageObject()
 
 describe('template spec', () => {
   beforeEach(() => {
-    cy.visit(baseUrl)
+    authPageObject.visit('')
   })
 
   it('passes', () => {
+    authPageObject.expectPath('/auth/enter-email')
     cy.get('#email').type('bensurgison@gmail.com')
-    cy.get('button').contains('Continue').click()
-    cy.get('button').contains('Continue').click()
-    cy.get('button').contains('Continue').click()
+    authPageObject.clickButtonByText('Continue')
+
+    authPageObject.expectPath('/auth/security-code')
+    authPageObject.clickButtonByText('Continue')
+
+    authPageObject.expectPath('/details/intro')
+    authPageObject.clickButtonByText('Continue')
   })
 })
